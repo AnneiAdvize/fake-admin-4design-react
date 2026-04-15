@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home — Back-office</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+  <!-- ── Level 1 Nav ── -->
+  <nav class="nav-primary">
+    <div class="nav-primary-inner">
+      <a href="../index.html" class="nav-logo" aria-label="Dashboard home">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="white"><circle cx="5" cy="5" r="5"/></svg>
+      </a>
+      <div class="nav-items">
+        <a href="./home.html" class="nav-item" data-page="home">Home</a>
+        <a href="./engagement.html" class="nav-item" data-page="engagement">Engagement</a>
+        <a href="./shopping-assistant.html" class="nav-item" data-page="shopping">
+          <span class="nav-icon-sparkle">✦</span> Shopping Assistant
+        </a>
+        <a href="./knowledge.html" class="nav-item" data-page="knowledge">Knowledge</a>
+        <a href="./reports/conversations.html" class="nav-item" data-page="reports">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <rect x="1" y="9" width="3" height="6" rx="1"/>
+            <rect x="6" y="5" width="3" height="10" rx="1"/>
+            <rect x="11" y="2" width="3" height="13" rx="1"/>
+          </svg>
+          Reports
+        </a>
+        <a href="./settings.html" class="nav-item" data-page="settings">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+          Settings
+        </a>
+      </div>
+      <div class="nav-actions">
+        <button class="btn-help">Help</button>
+        <div class="client-selector">
+          <button class="client-selector-btn" aria-haspopup="true" aria-expanded="false">
+            <span class="client-name">Nespresso - FR</span>
+            <svg class="chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="client-dropdown">
+            <div class="client-dropdown-item is-active">Nespresso - FR</div>
+            <div class="client-dropdown-item">Nespresso - DE</div>
+            <div class="client-dropdown-item">Nespresso - UK</div>
+            <div class="client-dropdown-item">Nespresso - US</div>
+            <div class="client-dropdown-divider"></div>
+            <div class="client-dropdown-item">Nescafé - FR</div>
+          </div>
+        </div>
+        <div class="user-avatar" title="Anne Pedro">AP</div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Page ── -->
+  <main class="layout-default">
+    <div class="coming-soon-wrap">
+      <div class="coming-soon-icon">⌂</div>
+      <h1 class="coming-soon-title">Home</h1>
+      <p class="coming-soon-sub">Your dashboard overview will live here — recent activity, alerts, and quick actions.</p>
+      <span class="coming-soon-badge">Coming soon</span>
+    </div>
+  </main>
+
+  <script src="../js/interactions.js"></script>
+</body>
+</html>

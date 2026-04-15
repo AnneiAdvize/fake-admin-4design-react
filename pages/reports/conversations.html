@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conversations — Reports — Back-office</title>
+  <link rel="stylesheet" href="../../css/tokens.css">
+  <link rel="stylesheet" href="../../css/layout.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <style>
+    .conv-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--sp-5);gap:var(--sp-4);flex-wrap:wrap}
+    .conv-title{font-size:var(--text-3xl);font-weight:var(--weight-semibold);color:var(--text-primary);letter-spacing:-.015em;display:flex;align-items:center;gap:6px}
+    .conv-title .icon-fav{color:var(--brand-green);font-size:var(--text-xl);line-height:1}
+    .conv-header-right{display:flex;align-items:center;gap:var(--sp-2);flex-shrink:0}
+    .project-btn{display:inline-flex;align-items:center;gap:var(--sp-2);height:30px;padding:0 var(--sp-3);border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);font-size:var(--text-sm);font-weight:var(--weight-medium);color:var(--text-primary);cursor:pointer;transition:background var(--t-fast)}
+    .project-btn:hover{background:var(--hover)}
+    .project-btn .project-label{color:var(--text-secondary);font-weight:var(--weight-normal)}
+    .btn-add-filters{display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 var(--sp-3);border-radius:var(--r-md);background:var(--brand-green);border:none;font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--brand-green-dark);cursor:pointer;transition:background var(--t-fast)}
+    .btn-add-filters:hover{background:#2fcf96}
+
+    /* KPI card */
+    .conv-kpi-card{display:flex;align-items:stretch;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);margin-bottom:var(--sp-5);overflow:hidden}
+    .conv-kpi-left{padding:var(--sp-5) var(--sp-6);flex-shrink:0;min-width:220px;border-right:1px solid var(--border);display:flex;flex-direction:column;justify-content:center}
+    .conv-kpi-metric-label{font-size:var(--text-sm);color:var(--text-secondary);margin-bottom:var(--sp-2);display:flex;align-items:center;gap:4px}
+    .conv-kpi-metric-label .icon-fav{color:var(--brand-green);font-size:12px}
+    .conv-kpi-metric-value{font-size:38px;font-weight:var(--weight-semibold);color:var(--text-primary);letter-spacing:-.025em;line-height:1;margin-bottom:var(--sp-2);font-variant-numeric:tabular-nums}
+    .conv-kpi-footer{display:flex;align-items:center;gap:var(--sp-2)}
+    .conv-kpi-chart{flex:1;min-width:0;padding:var(--sp-4) var(--sp-5) var(--sp-3);display:flex;flex-direction:column}
+    .conv-kpi-chart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--sp-3)}
+    .conv-kpi-chart-label{font-size:var(--text-xs);color:var(--text-secondary);text-transform:uppercase;letter-spacing:.05em;font-weight:var(--weight-medium)}
+    .conv-kpi-chart-value{font-size:var(--text-xl);font-weight:var(--weight-semibold);color:var(--text-primary);font-variant-numeric:tabular-nums}
+    .conv-kpi-chart svg{width:100%;height:80px;overflow:visible}
+
+    /* Table section */
+    .conv-table-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden}
+    .conv-table-header{display:flex;align-items:center;padding:var(--sp-4) var(--sp-5);border-bottom:1px solid var(--border);gap:var(--sp-3)}
+    .conv-table-title{font-size:var(--text-md);font-weight:var(--weight-semibold);color:var(--text-primary);display:flex;align-items:center;gap:5px;flex:1}
+    .conv-table-title .icon-fav{color:var(--brand-green);font-size:13px}
+    .btn-filter{display:inline-flex;align-items:center;gap:5px;height:28px;padding:0 var(--sp-3);border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);font-size:var(--text-xs);font-weight:var(--weight-medium);color:var(--text-secondary);cursor:pointer;transition:all var(--t-fast)}
+    .btn-filter:hover{background:var(--hover);color:var(--text-primary)}
+    .filter-count{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:var(--r-full);background:var(--selected);color:white;font-size:10px;font-weight:var(--weight-semibold)}
+    .btn-export-sm{display:inline-flex;align-items:center;gap:5px;height:28px;padding:0 var(--sp-3);border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);font-size:var(--text-xs);font-weight:var(--weight-medium);color:var(--text-secondary);cursor:pointer;transition:all var(--t-fast)}
+    .btn-export-sm:hover{background:var(--hover);color:var(--text-primary)}
+
+    /* Conv table */
+    .conv-table{width:100%;border-collapse:collapse}
+    .conv-table thead th{padding:var(--sp-2) var(--sp-4);text-align:left;font-size:var(--text-xs);font-weight:var(--weight-medium);color:var(--text-secondary);text-transform:uppercase;letter-spacing:.055em;border-bottom:1px solid var(--border);white-space:nowrap;background:var(--surface)}
+    .conv-table thead th:first-child{padding-left:var(--sp-5);width:36px}
+    .conv-table thead th:last-child{padding-right:var(--sp-5)}
+    .conv-row{cursor:pointer;border-bottom:1px solid var(--border);transition:background var(--t-fast)}
+    .conv-row:hover{background:var(--hover)}
+    .conv-row.is-expanded{background:var(--hover)}
+    .conv-table tbody td{padding:10px var(--sp-4);font-size:var(--text-sm);color:var(--text-primary);vertical-align:middle}
+    .conv-table tbody td:first-child{padding-left:var(--sp-5)}
+    .conv-table tbody td:last-child{padding-right:var(--sp-5)}
+    .status-ring{width:11px;height:11px;border-radius:var(--r-full);background:var(--brand-green);box-shadow:0 0 0 3px rgba(59,225,164,.18);display:inline-block}
+    .td-date-main{font-size:var(--text-sm);font-weight:var(--weight-medium);color:var(--text-primary);white-space:nowrap}
+    .td-date-time{font-size:var(--text-xs);color:var(--text-secondary);margin-top:1px;font-variant-numeric:tabular-nums}
+    .td-author{font-size:var(--text-sm);color:var(--text-primary)}
+    .td-author.anon{color:var(--text-secondary);font-style:italic}
+    .canal-chip{display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 var(--sp-2);border-radius:var(--r-full);background:var(--bg-app);border:1px solid var(--border);font-size:var(--text-xs);font-weight:var(--weight-medium);color:var(--text-primary);white-space:nowrap}
+    .canal-chip-dot{width:6px;height:6px;border-radius:var(--r-full);background:var(--brand-green);flex-shrink:0}
+    .td-contenu{font-size:var(--text-sm);color:var(--text-secondary);max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+    .td-nps{font-size:var(--text-sm);font-weight:var(--weight-semibold);font-variant-numeric:tabular-nums;white-space:nowrap}
+    .td-nps.high{color:var(--color-success-text)}
+    .td-nps.mid{color:var(--color-warning-text)}
+    .td-nps.low{color:var(--color-danger-text)}
+    .td-nps.empty{color:var(--text-secondary)}
+    .td-amount{font-size:var(--text-sm);font-variant-numeric:tabular-nums;color:var(--text-primary);font-weight:var(--weight-medium);white-space:nowrap}
+    .td-csat-val{font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--text-secondary)}
+    .td-csat-val.rated{color:var(--text-primary)}
+
+    /* Detail row */
+    .conv-detail-row{display:none;border-bottom:1px solid var(--border)}
+    .conv-detail-row.is-visible{display:table-row}
+    .conv-detail-row>td{padding:0!important;border:none}
+    .conv-detail-panel{display:flex;background:#FAFAF8;border-top:1px solid var(--border);min-height:320px;max-height:500px}
+    .conv-meta{width:252px;flex-shrink:0;border-right:1px solid var(--border);padding:var(--sp-5);overflow-y:auto;display:flex;flex-direction:column;gap:var(--sp-4)}
+    .conv-meta-avatar{width:38px;height:38px;border-radius:var(--r-full);background:var(--selected);color:#fff;display:flex;align-items:center;justify-content:center;font-size:var(--text-sm);font-weight:var(--weight-semibold);flex-shrink:0}
+    .conv-meta-field-lbl{font-size:10px;font-weight:var(--weight-semibold);color:var(--text-secondary);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px}
+    .conv-meta-field-val{font-size:var(--text-xs);color:var(--text-primary);font-family:var(--font-mono);word-break:break-all}
+    .conv-meta-field-val.normal{font-family:var(--font);font-size:var(--text-sm);font-weight:var(--weight-medium)}
+    .conv-meta-tag{display:inline-flex;align-items:center;height:20px;padding:0 var(--sp-2);border-radius:var(--r-full);background:var(--brand-green-dark);color:var(--brand-green);font-size:10px;font-weight:var(--weight-semibold)}
+    .conv-meta-divider{height:1px;background:var(--border);margin:0 calc(-1 * var(--sp-5))}
+    .conv-meta-stars{display:flex;align-items:center;gap:2px}
+    .conv-meta-star{font-size:13px}
+    .conv-meta-star.on{color:#f59e0b}
+    .conv-meta-star.off{color:var(--border)}
+    .conv-chat{flex:1;min-width:0;padding:var(--sp-5) var(--sp-6);overflow-y:auto;display:flex;flex-direction:column;gap:var(--sp-4)}
+    .chat-msg{display:flex;gap:var(--sp-3);max-width:80%}
+    .chat-msg.bot{align-self:flex-start}
+    .chat-msg.user{align-self:flex-end;flex-direction:row-reverse}
+    .chat-avatar-bot{width:28px;height:28px;border-radius:var(--r-full);background:var(--brand-green-dark);color:var(--brand-green);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px}
+    .chat-bubble-wrap{display:flex;flex-direction:column;gap:4px}
+    .chat-bubble-wrap.user-wrap{align-items:flex-end}
+    .chat-bubble{padding:var(--sp-3) var(--sp-4);border-radius:var(--r-lg);font-size:var(--text-sm);line-height:1.55}
+    .chat-msg.bot .chat-bubble{background:var(--surface);border:1px solid var(--border);border-bottom-left-radius:4px;color:var(--text-primary);box-shadow:var(--shadow-xs)}
+    .chat-msg.user .chat-bubble{background:var(--selected);color:#fff;border-bottom-right-radius:4px}
+    .chat-time{font-size:10px;color:var(--text-secondary);padding:0 2px}
+    .chat-bubble ul{padding-left:var(--sp-4);margin-top:6px}
+    .chat-bubble li{margin-bottom:4px}
+    .chat-bubble strong{font-weight:var(--weight-semibold)}
+  </style>
+</head>
+<body>
+
+  <nav class="nav-primary">
+    <div class="nav-primary-inner">
+      <a href="../../index.html" class="nav-logo" aria-label="Home">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="white"><circle cx="5" cy="5" r="5"/></svg>
+      </a>
+      <div class="nav-items">
+        <a href="../home.html" class="nav-item" data-page="home">Home</a>
+        <a href="../engagement.html" class="nav-item" data-page="engagement">Engagement</a>
+        <a href="../shopping-assistant.html" class="nav-item" data-page="shopping">
+          <span class="nav-icon-sparkle">✦</span> Shopping Assistant
+        </a>
+        <a href="../knowledge.html" class="nav-item" data-page="knowledge">Knowledge</a>
+        <a href="./conversations.html" class="nav-item" data-page="reports">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="9" width="3" height="6" rx="1"/><rect x="6" y="5" width="3" height="10" rx="1"/><rect x="11" y="2" width="3" height="13" rx="1"/></svg>
+          Reports
+        </a>
+        <a href="../settings.html" class="nav-item" data-page="settings">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Settings
+        </a>
+      </div>
+      <div class="nav-actions">
+        <button class="btn-help">Help</button>
+        <div class="client-selector">
+          <button class="client-selector-btn">
+            <span class="client-name">Nespresso - FR</span>
+            <svg class="chevron" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="client-dropdown">
+            <div class="client-dropdown-item is-active">Nespresso - FR</div>
+            <div class="client-dropdown-item">Nespresso - DE</div>
+            <div class="client-dropdown-item">Nespresso - UK</div>
+            <div class="client-dropdown-item">Nespresso - US</div>
+            <div class="client-dropdown-divider"></div>
+            <div class="client-dropdown-item">Nescafé - FR</div>
+          </div>
+        </div>
+        <div class="user-avatar" title="Anne Pedro">AP</div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="nav-secondary">
+    <div class="nav-secondary-inner">
+      <a href="./overview.html"      class="nav-sub-item" data-page="overview">Overview</a>
+      <a href="./sales.html"         class="nav-sub-item" data-page="sales">Sales</a>
+      <a href="./conversations.html" class="nav-sub-item" data-page="conversations">Conversations</a>
+      <a href="./quality.html"       class="nav-sub-item" data-page="quality">Quality</a>
+    </div>
+  </nav>
+
+  <main class="layout-reports">
+    <div class="page-content">
+
+      <header class="conv-header">
+        <h1 class="conv-title">
+          Conversations report
+          <span class="icon-fav">★</span>
+        </h1>
+        <div class="conv-header-right">
+          <button class="date-range-btn">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="12" rx="1.5"/><path d="M2 7h12M5 1v2M11 1v2"/></svg>
+            Dec 10 – Dec 15, 2025
+            <svg class="chevron" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="project-btn">
+            <span class="project-label">Projects:</span> All
+            <svg class="chevron" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="btn-add-filters">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            Add filters
+          </button>
+        </div>
+      </header>
+
+      <!-- KPI + sparkline -->
+      <div class="conv-kpi-card">
+        <div class="conv-kpi-left">
+          <div class="conv-kpi-metric-label">Closed conversations <span class="icon-fav">★</span></div>
+          <div class="conv-kpi-metric-value">1,088</div>
+          <div class="conv-kpi-footer">
+            <span class="kpi-trend up">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 8V2M2 5l3-3 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              +4.1%
+            </span>
+            <span class="kpi-trend-label">vs previous period</span>
+          </div>
+        </div>
+        <div class="conv-kpi-chart">
+          <div class="conv-kpi-chart-header">
+            <span class="conv-kpi-chart-label">Daily volume — Dec 2025</span>
+            <span class="conv-kpi-chart-value">36.3 / day</span>
+          </div>
+          <svg viewBox="0 0 560 80" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#3BE1A4" stop-opacity="0.22"/>
+                <stop offset="100%" stop-color="#3BE1A4" stop-opacity="0.02"/>
+              </linearGradient>
+            </defs>
+            <line x1="0" y1="20" x2="560" y2="20" stroke="#D1D1CB" stroke-width="0.5"/>
+            <line x1="0" y1="40" x2="560" y2="40" stroke="#D1D1CB" stroke-width="0.5"/>
+            <line x1="0" y1="60" x2="560" y2="60" stroke="#D1D1CB" stroke-width="0.5"/>
+            <polygon points="0,52 19,46 37,55 56,32 75,40 93,36 112,43 131,40 149,24 168,37 187,43 205,40 224,33 243,29 262,42 280,48 299,36 318,21 336,40 355,36 374,43 392,29 411,13 430,32 449,40 467,36 486,43 504,38 523,32 542,40 560,47 560,75 0,75" fill="url(#chartGrad)"/>
+            <polyline points="0,52 19,46 37,55 56,32 75,40 93,36 112,43 131,40 149,24 168,37 187,43 205,40 224,33 243,29 262,42 280,48 299,36 318,21 336,40 355,36 374,43 392,29 411,13 430,32 449,40 467,36 486,43 504,38 523,32 542,40 560,47" fill="none" stroke="#3BE1A4" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Conversation log table -->
+      <div class="conv-table-section">
+        <div class="conv-table-header">
+          <h2 class="conv-table-title">Conversation log <span class="icon-fav">★</span></h2>
+          <button class="btn-export-sm">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 1v7M3 5l3 3 3-3M2 10h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Export
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="btn-filter">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M1 2.5h10M3 6h6M5 9.5h2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            Filter
+            <span class="filter-count">2</span>
+          </button>
+        </div>
+
+        <table class="conv-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Date</th>
+              <th>Author</th>
+              <th>Channel</th>
+              <th>Content / Topic</th>
+              <th>NPS</th>
+              <th>CSAT</th>
+              <th>Cart value</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <!-- Row 1 — expanded by default -->
+            <tr class="conv-row is-expanded" data-target="detail-1">
+              <td><span class="status-ring"></span></td>
+              <td><div class="td-date-main">22/02/2026</div><div class="td-date-time">21:48</div></td>
+              <td><span class="td-author anon">Visitor</span></td>
+              <td><span class="canal-chip"><span class="canal-chip-dot"></span>AI Shopping Assistant</span></td>
+              <td><span class="td-contenu">Hi, I'm looking for capsules to make lattes at home…</span></td>
+              <td><span class="td-nps high">9</span></td>
+              <td><span class="td-csat-val rated">4.8</span></td>
+              <td><span class="td-amount">—</span></td>
+            </tr>
+            <tr class="conv-detail-row is-visible" id="detail-1">
+              <td colspan="8">
+                <div class="conv-detail-panel">
+                  <div class="conv-meta">
+                    <div class="conv-meta-avatar">VIS</div>
+                    <div>
+                      <div class="conv-meta-field-lbl">Segment</div>
+                      <div class="conv-meta-field-val normal">Anonymous visitor</div>
+                    </div>
+                    <div>
+                      <div class="conv-meta-field-lbl">Location</div>
+                      <div class="conv-meta-field-val normal">London, United Kingdom</div>
+                    </div>
+                    <div class="conv-meta-divider"></div>
+                    <div>
+                      <div class="conv-meta-field-lbl">Session ID</div>
+                      <div class="conv-meta-field-val">SESS-17284629834</div>
+                    </div>
+                    <div>
+                      <div class="conv-meta-field-lbl">Contact ID</div>
+                      <div class="conv-meta-field-val">CONT-47291038456</div>
+                    </div>
+                    <div>
+                      <div class="conv-meta-field-lbl">Duration</div>
+                      <div class="conv-meta-field-val normal">1m 38s</div>
+                    </div>
+                    <div class="conv-meta-divider"></div>
+                    <div>
+                      <div class="conv-meta-field-lbl">Topic</div>
+                      <span class="conv-meta-tag">Product recommendation</span>
+                    </div>
+                    <div>
+                      <div class="conv-meta-field-lbl">Satisfaction</div>
+                      <div class="conv-meta-stars">
+                        <span class="conv-meta-star on">★</span><span class="conv-meta-star on">★</span><span class="conv-meta-star on">★</span><span class="conv-meta-star on">★</span><span class="conv-meta-star on">★</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="conv-chat">
+                    <div class="chat-msg bot">
+                      <div class="chat-avatar-bot">✦</div>
+                      <div class="chat-bubble-wrap">
+                        <div class="chat-bubble">Welcome to Nespresso! I'm your personal coffee assistant. How can I help you today?</div>
+                        <div class="chat-time">21:48:03</div>
+                      </div>
+                    </div>
+                    <div class="chat-msg user">
+                      <div class="chat-bubble-wrap user-wrap">
+                        <div class="chat-bubble">Hi, I'm looking for capsules to make lattes at home</div>
+                        <div class="chat-time">21:48:22</div>
+                      </div>
+                    </div>
+                    <div class="chat-msg bot">
+                      <div class="chat-avatar-bot">✦</div>
+                      <div class="chat-bubble-wrap">
+                        <div class="chat-bubble">Happy to help! For great lattes, you need capsules strong enough to hold their own against milk. My top recommendations:
+                          <ul>
+                            <li><strong>Barista Creations Chiaro</strong> (Intensity 6) — biscuit and cereal notes, specially crafted to be lengthened with hot or cold milk.</li>
+                            <li><strong>Barista Creations Scuro</strong> (Intensity 8) — bolder, with roasted cereal notes for a stronger latte.</li>
+                          </ul>
+                          Both are from our <strong>Barista Creations</strong> range, designed specifically for milk-based drinks. Which one sounds right for you?
+                        </div>
+                        <div class="chat-time">21:48:45</div>
+                      </div>
+                    </div>
+                    <div class="chat-msg user">
+                      <div class="chat-bubble-wrap user-wrap">
+                        <div class="chat-bubble">The Chiaro sounds perfect! Any current promotions?</div>
+                        <div class="chat-time">21:49:12</div>
+                      </div>
+                    </div>
+                    <div class="chat-msg bot">
+                      <div class="chat-avatar-bot">✦</div>
+                      <div class="chat-bubble-wrap">
+                        <div class="chat-bubble">Great choice! <strong>Barista Creations Chiaro</strong> is £4.30 per 10-capsule box. Right now, order 5+ boxes to get <strong>10% off</strong>. Shall I redirect you to our shop to complete your order?</div>
+                        <div class="chat-time">21:49:31</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Rows 2–20 -->
+            <tr class="conv-row" data-target="detail-2"><td><span class="status-ring"></span></td><td><div class="td-date-main">22/02/2026</div><div class="td-date-time">21:44</div></td><td><span class="td-author anon">Visitor</span></td><td><span class="canal-chip"><span class="canal-chip-dot"></span>AI Shopping Assistant</span></td><td><span class="td-contenu">Capsule compatibility with Original Line machine…</span></td><td><span class="td-nps empty">—</span></td><td><span class="td-csat-val">—</span></td><td><span class="td-amount">—</span></td></tr>
+            <tr class="conv-detail-row" id="detail-2"><td colspan="8"><div class="conv-detail-panel"><div class="conv-meta"><div class="conv-meta-avatar">VIS</div><div><div class="conv-meta-field-lbl">Duration</div><div class="conv-meta-field-val normal">0m 58s</div></div><div><div class="conv-meta-field-lbl">Topic</div><span class="conv-meta-tag">Product compatibility</span></div></div><div class="conv-chat"><div class="chat-msg bot"><div class="chat-avatar-bot">✦</div><div class="chat-bubble-wrap"><div class="chat-bubble">Hello! How can I help you?</div></div></div><div class="chat-msg user"><div class="chat-bubble-wrap user-wrap"><div class="chat-bubble">Are my Vertuo capsules compatible with my Original Line machine?</div></div></div><div class="chat-msg bot"><div class="chat-avatar-bot">✦</div><div class="chat-bubble-wrap"><div class="chat-bubble">No, the Vertuo and Original systems are not compatible — they use different brewing technologies. For your <strong>Original Line</strong> machine, look for capsules labelled with the Original logo. Would you like me to suggest some great Original Line options?</div></div></div></div></div></td></tr>
+
+            <tr class="conv-row" data-target="detail-3"><td><span class="status-ring"></span></td><td><div class="td-date-main">22/02/2026</div><div class="td-date-time">21:42</div></td><td><span class="td-author anon">Visitor</span></td><td><span class="canal-chip"><span class="canal-chip-dot"></span>AI Shopping Assistant</span></td><td><span class="td-contenu">Monthly capsule subscription offer…</span></td><td><span class="td-nps high">8</span></td><td><span class="td-csat-val rated">4.2</span></td><td><span class="td-amount">40.40</span></td></tr>
+            <tr class="conv-detail-row" id="detail-3"><td colspan="8"><div style="height:1px;background:var(--border)"></div></td></tr>
+
+            <tr class="conv-row" data-target="detail-4"><td><span class="status-ring"></span></td><td><div class="td-date-main">22/02/2026</div><div class="td-date-time">21:38</div></td><td><span class="td-author">Lucas B.</span></td><td><span class="canal-chip"><span class="canal-chip-dot"></span>AI Shopping Assistant</span></td><td><span class="td-contenu">Order #NES-284912 tracking — late delivery…</span></td><td><span class="td-nps empty">—</span></td><td><span class="td-csat-val">—</span></td><td><span class="td-amount">—</span></td></tr>
+            <tr class="conv-detail-row" id="detail-4"><td colspan="8"><div style="height:1px;background:var(--border)"></div></td></tr>
+
+            <tr class="conv-row" data-target="detail-5"><td><span class="status-ring"></span></td><td><div class="td-date-main">22/02/2026</div><div class="td-date-time">21:35</div></td><td><span class="td-author anon">Visitor</span></td><td><span class="canal-chip"><span class="canal-chip-dot"></span>AI Shopping Assistant</span></td><td><span class="td-contenu">Difference between Vertuo and Original Line ranges…</span></td><td><span class="td-nps mid">7</span></td><td><span class="td-csat-val rated">3.8</span></td><td><span class="td-amount">—</span></td></tr>
+            <tr class="conv-detail-row" id="detail-5"><td colspan="8"><div style="height:1px;background:var(--border)"></div></td></tr>
+
+            <tr class="conv-row" data-target="detail-6"><td><span class="status-ring"></span></td><td><div class="td-date-main">22/02/2026</div><div class="td-date-time">21:31</div></td><td><span class="td-author">Marie C.</span></td><td><span class="canal-chip"><span class="canal-chip-dot"></span>AI Shopping Assistant</span></td><td><span class="td-contenu">Vertuo Next won't start after descaling…</span></td><td><span class="td-nps empty">—</span></td><td><span class="td-csat-val">—</span></td><td><span class="td-amount">—</span></td></tr>
+            <tr class="conv-detail-row" id="detail-6"><td colspan="8"><div style="height:1px;background:var(--border)"></div></td></tr>
+
+            <tr class="conv-row" data-target="detail-7"><td><span class="status-ring"></span></td><td><div class="td-date-main">22/02/2026</div><div class="td-date-time">21:28</div></td><td><span class="td-author anon">Visitor</span></td><td><span class="canal-chip"><span class="canal-chip-dot"></span>AI Shopping Assistant</span></td><td><span class="td-contenu">Best high-intensity capsule for espresso…</span></td><td><span class="td-nps high">10</span></td><td><span class="td-csat-val rated">5.0</span></td><td><span class="td-amount">52.00</span></td></tr>
+            <tr class="conv-detail-row" id="detail-7"><td colspan="8"><div style="height:1px;background:var(--border)"></div></td></tr>
+
+            <tr class="conv-row" data-target="detail-8"><td><span class="status-ring"></span></td><td><div class="td-date-main">22/02/2026</div><div class="td-date-time">21:22</div></td><td><span class="td-author anon">Visitor</span></td><td><span class="canal-chip"><span class="canal-chip-dot"></span>AI Shopping Assistant</span></td><td><span class="td-contenu">Standard delivery time to Southern UK…</span></td><td><span class="td-nps empty">—</span></td><td><span class="td-csat-val">—</span></td><td><span class="td-amount">—</span></td></tr>
+            <tr class="conv-detail-row" id="detail-8"><td colspan="8"><div style="height:1px;background:var(--border)"></div></td></tr>
+
+            <tr class="conv-row" data-target="detail-9"><td><span class="status-ring"></span></td><td><div class="td-date-main">22/02/2026</div><div class="td-date-time">21:18</div></td><td><span class="td-author">Thomas R.</span></td><td><span class="canal-chip"><span class="canal-chip-dot"></span>AI Shopping Assistant</span></td><td><span class="td-contenu">Refund request for duplicate order…</span></td><td><span class="td-nps low">5</span></td><td><span class="td-csat-val rated">2.5</span></td><td><span class="td-amount">—</span></td></tr>
+            <tr class="conv-detail-row" id="detail-9"><td colspan="8"><div style="height:1px;background:var(--border)"></div></td></tr>
+
+            <tr class="conv-row" data-target="detail-10"><td><span class="status-ring"></span></td><td><div class="td-date-main">22/02/2026</div><div class="td-date-time">21:14</div></td><td><span class="td-author anon">Visitor</span></td><td><span class="canal-chip"><span class="canal-chip-dot"></span>AI Shopping Assistant</span></td><td><span class="td-contenu">Compatible capsules for Vertuo Next — full range…</span></td><td><span class="td-nps high">9</span></td><td><span class="td-csat-val rated">4.6</span></td><td><span class="td-amount">38.60</span></td></tr>
+            <tr class="conv-detail-row" id="detail-10"><td colspan="8"><div style="height:1px;background:var(--border)"></div></td></tr>
+
+            <tr class="conv-row" data-target="detail-11"><td><span class="status-ring"></span></td><td><div class="td-date-main">22/02/2026</div><div class="td-date-time">21:09</div></td><td><span class="td-author anon">Visitor</span></td><td><span class="canal-chip"><span class="canal-chip-dot"></span>AI Shopping Assistant</span></td><td><span class="td-contenu">Loyalty programme — points accrual on subscriptions…</span></td><td><span class="td-nps empty">—</span></td><td><span class="td-csat-val">—</span></td><td><span class="td-amount">—</span></td></tr>
+            <tr class="conv-detail-row" id="detail-11"><td colspan="8"><div style="height:1px;background:var(--border)"></div></td></tr>
+
+            <tr class="conv-row" data-target="detail-12"><td><span class="status-ring"></span></td><td><div class="td-date-main">22/02/2026</div><div class="td-date-time">21:04</div></td><td><span class="td-author">Emma D.</span></td><td><span class="canal-chip"><span class="canal-chip-dot"></span>AI Shopping Assistant</span></td><td><span class="td-contenu">Anniversary gift idea — machine and capsule bundle…</span></td><td><span class="td-nps high">10</span></td><td><span class="td-csat-val rated">5.0</span></td><td><span class="td-amount">76.00</span></td></tr>
+            <tr class="conv-detail-row" id="detail-12"><td colspan="8"><div style="height:1px;background:var(--border)"></div></td></tr>
+
+            <tr class="conv-row" data-target="detail-13"><td><span class="status-ring"></span></td><td><div class="td-date-main">22/02/2026</div><div class="td-date-time">20:58</div></td><td><span class="td-author anon">Visitor</span></td><td><span class="canal-chip"><span class="canal-chip-dot"></span>AI Shopping Assistant</span></td><td><span class="td-contenu">How to recycle used capsules at a boutique…</span></td><td><span class="td-nps high">8</span></td><td><span class="td-csat-val rated">4.1</span></td><td><span class="td-amount">—</span></td></tr>
+            <tr class="conv-detail-row" id="detail-13"><td colspan="8"><div style="height:1px;background:var(--border)"></div></td></tr>
+
+            <tr class="conv-row" data-target="detail-14"><td><span class="status-ring"></span></td><td><div class="td-date-main">22/02/2026</div><div class="td-date-time">20:52</div></td><td><span class="td-author anon">Visitor</span></td><td><span class="canal-chip"><span class="canal-chip-dot"></span>AI Shopping Assistant</span></td><td><span class="td-contenu">Free machine trial — discovery offer available?…</span></td><td><span class="td-nps empty">—</span></td><td><span class="td-csat-val">—</span></td><td><span class="td-amount">—</span></td></tr>
+            <tr class="conv-detail-row" id="detail-14"><td colspan="8"><div style="height:1px;background:var(--border)"></div></td></tr>
+
+            <tr class="conv-row" data-target="detail-15"><td><span class="status-ring"></span></td><td><div class="td-date-main">22/02/2026</div><div class="td-date-time">20:47</div></td><td><span class="td-author">Paul M.</span></td><td><span class="canal-chip"><span class="canal-chip-dot"></span>AI Shopping Assistant</span></td><td><span class="td-contenu">Vertuo Evoluo descaling step-by-step…</span></td><td><span class="td-nps empty">—</span></td><td><span class="td-csat-val">—</span></td><td><span class="td-amount">—</span></td></tr>
+            <tr class="conv-detail-row" id="detail-15"><td colspan="8"><div style="height:1px;background:var(--border)"></div></td></tr>
+
+            <tr class="conv-row" data-target="detail-16"><td><span class="status-ring"></span></td><td><div class="td-date-main">22/02/2026</div><div class="td-date-time">20:43</div></td><td><span class="td-author anon">Visitor</span></td><td><span class="canal-chip"><span class="canal-chip-dot"></span>AI Shopping Assistant</span></td><td><span class="td-contenu">Spring promotions — discounts on new arrivals…</span></td><td><span class="td-nps mid">6</span></td><td><span class="td-csat-val rated">3.2</span></td><td><span class="td-amount">—</span></td></tr>
+            <tr class="conv-detail-row" id="detail-16"><td colspan="8"><div style="height:1px;background:var(--border)"></div></td></tr>
+
+            <tr class="conv-row" data-target="detail-17"><td><span class="status-ring"></span></td><td><div class="td-date-main">22/02/2026</div><div class="td-date-time">20:38</div></td><td><span class="td-author anon">Visitor</span></td><td><span class="canal-chip"><span class="canal-chip-dot"></span>AI Shopping Assistant</span></td><td><span class="td-contenu">Recommended intensity for the perfect ristretto…</span></td><td><span class="td-nps high">9</span></td><td><span class="td-csat-val rated">4.7</span></td><td><span class="td-amount">28.50</span></td></tr>
+            <tr class="conv-detail-row" id="detail-17"><td colspan="8"><div style="height:1px;background:var(--border)"></div></td></tr>
+
+            <tr class="conv-row" data-target="detail-18"><td><span class="status-ring"></span></td><td><div class="td-date-main">22/02/2026</div><div class="td-date-time">20:32</div></td><td><span class="td-author">Julie F.</span></td><td><span class="canal-chip"><span class="canal-chip-dot"></span>AI Shopping Assistant</span></td><td><span class="td-contenu">Change delivery address for order in progress…</span></td><td><span class="td-nps empty">—</span></td><td><span class="td-csat-val">—</span></td><td><span class="td-amount">—</span></td></tr>
+            <tr class="conv-detail-row" id="detail-18"><td colspan="8"><div style="height:1px;background:var(--border)"></div></td></tr>
+
+            <tr class="conv-row" data-target="detail-19"><td><span class="status-ring"></span></td><td><div class="td-date-main">22/02/2026</div><div class="td-date-time">20:28</div></td><td><span class="td-author anon">Visitor</span></td><td><span class="canal-chip"><span class="canal-chip-dot"></span>AI Shopping Assistant</span></td><td><span class="td-contenu">Spring 2026 collection — first look at new capsules…</span></td><td><span class="td-nps high">8</span></td><td><span class="td-csat-val rated">4.3</span></td><td><span class="td-amount">45.00</span></td></tr>
+            <tr class="conv-detail-row" id="detail-19"><td colspan="8"><div style="height:1px;background:var(--border)"></div></td></tr>
+
+            <tr class="conv-row" data-target="detail-20"><td><span class="status-ring"></span></td><td><div class="td-date-main">22/02/2026</div><div class="td-date-time">20:24</div></td><td><span class="td-author anon">Visitor</span></td><td><span class="canal-chip"><span class="canal-chip-dot"></span>AI Shopping Assistant</span></td><td><span class="td-contenu">Sustainable capsules — eco-friendly product range…</span></td><td><span class="td-nps mid">7</span></td><td><span class="td-csat-val rated">3.9</span></td><td><span class="td-amount">—</span></td></tr>
+            <tr class="conv-detail-row" id="detail-20"><td colspan="8"><div style="height:1px;background:var(--border)"></div></td></tr>
+
+          </tbody>
+        </table>
+
+        <div class="pagination">
+          <span class="pagination-info">Showing 1–20 of 1,088 conversations</span>
+          <div class="pagination-controls">
+            <button class="pg-btn" disabled><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2L4 6l4 4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button class="pg-btn active">1</button>
+            <button class="pg-btn">2</button>
+            <button class="pg-btn">3</button>
+            <button class="pg-btn">…</button>
+            <button class="pg-btn">55</button>
+            <button class="pg-btn"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="../../js/interactions.js"></script>
+  <script>
+    document.querySelectorAll('.conv-row').forEach(function(row) {
+      row.addEventListener('click', function() {
+        var targetId = this.dataset.target;
+        var detailRow = document.getElementById(targetId);
+        if (!detailRow) return;
+        var isOpen = detailRow.classList.contains('is-visible');
+        document.querySelectorAll('.conv-detail-row.is-visible').forEach(function(d){ d.classList.remove('is-visible'); });
+        document.querySelectorAll('.conv-row.is-expanded').forEach(function(r){ r.classList.remove('is-expanded'); });
+        if (!isOpen) {
+          detailRow.classList.add('is-visible');
+          this.classList.add('is-expanded');
+          this.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
