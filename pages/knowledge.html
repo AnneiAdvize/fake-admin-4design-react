@@ -7,20 +7,230 @@
   <link rel="stylesheet" href="../css/tokens.css">
   <link rel="stylesheet" href="../css/layout.css">
   <link rel="stylesheet" href="../css/components.css">
+  <style>
+    /* ── Page header ── */
+    .page-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--sp-6)}
+    .page-head-title{font-size:var(--text-4xl);font-weight:var(--weight-semibold);color:var(--text-primary);letter-spacing:-.02em}
+    .btn-add{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 var(--sp-4);border-radius:var(--r-full);background:var(--brand-green);border:none;font-family:var(--font);font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--brand-green-dark);cursor:pointer;transition:background var(--t-fast)}
+    .btn-add:hover{background:#2fcf96}
+
+    /* ── Knowledge section cards ── */
+    .knowledge-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:var(--sp-4)}
+
+    .ks-header{display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-4) var(--sp-5)}
+    .ks-expand-btn{display:inline-flex;align-items:center;gap:var(--sp-2);font-size:var(--text-xs);color:var(--text-secondary);cursor:pointer;background:none;border:none;font-family:var(--font);padding:0;flex-shrink:0;transition:color var(--t-fast)}
+    .ks-expand-btn:hover{color:var(--text-primary)}
+    .ks-expand-icon{width:16px;height:16px;display:flex;align-items:center;justify-content:center;font-size:12px}
+    .ks-title-group{display:flex;align-items:center;gap:var(--sp-2);flex:1;min-width:0}
+    .ks-title{font-size:var(--text-md);font-weight:var(--weight-semibold);color:var(--text-primary)}
+    .ks-badge{display:inline-flex;align-items:center;height:20px;padding:0 var(--sp-2);border-radius:var(--r-sm);font-size:var(--text-xs);font-weight:var(--weight-medium)}
+    .ks-badge-product{background:#F0F0EC;color:var(--text-primary);border:1px solid var(--border)}
+    .ks-badge-helpful{background:#F0F0EC;color:var(--text-primary);border:1px solid var(--border)}
+    .ks-info-icon{width:14px;height:14px;border-radius:var(--r-full);border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;font-size:9px;color:var(--text-secondary);cursor:default;flex-shrink:0}
+    .ks-header-right{display:flex;align-items:center;gap:var(--sp-3);flex-shrink:0;margin-left:auto}
+    .ks-use-by{font-size:var(--text-xs);color:var(--text-secondary)}
+    .btn-explore{display:inline-flex;align-items:center;gap:5px;height:28px;padding:0 var(--sp-3);border-radius:var(--r-md);background:var(--surface);border:1px solid var(--border);font-family:var(--font);font-size:var(--text-xs);font-weight:var(--weight-medium);color:var(--text-secondary);cursor:pointer;transition:all var(--t-fast)}
+    .btn-explore:hover{background:var(--hover);color:var(--text-primary)}
+    .kebab-btn{width:28px;height:28px;border-radius:var(--r-md);background:transparent;border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:var(--text-secondary);font-size:16px;transition:background var(--t-fast)}
+    .kebab-btn:hover{background:var(--hover);color:var(--text-primary)}
+
+    /* ── Source rows ── */
+    .ks-sources{border-top:1px solid var(--border)}
+    .source-row{display:flex;align-items:center;gap:var(--sp-4);padding:var(--sp-3) var(--sp-5);border-bottom:1px solid var(--border);transition:background var(--t-fast)}
+    .source-row:last-child{border-bottom:none}
+    .source-row:hover{background:var(--hover)}
+    .source-name{font-size:var(--text-sm);font-weight:var(--weight-medium);color:var(--text-primary);flex:1;min-width:0}
+
+    /* Toggle switch */
+    .toggle{width:34px;height:20px;border-radius:var(--r-full);position:relative;cursor:pointer;transition:background var(--t-base);flex-shrink:0}
+    .toggle-on{background:var(--brand-green)}
+    .toggle-off{background:var(--border)}
+    .toggle-thumb{position:absolute;top:2px;width:16px;height:16px;border-radius:var(--r-full);background:var(--surface);transition:left var(--t-base);box-shadow:0 1px 3px rgba(10,10,9,.2)}
+    .toggle-on .toggle-thumb{left:16px}
+    .toggle-off .toggle-thumb{left:2px}
+
+    .source-status{font-size:var(--text-xs);color:var(--text-secondary)}
+
+    /* Source type badges */
+    .source-type-badge{display:inline-flex;align-items:center;height:20px;padding:0 var(--sp-2);border-radius:var(--r-sm);font-size:var(--text-xs);font-weight:var(--weight-medium);flex-shrink:0}
+    .source-type-dark{background:var(--text-primary);color:#fff}
+    .source-type-light{background:var(--bg-app);border:1px solid var(--border);color:var(--text-secondary)}
+
+    .source-date{font-size:var(--text-xs);color:var(--text-secondary);white-space:nowrap;flex-shrink:0}
+
+    /* Source action icons */
+    .source-actions{display:flex;align-items:center;gap:2px;flex-shrink:0}
+    .icon-btn{width:26px;height:26px;border-radius:var(--r-sm);background:transparent;border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:var(--text-secondary);transition:background var(--t-fast),color var(--t-fast)}
+    .icon-btn:hover{background:var(--hover);color:var(--text-primary)}
+    .icon-btn svg{width:13px;height:13px}
+  </style>
 </head>
 <body>
 
   <script src="../js/nav.js"></script>
 
   <main class="layout-default">
-    <div class="coming-soon-wrap">
-      <div class="coming-soon-icon">📖</div>
-      <h1 class="coming-soon-title">Knowledge</h1>
-      <p class="coming-soon-sub">Manage your AI knowledge base — FAQs, product content, policies, and intents.</p>
-      <span class="coming-soon-badge">Coming soon</span>
+    <div class="page-content">
+
+      <!-- Page header -->
+      <div class="page-head">
+        <h1 class="page-head-title">Knowledge</h1>
+        <button class="btn-add">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          Add
+        </button>
+      </div>
+
+      <!-- Section 1: Catalog (expanded) -->
+      <div class="knowledge-section">
+        <div class="ks-header">
+          <button class="ks-expand-btn" data-target="sources-1" aria-expanded="true">
+            <span class="ks-expand-icon">↑</span>
+            1 sources
+          </button>
+          <div class="ks-title-group">
+            <span class="ks-title">Your Catalog for AI Shopping Assistance</span>
+            <span class="ks-badge ks-badge-product">Product</span>
+            <span class="ks-info-icon" title="Information about this knowledge type">i</span>
+          </div>
+          <div class="ks-header-right">
+            <span class="ks-use-by">Use by <strong>Copilot name</strong></span>
+            <button class="btn-explore">
+              <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <circle cx="6" cy="6" r="4"/>
+                <path d="M8 8.5L11 11.5" stroke-linecap="round"/>
+              </svg>
+              Explore
+            </button>
+            <button class="kebab-btn" aria-label="More options">⋮</button>
+          </div>
+        </div>
+
+        <div class="ks-sources" id="sources-1">
+          <div class="source-row">
+            <span class="source-name">Google Feed 2025</span>
+            <div class="toggle toggle-on" title="Active"><div class="toggle-thumb"></div></div>
+            <span class="source-status">Active</span>
+            <span class="source-type-badge source-type-dark">Google Shopping</span>
+            <span class="source-date">Last update: 02/03/2023</span>
+            <div class="source-actions">
+              <button class="icon-btn" title="Refresh">
+                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1.5 7A5.5 5.5 0 0 1 12 4M12 4V1.5M12 4H9.5"/>
+                  <path d="M12.5 7A5.5 5.5 0 0 1 2 10M2 10v2.5M2 10h2.5"/>
+                </svg>
+              </button>
+              <button class="icon-btn" title="Download">
+                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 1v8M4 6l3 3 3-3M2 12h10"/>
+                </svg>
+              </button>
+              <button class="icon-btn" title="Edit">
+                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9.5 2.5l2 2L4 12H2v-2L9.5 2.5z"/>
+                </svg>
+              </button>
+              <button class="icon-btn" title="Delete" style="color:var(--color-danger-text)">
+                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 4h10M5 4V2.5h4V4M5.5 7v4M8.5 7v4M3 4l.8 8h6.4L11 4"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="source-row">
+            <span class="source-name">feed-2024</span>
+            <div class="toggle toggle-off" title="Inactive"><div class="toggle-thumb"></div></div>
+            <span class="source-status">Active</span>
+            <span class="source-type-badge source-type-light">CSV File</span>
+            <span class="source-date">Last update: 02/03/2023</span>
+            <div class="source-actions">
+              <button class="icon-btn" title="Refresh">
+                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1.5 7A5.5 5.5 0 0 1 12 4M12 4V1.5M12 4H9.5"/>
+                  <path d="M12.5 7A5.5 5.5 0 0 1 2 10M2 10v2.5M2 10h2.5"/>
+                </svg>
+              </button>
+              <button class="icon-btn" title="Download">
+                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 1v8M4 6l3 3 3-3M2 12h10"/>
+                </svg>
+              </button>
+              <button class="icon-btn" title="Edit">
+                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9.5 2.5l2 2L4 12H2v-2L9.5 2.5z"/>
+                </svg>
+              </button>
+              <button class="icon-btn" title="Delete" style="color:var(--color-danger-text)">
+                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 4h10M5 4V2.5h4V4M5.5 7v4M8.5 7v4M3 4l.8 8h6.4L11 4"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: General Knowledge (collapsed) -->
+      <div class="knowledge-section">
+        <div class="ks-header">
+          <button class="ks-expand-btn" data-target="sources-2" aria-expanded="false">
+            <span class="ks-expand-icon">↓</span>
+            1 sources
+          </button>
+          <div class="ks-title-group">
+            <span class="ks-title">General Knowledge for AI Assistance</span>
+            <span class="ks-badge ks-badge-helpful">Helpful contents</span>
+            <span class="ks-info-icon" title="Information about this knowledge type">i</span>
+          </div>
+          <div class="ks-header-right">
+            <span class="ks-use-by">Use by <strong>Copilot name</strong></span>
+            <button class="btn-explore">
+              <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <circle cx="6" cy="6" r="4"/>
+                <path d="M8 8.5L11 11.5" stroke-linecap="round"/>
+              </svg>
+              Explore
+            </button>
+            <button class="kebab-btn" aria-label="More options">⋮</button>
+          </div>
+        </div>
+        <!-- Collapsed: no sources shown -->
+        <div class="ks-sources" id="sources-2" style="display:none"></div>
+      </div>
+
     </div>
   </main>
 
   <script src="../js/interactions.js"></script>
+  <script>
+    /* Toggle expand/collapse */
+    document.querySelectorAll('.ks-expand-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var targetId = this.dataset.target;
+        var target   = document.getElementById(targetId);
+        var icon     = this.querySelector('.ks-expand-icon');
+        var expanded = this.getAttribute('aria-expanded') === 'true';
+        if (expanded) {
+          target.style.display = 'none';
+          icon.textContent = '↓';
+          this.setAttribute('aria-expanded', 'false');
+        } else {
+          target.style.display = '';
+          icon.textContent = '↑';
+          this.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+    /* Toggle switch click */
+    document.querySelectorAll('.toggle').forEach(function(toggle) {
+      toggle.addEventListener('click', function() {
+        this.classList.toggle('toggle-on');
+        this.classList.toggle('toggle-off');
+      });
+    });
+  </script>
 </body>
 </html>

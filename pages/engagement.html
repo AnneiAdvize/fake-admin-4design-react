@@ -7,17 +7,232 @@
   <link rel="stylesheet" href="../css/tokens.css">
   <link rel="stylesheet" href="../css/layout.css">
   <link rel="stylesheet" href="../css/components.css">
+  <style>
+    /* ── Page header ── */
+    .page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--sp-5);margin-bottom:var(--sp-6)}
+    .page-head-title{font-size:var(--text-4xl);font-weight:var(--weight-semibold);color:var(--text-primary);letter-spacing:-.02em;margin-bottom:var(--sp-2)}
+    .page-head-subtitle{font-size:var(--text-sm);color:var(--text-secondary);max-width:600px}
+    .page-head-subtitle a{color:var(--color-info-text);text-decoration:underline;cursor:pointer}
+
+    .btn-create{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 var(--sp-4);border-radius:var(--r-full);background:var(--brand-green);border:none;font-family:var(--font);font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--brand-green-dark);cursor:pointer;transition:background var(--t-fast);white-space:nowrap;flex-shrink:0;margin-top:4px}
+    .btn-create:hover{background:#2fcf96}
+
+    /* ── Section card ── */
+    .section-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden}
+    .section-card-head{display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-4) var(--sp-5);border-bottom:1px solid var(--border)}
+    .section-card-title{font-size:var(--text-md);font-weight:var(--weight-semibold);color:var(--text-primary)}
+
+    .btn-add-filter{display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 var(--sp-3);border-radius:var(--r-md);background:var(--surface);border:1px solid var(--border);font-family:var(--font);font-size:var(--text-sm);font-weight:var(--weight-medium);color:var(--text-secondary);cursor:pointer;transition:all var(--t-fast)}
+    .btn-add-filter:hover{background:var(--hover);color:var(--text-primary)}
+
+    .filter-bar{padding:var(--sp-3) var(--sp-5);border-bottom:1px solid var(--border)}
+
+    /* ── Engagement table ── */
+    .eng-table{width:100%;border-collapse:collapse}
+    .eng-table thead th{padding:var(--sp-3) var(--sp-4);text-align:left;font-size:var(--text-xs);font-weight:var(--weight-medium);color:var(--text-secondary);text-transform:uppercase;letter-spacing:.055em;border-bottom:1px solid var(--border);white-space:nowrap;background:var(--surface)}
+    .eng-table thead th:first-child{padding-left:var(--sp-5)}
+    .eng-table thead th:last-child{padding-right:var(--sp-5);text-align:right}
+    .eng-table thead th.sortable{cursor:pointer;user-select:none}
+    .eng-table thead th.sortable:hover{color:var(--text-primary)}
+    .sort-arrow{opacity:.45;margin-left:3px;font-size:10px}
+    .eng-table tbody tr{border-bottom:1px solid var(--border);transition:background var(--t-fast)}
+    .eng-table tbody tr:last-child{border-bottom:none}
+    .eng-table tbody tr:hover{background:var(--hover)}
+    .eng-table tbody td{padding:var(--sp-3) var(--sp-4);font-size:var(--text-sm);color:var(--text-primary);vertical-align:middle}
+    .eng-table tbody td:first-child{padding-left:var(--sp-5);font-weight:var(--weight-medium)}
+    .eng-table tbody td:last-child{padding-right:var(--sp-5);text-align:right}
+
+    .widget-cell{display:inline-flex;align-items:center;gap:var(--sp-2)}
+    .widget-eye{color:var(--text-secondary);cursor:pointer;flex-shrink:0;transition:color var(--t-fast)}
+    .widget-eye:hover{color:var(--text-primary)}
+
+    .badge-online{display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 var(--sp-2);border-radius:var(--r-full);background:var(--color-success-bg);color:var(--color-success-text);font-size:var(--text-xs);font-weight:var(--weight-medium)}
+    .badge-online::before{content:'';width:5px;height:5px;border-radius:var(--r-full);background:currentColor;flex-shrink:0}
+    .badge-offline{display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 var(--sp-2);border-radius:var(--r-full);background:var(--color-neutral-bg);color:var(--color-neutral-text);font-size:var(--text-xs);font-weight:var(--weight-medium)}
+    .badge-offline::before{content:'';width:5px;height:5px;border-radius:var(--r-full);background:currentColor;flex-shrink:0}
+
+    .condition-chip{display:inline-flex;align-items:center;gap:4px;height:22px;padding:0 var(--sp-2);border:1px solid var(--border);border-radius:var(--r-sm);font-family:var(--font);font-size:var(--text-xs);color:var(--text-secondary);background:var(--surface);cursor:pointer;transition:background var(--t-fast)}
+    .condition-chip:hover{background:var(--hover)}
+
+    .td-secondary{color:var(--text-secondary)}
+
+    .kebab-btn{width:28px;height:28px;border-radius:var(--r-md);background:transparent;border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:var(--text-secondary);font-size:16px;transition:background var(--t-fast)}
+    .kebab-btn:hover{background:var(--hover);color:var(--text-primary)}
+  </style>
 </head>
 <body>
 
   <script src="../js/nav.js"></script>
 
   <main class="layout-default">
-    <div class="coming-soon-wrap">
-      <div class="coming-soon-icon">💬</div>
-      <h1 class="coming-soon-title">Engagement</h1>
-      <p class="coming-soon-sub">Manage proactive campaigns, triggers, and audience segments from this section.</p>
-      <span class="coming-soon-badge">Coming soon</span>
+    <div class="page-content">
+
+      <!-- Page header -->
+      <div class="page-head">
+        <div>
+          <h1 class="page-head-title">Engagement strategies</h1>
+          <p class="page-head-subtitle">Set widgets adapted to each page type to guide visitors and boost conversions. <a>Learn how to create conversion-driven engagement strategy →</a></p>
+        </div>
+        <button class="btn-create">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          Create
+        </button>
+      </div>
+
+      <!-- Section card -->
+      <div class="section-card">
+        <div class="section-card-head">
+          <span class="section-card-title">Engagement strategies list</span>
+          <span class="table-count-badge">6</span>
+          <div style="flex:1"></div>
+          <button class="btn-add-filter">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            Add a filter
+          </button>
+        </div>
+
+        <div class="filter-bar">
+          <div class="filter-input-wrap">
+            <span class="filter-input-icon">
+              <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <circle cx="6" cy="6" r="4"/>
+                <path d="M9.5 9.5L12 12" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <input class="filter-input" type="text" placeholder="Search by name">
+          </div>
+        </div>
+
+        <table class="eng-table">
+          <thead>
+            <tr>
+              <th class="sortable">Name <span class="sort-arrow">↕</span></th>
+              <th>Page</th>
+              <th>Widget</th>
+              <th>Condition</th>
+              <th class="sortable">Last edited <span class="sort-arrow">↕</span></th>
+              <th class="sortable">Status <span class="sort-arrow">↕</span></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Classic for VIP</td>
+              <td class="td-secondary">Home</td>
+              <td>
+                <div class="widget-cell">
+                  Classic
+                  <svg class="widget-eye" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-label="Preview widget">
+                    <path d="M1 8s3-5 7-5 7 5 7 5-3 5-7 5-7-5-7-5z"/>
+                    <circle cx="8" cy="8" r="2"/>
+                  </svg>
+                </div>
+              </td>
+              <td class="td-secondary">Display after 6 seconds</td>
+              <td class="td-secondary">6 days ago</td>
+              <td><span class="badge-online">Online</span></td>
+              <td><button class="kebab-btn" aria-label="More actions">⋮</button></td>
+            </tr>
+            <tr>
+              <td>Messaging for all</td>
+              <td class="td-secondary">Home</td>
+              <td>
+                <div class="widget-cell">
+                  Messaging
+                  <svg class="widget-eye" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M1 8s3-5 7-5 7 5 7 5-3 5-7 5-7-5-7-5z"/>
+                    <circle cx="8" cy="8" r="2"/>
+                  </svg>
+                </div>
+              </td>
+              <td class="td-secondary">—</td>
+              <td class="td-secondary">6 days ago</td>
+              <td><span class="badge-offline">Offline</span></td>
+              <td><button class="kebab-btn" aria-label="More actions">⋮</button></td>
+            </tr>
+            <tr>
+              <td>All smartphones</td>
+              <td class="td-secondary">Product details</td>
+              <td>
+                <div class="widget-cell">
+                  Conversation starters
+                  <svg class="widget-eye" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M1 8s3-5 7-5 7 5 7 5-3 5-7 5-7-5-7-5z"/>
+                    <circle cx="8" cy="8" r="2"/>
+                  </svg>
+                </div>
+              </td>
+              <td class="td-secondary">Display after 6 seconds</td>
+              <td class="td-secondary">10 days ago</td>
+              <td><span class="badge-online">Online</span></td>
+              <td><button class="kebab-btn" aria-label="More actions">⋮</button></td>
+            </tr>
+            <tr>
+              <td>All visitors</td>
+              <td class="td-secondary">Purchase funnel</td>
+              <td>
+                <div class="widget-cell">
+                  Messaging
+                  <svg class="widget-eye" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M1 8s3-5 7-5 7 5 7 5-3 5-7 5-7-5-7-5z"/>
+                    <circle cx="8" cy="8" r="2"/>
+                  </svg>
+                </div>
+              </td>
+              <td class="td-secondary">—</td>
+              <td class="td-secondary">3 months ago</td>
+              <td><span class="badge-online">Online</span></td>
+              <td><button class="kebab-btn" aria-label="More actions">⋮</button></td>
+            </tr>
+            <tr>
+              <td>Help for contact</td>
+              <td class="td-secondary">Other pages</td>
+              <td>
+                <div class="widget-cell">
+                  Messaging
+                  <svg class="widget-eye" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M1 8s3-5 7-5 7 5 7 5-3 5-7 5-7-5-7-5z"/>
+                    <circle cx="8" cy="8" r="2"/>
+                  </svg>
+                </div>
+              </td>
+              <td class="td-secondary">Display after 10 seconds</td>
+              <td class="td-secondary">5 days ago</td>
+              <td><span class="badge-online">Online</span></td>
+              <td><button class="kebab-btn" aria-label="More actions">⋮</button></td>
+            </tr>
+            <tr>
+              <td>Help for VIP</td>
+              <td class="td-secondary">All pages</td>
+              <td>
+                <div class="widget-cell">
+                  Classic
+                  <svg class="widget-eye" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M1 8s3-5 7-5 7 5 7 5-3 5-7 5-7-5-7-5z"/>
+                    <circle cx="8" cy="8" r="2"/>
+                  </svg>
+                </div>
+              </td>
+              <td>
+                <button class="condition-chip">
+                  2 conditions
+                  <svg width="8" height="5" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+                    <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                </button>
+              </td>
+              <td class="td-secondary">12 days ago</td>
+              <td><span class="badge-online">Online</span></td>
+              <td><button class="kebab-btn" aria-label="More actions">⋮</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
     </div>
   </main>
 

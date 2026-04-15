@@ -90,10 +90,48 @@
     document.querySelectorAll('.client-selector-btn').forEach(function (b) {
       b.classList.remove('is-open');
     });
+    document.querySelectorAll('.avatar-dropdown').forEach(function (d) {
+      d.classList.remove('is-open');
+    });
   }
 
   /* Close dropdowns on outside click */
   document.addEventListener('click', closeAllDropdowns);
+
+  /* ----------------------------------------------------------
+     AVATAR DROPDOWN
+  ---------------------------------------------------------- */
+  function initAvatarDropdown() {
+    var avatar = document.querySelector('.user-avatar');
+    if (!avatar) return;
+
+    /* Wrap avatar in position:relative container */
+    var wrap = document.createElement('div');
+    wrap.className = 'avatar-wrap';
+    avatar.parentNode.replaceChild(wrap, avatar);
+    wrap.appendChild(avatar);
+
+    /* Build dropdown */
+    var dropdown = document.createElement('div');
+    dropdown.className = 'avatar-dropdown';
+    dropdown.innerHTML =
+      '<div class="avatar-dropdown-item">My account</div>' +
+      '<div class="avatar-dropdown-item">My projects</div>' +
+      '<div class="avatar-dropdown-divider"></div>' +
+      '<div class="avatar-dropdown-item avatar-dropdown-item--danger">Sign out</div>';
+    wrap.appendChild(dropdown);
+
+    /* Toggle on avatar click */
+    avatar.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var opening = !dropdown.classList.contains('is-open');
+      closeAllDropdowns();
+      if (opening) dropdown.classList.add('is-open');
+    });
+
+    /* Prevent click inside dropdown from closing it */
+    dropdown.addEventListener('click', function (e) { e.stopPropagation(); });
+  }
 
   /* ----------------------------------------------------------
      DATE RANGE BUTTON — cosmetic toggle (no real date picker)
@@ -169,6 +207,7 @@
   ready(function () {
     initNavActiveStates();
     initClientSelector();
+    initAvatarDropdown();
     initDateRange();
     initTableActions();
     initChannelBars();

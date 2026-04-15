@@ -30,7 +30,7 @@
     '        <span class="nav-icon-sparkle">\u2736</span> Shopping Assistant',
     '      </a>',
     '      <a href="' + pagesBase + 'knowledge.html" class="nav-item" data-page="knowledge">Knowledge</a>',
-    '      <a href="' + reportsBase + 'conversations.html" class="nav-item" data-page="reports">',
+    '      <a href="' + reportsBase + 'overview.html" class="nav-item" data-page="reports">',
     '        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">',
     '          <rect x="1" y="9" width="3" height="6" rx="1"/>',
     '          <rect x="6" y="5" width="3" height="10" rx="1"/>',

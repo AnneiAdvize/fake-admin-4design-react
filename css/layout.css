@@ -202,6 +202,38 @@ input, select { font-family: var(--font); }
 }
 .user-avatar:hover { opacity: .85; }
 
+/* Avatar dropdown */
+.avatar-wrap { position: relative; display: inline-flex; }
+.avatar-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-dropdown);
+  padding: var(--sp-1);
+  z-index: 300;
+  display: none;
+  white-space: nowrap;
+  min-width: 148px;
+  animation: dropIn 120ms ease;
+}
+.avatar-dropdown.is-open { display: block; }
+.avatar-dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-md);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background var(--t-fast);
+}
+.avatar-dropdown-item:hover { background: var(--hover); }
+.avatar-dropdown-item--danger { color: var(--color-danger-text); }
+.avatar-dropdown-divider { height: 1px; background: var(--border); margin: var(--sp-1) 0; }
+
 
 /* ============================================================
    SECONDARY NAV — Level 2 (dark green bar, Reports only)

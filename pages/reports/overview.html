@@ -7,17 +7,333 @@
   <link rel="stylesheet" href="../../css/tokens.css">
   <link rel="stylesheet" href="../../css/layout.css">
   <link rel="stylesheet" href="../../css/components.css">
+  <style>
+    /* ── Page header (shared with sales / quality) ── */
+    .rpt-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:var(--sp-5);gap:var(--sp-4);flex-wrap:wrap}
+    .rpt-title{font-size:var(--text-3xl);font-weight:var(--weight-semibold);color:var(--text-primary);letter-spacing:-.015em;margin-bottom:3px}
+    .rpt-subtitle{font-size:var(--text-sm);color:var(--text-secondary)}
+    .rpt-subtitle a{color:var(--brand-green-hover);text-decoration:underline;cursor:pointer}
+    .rpt-header-right{display:flex;align-items:center;gap:var(--sp-2);flex-shrink:0;flex-wrap:wrap}
+    .project-btn{display:inline-flex;align-items:center;gap:var(--sp-2);height:30px;padding:0 var(--sp-3);border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);font-size:var(--text-sm);font-weight:var(--weight-medium);color:var(--text-primary);cursor:pointer;transition:background var(--t-fast)}
+    .project-btn:hover{background:var(--hover)}
+    .project-btn .lbl{color:var(--text-secondary);font-weight:var(--weight-normal)}
+    .btn-add-filters{display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 var(--sp-3);border-radius:var(--r-md);background:var(--brand-green);border:none;font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--brand-green-dark);cursor:pointer;transition:background var(--t-fast)}
+    .btn-add-filters:hover{background:#2fcf96}
+
+    /* ── KPI row (5 cols) ── */
+    .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--sp-4);margin-bottom:var(--sp-5)}
+    .kpi-c{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:var(--sp-4) var(--sp-5)}
+    .kpi-c.selected{border-color:var(--text-primary);box-shadow:0 0 0 1px var(--text-primary)}
+    .kpi-c-label{font-size:var(--text-xs);font-weight:var(--weight-medium);color:var(--text-secondary);text-transform:uppercase;letter-spacing:.055em;margin-bottom:var(--sp-2);display:flex;align-items:center;gap:4px}
+    .info-i{width:14px;height:14px;border-radius:var(--r-full);border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;font-size:9px;color:var(--text-secondary);cursor:default;flex-shrink:0}
+    .kpi-c-value{font-size:var(--text-5xl);font-weight:var(--weight-semibold);color:var(--text-primary);letter-spacing:-.025em;line-height:1.1;margin-bottom:var(--sp-2);font-variant-numeric:tabular-nums}
+    .kpi-c-sub{font-size:var(--text-xs);color:var(--text-secondary)}
+
+    /* ── Charts row (2 equal cols) ── */
+    .charts-2col{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4);margin-bottom:var(--sp-5)}
+    .chart-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden}
+    .chart-section-header{display:flex;align-items:flex-start;justify-content:space-between;padding:var(--sp-4) var(--sp-5);border-bottom:1px solid var(--border)}
+    .chart-section-title{font-size:var(--text-md);font-weight:var(--weight-semibold);color:var(--text-primary)}
+    .chart-section-value{font-size:var(--text-xl);font-weight:var(--weight-semibold);color:var(--text-primary);font-variant-numeric:tabular-nums;text-align:right}
+    .chart-body{padding:var(--sp-4) var(--sp-5) var(--sp-3)}
+    .chart-svg-container{width:100%;overflow:visible}
+    .chart-svg-container svg{width:100%;height:auto;display:block}
+    .axis-label-x{fill:var(--text-secondary);font-size:10px;font-family:'Inter',-apple-system,sans-serif}
+    .axis-label-y{fill:var(--text-secondary);font-size:10px;font-family:'Inter',-apple-system,sans-serif;text-anchor:end}
+
+    /* ── Topics table ── */
+    .topics-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden}
+    .topics-header{display:flex;align-items:center;padding:var(--sp-4) var(--sp-5);border-bottom:1px solid var(--border)}
+    .topics-title{font-size:var(--text-md);font-weight:var(--weight-semibold);color:var(--text-primary);flex:1}
+    .kebab-btn{width:28px;height:28px;border-radius:var(--r-md);background:transparent;border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:var(--text-secondary);font-size:16px;transition:background var(--t-fast)}
+    .kebab-btn:hover{background:var(--hover);color:var(--text-primary)}
+
+    .topics-table{width:100%;border-collapse:collapse}
+    .topics-table thead th{padding:var(--sp-3) var(--sp-4);text-align:left;font-size:var(--text-xs);font-weight:var(--weight-medium);color:var(--text-secondary);text-transform:uppercase;letter-spacing:.055em;border-bottom:1px solid var(--border);white-space:nowrap;background:var(--surface)}
+    .topics-table thead th:first-child{padding-left:var(--sp-5)}
+    .topics-table thead th:last-child{padding-right:var(--sp-5)}
+    .topics-table thead th.sortable{cursor:pointer;user-select:none}
+    .topics-table thead th.sortable:hover{color:var(--text-primary)}
+    .sort-arrow{opacity:.45;margin-left:3px;font-size:10px}
+    .topics-table tbody tr{border-bottom:1px solid var(--border);transition:background var(--t-fast)}
+    .topics-table tbody tr:last-child{border-bottom:none}
+    .topics-table tbody tr:hover{background:var(--hover)}
+    .topics-table tbody td{padding:var(--sp-3) var(--sp-4);font-size:var(--text-sm);color:var(--text-primary);vertical-align:middle;font-variant-numeric:tabular-nums}
+    .topics-table tbody td:first-child{padding-left:var(--sp-5);font-weight:var(--weight-medium);font-variant-numeric:normal}
+    .topics-table tbody td:last-child{padding-right:var(--sp-5)}
+    .td-num{color:var(--text-secondary)}
+
+    /* CSAT color badges */
+    .csat-badge{display:inline-flex;align-items:center;justify-content:center;height:22px;padding:0 var(--sp-2);border-radius:var(--r-sm);font-size:var(--text-xs);font-weight:var(--weight-semibold);font-variant-numeric:tabular-nums}
+    .csat-good{background:var(--color-success-bg);color:var(--color-success-text)}
+    .csat-bad{background:var(--color-danger-bg);color:var(--color-danger-text)}
+
+    .action-link{font-size:var(--text-xs);color:var(--brand-green-hover);cursor:pointer;white-space:nowrap}
+    .action-link:hover{text-decoration:underline}
+
+    .view-more-row{display:flex;align-items:center;justify-content:center;padding:var(--sp-4);border-top:1px solid var(--border)}
+    .btn-view-more{display:inline-flex;align-items:center;gap:var(--sp-2);height:30px;padding:0 var(--sp-4);border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);font-size:var(--text-sm);font-weight:var(--weight-medium);color:var(--text-secondary);cursor:pointer;transition:all var(--t-fast)}
+    .btn-view-more:hover{background:var(--hover);color:var(--text-primary)}
+  </style>
 </head>
 <body>
 
   <script src="../../js/nav.js"></script>
 
   <main class="layout-reports">
-    <div class="coming-soon-wrap">
-      <div class="coming-soon-icon">📊</div>
-      <h1 class="coming-soon-title">Overview</h1>
-      <p class="coming-soon-sub">A high-level summary of performance across all channels and metrics.</p>
-      <span class="coming-soon-badge">Coming soon</span>
+    <div class="page-content">
+
+      <!-- Page header -->
+      <header class="rpt-header">
+        <div>
+          <h1 class="rpt-title">Overview</h1>
+        </div>
+        <div class="rpt-header-right">
+          <button class="date-range-btn">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <rect x="2" y="3" width="12" height="12" rx="1.5"/>
+              <path d="M2 7h12M5 1v2M11 1v2"/>
+            </svg>
+            May 5 – June 15, 2025
+            <svg class="chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button class="project-btn">
+            <span class="lbl">Projects:</span> All
+            <svg class="chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button class="btn-add-filters">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            Add filter
+          </button>
+        </div>
+      </header>
+
+      <!-- KPI row (5 cols) -->
+      <div class="kpi-row">
+        <div class="kpi-c">
+          <div class="kpi-c-label">Revenue <span class="info-i">i</span></div>
+          <div class="kpi-c-value">24 690<span style="font-size:var(--text-xl)"> €</span></div>
+          <div class="kpi-c-sub">12% of total</div>
+        </div>
+        <div class="kpi-c">
+          <div class="kpi-c-label">Conversion rate <span class="info-i">i</span></div>
+          <div class="kpi-c-value">12<span style="font-size:var(--text-xl)">%</span></div>
+          <div class="kpi-c-sub">vs 0% for global website</div>
+        </div>
+        <div class="kpi-c selected">
+          <div class="kpi-c-label">Engagement rate <span class="info-i">i</span></div>
+          <div class="kpi-c-value">1,65<span style="font-size:var(--text-xl)">%</span></div>
+          <div class="kpi-c-sub">&nbsp;</div>
+        </div>
+        <div class="kpi-c">
+          <div class="kpi-c-label">CSAT <span class="info-i">i</span></div>
+          <div class="kpi-c-value">68,1<span style="font-size:var(--text-xl)">%</span></div>
+          <div class="kpi-c-sub">&nbsp;</div>
+        </div>
+        <div class="kpi-c">
+          <div class="kpi-c-label">Conversations <span class="info-i">i</span></div>
+          <div class="kpi-c-value">2 203</div>
+          <div class="kpi-c-sub">&nbsp;</div>
+        </div>
+      </div>
+
+      <!-- Charts row (2 equal cols) -->
+      <div class="charts-2col">
+
+        <!-- Engagement rate chart -->
+        <div class="chart-section">
+          <div class="chart-section-header">
+            <div>
+              <div class="chart-section-title">Engagement rate <span class="info-i" style="vertical-align:middle">i</span></div>
+            </div>
+            <div class="chart-section-value">1,65%</div>
+          </div>
+          <div class="chart-body">
+            <div class="chart-svg-container">
+              <!-- viewBox 560×160, y-axis 0–9%, 7 weekly date points -->
+              <svg viewBox="0 0 560 160" preserveAspectRatio="xMidYMid meet">
+                <!-- Y-axis labels -->
+                <text x="26" y="16"  class="axis-label-y">9%</text>
+                <text x="26" y="48"  class="axis-label-y">6%</text>
+                <text x="26" y="80"  class="axis-label-y">3%</text>
+                <text x="26" y="112" class="axis-label-y">0%</text>
+                <!-- Grid lines -->
+                <line x1="32" y1="12"  x2="555" y2="12"  stroke="#D1D1CB" stroke-width="0.7"/>
+                <line x1="32" y1="44"  x2="555" y2="44"  stroke="#D1D1CB" stroke-width="0.7"/>
+                <line x1="32" y1="76"  x2="555" y2="76"  stroke="#D1D1CB" stroke-width="0.7"/>
+                <line x1="32" y1="108" x2="555" y2="108" stroke="#D1D1CB" stroke-width="0.7"/>
+                <!-- X-axis date labels (7 weekly pts) -->
+                <text x="42"  y="130" class="axis-label-x" text-anchor="middle">5/05/25</text>
+                <text x="130" y="130" class="axis-label-x" text-anchor="middle">12/05/25</text>
+                <text x="218" y="130" class="axis-label-x" text-anchor="middle">19/05/25</text>
+                <text x="306" y="130" class="axis-label-x" text-anchor="middle">26/05/25</text>
+                <text x="394" y="130" class="axis-label-x" text-anchor="middle">2/06/25</text>
+                <text x="482" y="130" class="axis-label-x" text-anchor="middle">9/06/25</text>
+                <text x="549" y="130" class="axis-label-x" text-anchor="middle">13/06/25</text>
+                <!-- Engagement rate ~1.65% → scaled: 0%=108, 9%=12, so scale=96/9=10.67px per %
+                     1.65% → 108 - 17.6 ≈ 90
+                     data: 88,92,85,90,87,91,89 -->
+                <defs>
+                  <linearGradient id="engGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.15"/>
+                    <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.01"/>
+                  </linearGradient>
+                </defs>
+                <polygon points="42,88 130,92 218,85 306,90 394,87 482,91 549,89 549,108 42,108" fill="url(#engGrad)"/>
+                <polyline points="42,88 130,92 218,85 306,90 394,87 482,91 549,89" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+                <circle cx="42"  cy="88" r="3" fill="#3b82f6"/>
+                <circle cx="130" cy="92" r="3" fill="#3b82f6"/>
+                <circle cx="218" cy="85" r="3" fill="#3b82f6"/>
+                <circle cx="306" cy="90" r="3" fill="#3b82f6"/>
+                <circle cx="394" cy="87" r="3" fill="#3b82f6"/>
+                <circle cx="482" cy="91" r="3" fill="#3b82f6"/>
+                <circle cx="549" cy="89" r="3" fill="#3b82f6"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Copilot answer rate chart -->
+        <div class="chart-section">
+          <div class="chart-section-header">
+            <div>
+              <div class="chart-section-title">Copilot answer rate <span class="info-i" style="vertical-align:middle">i</span></div>
+            </div>
+            <div class="chart-section-value">83,22%</div>
+          </div>
+          <div class="chart-body">
+            <div class="chart-svg-container">
+              <!-- y-axis 0–100%, answer rate ~83% → y = 108 - 83*96/100 ≈ 28
+                   data: 79,84,82,86,84,83,82 scaled: 108-val*0.96 -->
+              <svg viewBox="0 0 560 160" preserveAspectRatio="xMidYMid meet">
+                <text x="34" y="16"  class="axis-label-y">100%</text>
+                <text x="34" y="48"  class="axis-label-y">80%</text>
+                <text x="34" y="80"  class="axis-label-y">60%</text>
+                <text x="34" y="112" class="axis-label-y">20%</text>
+                <line x1="38" y1="12"  x2="555" y2="12"  stroke="#D1D1CB" stroke-width="0.7"/>
+                <line x1="38" y1="44"  x2="555" y2="44"  stroke="#D1D1CB" stroke-width="0.7"/>
+                <line x1="38" y1="76"  x2="555" y2="76"  stroke="#D1D1CB" stroke-width="0.7"/>
+                <line x1="38" y1="108" x2="555" y2="108" stroke="#D1D1CB" stroke-width="0.7"/>
+                <text x="42"  y="130" class="axis-label-x" text-anchor="middle">5/05/25</text>
+                <text x="130" y="130" class="axis-label-x" text-anchor="middle">12/05/25</text>
+                <text x="218" y="130" class="axis-label-x" text-anchor="middle">19/05/25</text>
+                <text x="306" y="130" class="axis-label-x" text-anchor="middle">26/05/25</text>
+                <text x="394" y="130" class="axis-label-x" text-anchor="middle">2/06/25</text>
+                <text x="482" y="130" class="axis-label-x" text-anchor="middle">9/06/25</text>
+                <text x="549" y="130" class="axis-label-x" text-anchor="middle">13/06/25</text>
+                <!-- 100%=12, 0%=108, scale=96/100=0.96 per %. values: 79,84,82,86,84,83,82
+                     y = 108 - val*0.96 → 32,27,29,25,27,28,29 -->
+                <defs>
+                  <linearGradient id="ansGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#0B3B37" stop-opacity="0.14"/>
+                    <stop offset="100%" stop-color="#0B3B37" stop-opacity="0.01"/>
+                  </linearGradient>
+                </defs>
+                <polygon points="42,32 130,27 218,29 306,25 394,27 482,28 549,29 549,108 42,108" fill="url(#ansGrad)"/>
+                <polyline points="42,32 130,27 218,29 306,25 394,27 482,28 549,29" fill="none" stroke="#0B3B37" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+                <circle cx="42"  cy="32" r="3" fill="#0B3B37"/>
+                <circle cx="130" cy="27" r="3" fill="#0B3B37"/>
+                <circle cx="218" cy="29" r="3" fill="#0B3B37"/>
+                <circle cx="306" cy="25" r="3" fill="#0B3B37"/>
+                <circle cx="394" cy="27" r="3" fill="#0B3B37"/>
+                <circle cx="482" cy="28" r="3" fill="#0B3B37"/>
+                <circle cx="549" cy="29" r="3" fill="#0B3B37"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /charts-2col -->
+
+      <!-- Topics table -->
+      <div class="topics-section">
+        <div class="topics-header">
+          <h2 class="topics-title">Recurrent topics in AI conversations</h2>
+          <button class="kebab-btn" aria-label="More options">⋮</button>
+        </div>
+        <table class="topics-table">
+          <thead>
+            <tr>
+              <th style="width:220px">AI Topics</th>
+              <th class="sortable">Conversations <span class="sort-arrow">↕</span></th>
+              <th class="sortable">CSAT <span class="sort-arrow">↕</span></th>
+              <th class="sortable">Automation % <span class="sort-arrow">↕</span></th>
+              <th class="sortable">Conversion <span class="sort-arrow">↕</span></th>
+              <th class="sortable">Revenue <span class="sort-arrow">↕</span></th>
+              <th class="sortable">AOV <span class="sort-arrow">↕</span></th>
+              <th class="sortable">Answer rate <span class="sort-arrow">↕</span></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Payment options</td>
+              <td class="td-num">1 459</td>
+              <td><span class="csat-badge csat-bad">46%</span></td>
+              <td class="td-num">3%</td>
+              <td class="td-num">3,3%</td>
+              <td class="td-num">2 367 €</td>
+              <td class="td-num">2 367 €</td>
+              <td class="td-num">60%</td>
+              <td><a class="action-link">Add knowledge</a></td>
+            </tr>
+            <tr>
+              <td>Account management</td>
+              <td class="td-num">230</td>
+              <td><span class="csat-badge csat-good">53%</span></td>
+              <td class="td-num">50%</td>
+              <td class="td-num">2,4%</td>
+              <td class="td-num">1 125 €</td>
+              <td class="td-num">1 125 €</td>
+              <td class="td-num">50%</td>
+              <td><a class="action-link">Add knowledge</a></td>
+            </tr>
+            <tr>
+              <td>Questions about a product</td>
+              <td class="td-num">127</td>
+              <td><span class="csat-badge csat-bad">25%</span></td>
+              <td class="td-num">38%</td>
+              <td class="td-num">5,8%</td>
+              <td class="td-num">567 €</td>
+              <td class="td-num">567 €</td>
+              <td class="td-num">38%</td>
+              <td><a class="action-link">Add knowledge</a></td>
+            </tr>
+            <tr>
+              <td>Order management</td>
+              <td class="td-num">890</td>
+              <td><span class="csat-badge csat-bad">42%</span></td>
+              <td class="td-num">18%</td>
+              <td class="td-num">1,7%</td>
+              <td class="td-num">678 €</td>
+              <td class="td-num">678 €</td>
+              <td class="td-num">28%</td>
+              <td><a class="action-link">Add knowledge</a></td>
+            </tr>
+            <tr>
+              <td>After-sales — Return and refund inquiry</td>
+              <td class="td-num">456</td>
+              <td><span class="csat-badge csat-bad">19%</span></td>
+              <td class="td-num">53%</td>
+              <td class="td-num">8,9%</td>
+              <td class="td-num">3 245 €</td>
+              <td class="td-num">3 245 €</td>
+              <td class="td-num">79%</td>
+              <td><a class="action-link">Add knowledge</a></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="view-more-row">
+          <button class="btn-view-more">View more</button>
+        </div>
+      </div>
+
     </div>
   </main>
 
