@@ -36,7 +36,7 @@
 
     /* ── Source rows ── */
     .ks-sources{border-top:1px solid var(--border)}
-    .source-row{display:flex;align-items:center;gap:var(--sp-4);padding:var(--sp-3) var(--sp-5);border-bottom:1px solid var(--border);transition:background var(--t-fast)}
+    .source-row{display:flex;align-items:center;gap:var(--sp-4);padding:var(--sp-3) var(--sp-5);border-bottom:1px solid var(--border);transition:background var(--t-fast);cursor:pointer}
     .source-row:last-child{border-bottom:none}
     .source-row:hover{background:var(--hover)}
     .source-name{font-size:var(--text-sm);font-weight:var(--weight-medium);color:var(--text-primary);flex:1;min-width:0}
@@ -109,7 +109,7 @@
         </div>
 
         <div class="ks-sources" id="sources-1">
-          <div class="source-row">
+          <div class="source-row" data-href="./knowledge-catalog.html">
             <span class="source-name">Google Feed 2025</span>
             <div class="toggle toggle-on" title="Active"><div class="toggle-thumb"></div></div>
             <span class="source-status">Active</span>
@@ -139,7 +139,7 @@
               </button>
             </div>
           </div>
-          <div class="source-row">
+          <div class="source-row" data-href="./knowledge-catalog.html">
             <span class="source-name">feed-2024</span>
             <div class="toggle toggle-off" title="Inactive"><div class="toggle-thumb"></div></div>
             <span class="source-status">Active</span>
@@ -196,8 +196,51 @@
             <button class="kebab-btn" aria-label="More options">⋮</button>
           </div>
         </div>
-        <!-- Collapsed: no sources shown -->
-        <div class="ks-sources" id="sources-2" style="display:none"></div>
+        <!-- Collapsed: sources shown on expand -->
+        <div class="ks-sources" id="sources-2" style="display:none">
+          <div class="source-row" data-href="./knowledge-faq.html">
+            <span class="source-name">FAQ 2024</span>
+            <div class="toggle toggle-on" title="Active"><div class="toggle-thumb"></div></div>
+            <span class="source-status">Active</span>
+            <span class="source-type-badge source-type-dark">FAQ</span>
+            <span class="source-date">Last update: 12/12/2023</span>
+            <div class="source-actions">
+              <button class="icon-btn" title="Refresh" onclick="event.stopPropagation()">
+                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 7A5.5 5.5 0 0 1 12 4M12 4V1.5M12 4H9.5"/><path d="M12.5 7A5.5 5.5 0 0 1 2 10M2 10v2.5M2 10h2.5"/></svg>
+              </button>
+              <button class="icon-btn" title="Download" onclick="event.stopPropagation()">
+                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 1v8M4 6l3 3 3-3M2 12h10"/></svg>
+              </button>
+              <button class="icon-btn" title="Edit" onclick="event.stopPropagation()">
+                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2.5l2 2L4 12H2v-2L9.5 2.5z"/></svg>
+              </button>
+              <button class="icon-btn" title="Delete" style="color:var(--color-danger-text)" onclick="event.stopPropagation()">
+                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h10M5 4V2.5h4V4M5.5 7v4M8.5 7v4M3 4l.8 8h6.4L11 4"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="source-row" data-href="./knowledge-faq.html">
+            <span class="source-name">Website content extract 2024</span>
+            <div class="toggle toggle-on" title="Active"><div class="toggle-thumb"></div></div>
+            <span class="source-status">Active</span>
+            <span class="source-type-badge source-type-light">Web scraping</span>
+            <span class="source-date">Last update: 11/08/2023</span>
+            <div class="source-actions">
+              <button class="icon-btn" title="Refresh" onclick="event.stopPropagation()">
+                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 7A5.5 5.5 0 0 1 12 4M12 4V1.5M12 4H9.5"/><path d="M12.5 7A5.5 5.5 0 0 1 2 10M2 10v2.5M2 10h2.5"/></svg>
+              </button>
+              <button class="icon-btn" title="Download" onclick="event.stopPropagation()">
+                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 1v8M4 6l3 3 3-3M2 12h10"/></svg>
+              </button>
+              <button class="icon-btn" title="Edit" onclick="event.stopPropagation()">
+                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2.5l2 2L4 12H2v-2L9.5 2.5z"/></svg>
+              </button>
+              <button class="icon-btn" title="Delete" style="color:var(--color-danger-text)" onclick="event.stopPropagation()">
+                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h10M5 4V2.5h4V4M5.5 7v4M8.5 7v4M3 4l.8 8h6.4L11 4"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -205,6 +248,19 @@
 
   <script src="../js/interactions.js"></script>
   <script>
+    /* Source row navigation — stop propagation on icon buttons */
+    document.querySelectorAll('.source-actions button').forEach(function(btn) {
+      btn.addEventListener('click', function(e) { e.stopPropagation(); });
+    });
+    document.querySelectorAll('.toggle').forEach(function(t) {
+      t.addEventListener('click', function(e) { e.stopPropagation(); });
+    });
+    document.querySelectorAll('.source-row[data-href]').forEach(function(row) {
+      row.addEventListener('click', function() {
+        window.location.href = this.dataset.href;
+      });
+    });
+
     /* Toggle expand/collapse */
     document.querySelectorAll('.ks-expand-btn').forEach(function(btn) {
       btn.addEventListener('click', function() {

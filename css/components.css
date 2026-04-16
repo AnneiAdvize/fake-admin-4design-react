@@ -2,44 +2,93 @@
    BUTTONS
    ============================================================ */
 
+/* Base — M size (32px) */
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: var(--sp-2);
+  justify-content: center;
+  gap: 4px;
   height: 32px;
-  padding: 0 var(--sp-3);
-  border-radius: var(--r-md);
+  padding: 0 var(--sp-4);
+  border-radius: var(--r-full);
+  font-family: var(--font-btn);
   font-size: var(--text-sm);
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-semibold);
+  line-height: 1.4;
   cursor: pointer;
   border: none;
-  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast), filter var(--t-fast);
   white-space: nowrap;
-  line-height: 1;
 }
 .btn svg { flex-shrink: 0; }
 
+/* Disabled */
+.btn:disabled, .btn[disabled] {
+  background: var(--hover) !important;
+  color: var(--btn-disabled-text) !important;
+  border-color: transparent !important;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Sizes */
+.btn-sm { height: 24px; padding: 0 var(--sp-3); font-size: var(--text-xs); }
+.btn-lg { height: 40px; padding: 0 var(--sp-4); font-size: var(--text-md); }
+
+/* Primary — filled green */
 .btn-primary {
   background: var(--brand-green);
   color: var(--brand-green-dark);
 }
-.btn-primary:hover { background: #2fcf96; }
+.btn-primary:hover:not(:disabled) {
+  background: var(--brand-green-hover);
+  color: #fff;
+}
 
+/* Secondary — neutral outlined (grey border, for generic actions) */
 .btn-secondary {
-  background: var(--surface);
+  background: transparent;
   color: var(--text-primary);
   border: 1px solid var(--border);
 }
-.btn-secondary:hover { background: var(--hover); }
+.btn-secondary:hover:not(:disabled) { background: var(--hover); }
 
-.btn-ghost {
+/* Outlined — brand outlined (dark-green border, Figma Secondary/Primary) */
+.btn-outlined {
   background: transparent;
-  color: var(--text-secondary);
+  color: var(--brand-green-dark);
+  border: 1px solid var(--brand-green-dark);
 }
-.btn-ghost:hover { background: var(--hover); color: var(--text-primary); }
+.btn-outlined:hover:not(:disabled) { background: var(--hover); }
 
-.btn-sm { height: 28px; padding: 0 var(--sp-2); font-size: var(--text-xs); }
-.btn-lg { height: 36px; padding: 0 var(--sp-5); font-size: var(--text-md); }
+/* Ghost / Tertiary — text only */
+.btn-ghost, .btn-tertiary {
+  background: transparent;
+  color: var(--brand-green-dark);
+}
+.btn-ghost:hover:not(:disabled),
+.btn-tertiary:hover:not(:disabled) { background: var(--hover); }
+
+/* Information */
+.btn-info {
+  background: var(--btn-info);
+  color: #fff;
+}
+.btn-info:hover:not(:disabled) { background: var(--btn-info-hover); }
+
+/* Error */
+.btn-error {
+  background: var(--btn-error);
+  color: #fff;
+}
+.btn-error:hover:not(:disabled) { filter: brightness(0.88); }
+
+/* Neutral / Dark */
+.btn-dark {
+  background: var(--selected);
+  color: #fff;
+}
+.btn-dark:hover:not(:disabled) { filter: brightness(0.85); }
 
 
 /* ============================================================

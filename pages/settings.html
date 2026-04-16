@@ -881,8 +881,13 @@
       });
     });
 
-    /* Default: show users */
-    switchSection('settings-users');
+    /* Default: show users — must run AFTER interactions.js initNavActiveStates */
+    function initDefaultSection() { switchSection('settings-users'); }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initDefaultSection);
+    } else {
+      initDefaultSection();
+    }
 
 
     /* ── Modal helpers ── */

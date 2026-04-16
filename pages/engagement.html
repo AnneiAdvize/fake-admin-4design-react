@@ -35,7 +35,7 @@
     .eng-table thead th.sortable{cursor:pointer;user-select:none}
     .eng-table thead th.sortable:hover{color:var(--text-primary)}
     .sort-arrow{opacity:.45;margin-left:3px;font-size:10px}
-    .eng-table tbody tr{border-bottom:1px solid var(--border);transition:background var(--t-fast)}
+    .eng-table tbody tr{border-bottom:1px solid var(--border);transition:background var(--t-fast);cursor:pointer}
     .eng-table tbody tr:last-child{border-bottom:none}
     .eng-table tbody tr:hover{background:var(--hover)}
     .eng-table tbody td{padding:var(--sp-3) var(--sp-4);font-size:var(--text-sm);color:var(--text-primary);vertical-align:middle}
@@ -236,6 +236,16 @@
     </div>
   </main>
 
+  <script>
+    /* Row click → strategy builder */
+    document.querySelectorAll('.eng-table tbody tr').forEach(function (row) {
+      row.addEventListener('click', function (e) {
+        /* Don't navigate when clicking the kebab menu button */
+        if (e.target.closest('.kebab-btn')) return;
+        window.location.href = './engagement-strategy-builder.html';
+      });
+    });
+  </script>
   <script src="../js/interactions.js"></script>
 </body>
 </html>
