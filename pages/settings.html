@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Settings — Back-office</title>
+  <link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
   <link rel="stylesheet" href="../css/tokens.css">
   <link rel="stylesheet" href="../css/layout.css">
   <link rel="stylesheet" href="../css/components.css">
@@ -14,7 +17,7 @@
 
     /* ── Page header ── */
     .rpt-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:var(--sp-5);gap:var(--sp-4);flex-wrap:wrap}
-    .rpt-title{font-size:var(--text-3xl);font-weight:var(--weight-semibold);color:var(--text-primary);letter-spacing:-.015em;margin-bottom:3px}
+    .rpt-title{font-size:var(--text-title-xxl);font-weight:var(--weight-semibold);color:var(--text-primary);line-height:1.4;margin-bottom:3px}
     .rpt-subtitle{font-size:var(--text-sm);color:var(--text-secondary);max-width:560px}
     .rpt-header-right{display:flex;align-items:center;gap:var(--sp-2);flex-shrink:0;flex-wrap:wrap}
 
@@ -147,7 +150,7 @@
     .btn-modal-save:hover{background:#2fcf96}
 
     /* ── Centered single-column layout (Integration / Consent) ── */
-    .settings-col{max-width:680px;margin:0 auto}
+    .settings-col{}
 
     /* ── Integration cards ── */
     .int-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:var(--sp-6);margin-bottom:var(--sp-4)}
@@ -178,8 +181,8 @@
     .icon-btn-sm.danger:hover{background:var(--color-danger-bg);color:var(--color-danger-text)}
 
     /* ── Consent ── */
-    .cmp-list{display:flex;flex-direction:column;gap:var(--sp-3);margin-bottom:var(--sp-5)}
-    .cmp-option{display:flex;align-items:center;gap:var(--sp-4);padding:var(--sp-4) var(--sp-5);background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r-xl);cursor:pointer;transition:border-color var(--t-fast),background var(--t-fast)}
+    .cmp-list{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-3);margin-bottom:var(--sp-5)}
+    .cmp-option{display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-2);padding:var(--sp-4) var(--sp-4);background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r-xl);cursor:pointer;transition:border-color var(--t-fast),background var(--t-fast)}
     .cmp-option:hover{border-color:var(--text-secondary)}
     .cmp-option.selected{border-color:var(--brand-green-dark);background:#F0FDF7}
     .cmp-radio{appearance:none;-webkit-appearance:none;width:16px;height:16px;border-radius:var(--r-full);border:2px solid var(--border);background:var(--surface);flex-shrink:0;cursor:pointer;transition:border-color var(--t-fast),box-shadow var(--t-fast)}
@@ -498,6 +501,7 @@
       ============================================================ -->
       <div id="sec-settings-users" class="settings-section">
         <div class="page-content" style="padding-top:var(--sp-6)">
+          <h1 class="rpt-title" style="margin-bottom:var(--sp-5)">Users</h1>
           <div class="settings-col">
             <div class="int-card" style="padding:0;overflow:hidden">
               <table class="data-table" style="width:100%">
@@ -643,10 +647,11 @@
       ============================================================ -->
       <div id="sec-settings-integration" class="settings-section">
         <div class="page-content" style="padding-top:var(--sp-6)">
-          <div class="settings-col">
+          <h1 class="rpt-title" style="margin-bottom:var(--sp-5)">Integration</h1>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-5);align-items:start">
 
             <!-- Card 1: Install your tags -->
-            <div class="int-card">
+            <div class="int-card" style="margin-bottom:0">
               <div class="int-card-header">
                 <div class="int-card-title">Install your tags</div>
               </div>
@@ -657,7 +662,7 @@
             </div>
 
             <!-- Card 2: Test the main tag -->
-            <div class="int-card">
+            <div class="int-card" style="margin-bottom:0">
               <div class="int-card-header">
                 <div class="int-card-title">Test the main tag</div>
               </div>
@@ -680,6 +685,7 @@
       ============================================================ -->
       <div id="sec-settings-consent" class="settings-section">
         <div class="page-content" style="padding-top:var(--sp-6)">
+          <h1 class="rpt-title" style="margin-bottom:var(--sp-5)">Consent</h1>
           <div class="settings-col">
 
             <!-- CMP selection -->
@@ -720,27 +726,29 @@
 
             <!-- CMP configuration form -->
             <div class="int-card" id="consent-config-card">
-              <div class="int-card-title" style="margin-bottom:var(--sp-4)">Didomi configuration</div>
+              <div class="int-card-title" style="margin-bottom:var(--sp-5)">Didomi configuration</div>
 
-              <div class="cmp-form-row">
-                <label class="cmp-form-label">Vendor ID</label>
-                <input type="text" class="cmp-form-input" value="iadvize" placeholder="e.g. iadvize">
-              </div>
-              <div class="cmp-form-row">
-                <label class="cmp-form-label">Device Vendor ID</label>
-                <input type="text" class="cmp-form-input" value="c:iadvize" placeholder="e.g. c:iadvize">
-              </div>
-              <div class="cmp-form-row">
-                <label class="cmp-form-label">Consent message</label>
-                <textarea class="cmp-form-textarea" rows="3" placeholder="Message shown to visitors before consent is collected…">By continuing, you agree to the use of cookies to power the live chat assistant and improve your experience.</textarea>
-              </div>
-              <div class="cmp-form-row">
-                <label class="cmp-form-label">Privacy policy URL</label>
-                <input type="text" class="cmp-form-input" value="https://www.nespresso.com/fr/fr/legal/privacy-policy" placeholder="https://…">
-              </div>
-              <div class="cmp-form-row" style="margin-bottom:0">
-                <label class="cmp-form-label">Legal notice</label>
-                <input type="text" class="cmp-form-input" value="iAdvize SAS — 2 rue de la Loire, 44000 Nantes" placeholder="Legal entity name and address">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4) var(--sp-6)">
+                <div class="cmp-form-row" style="margin-bottom:0">
+                  <label class="cmp-form-label">Vendor ID</label>
+                  <input type="text" class="cmp-form-input" value="iadvize" placeholder="e.g. iadvize">
+                </div>
+                <div class="cmp-form-row" style="margin-bottom:0">
+                  <label class="cmp-form-label">Device Vendor ID</label>
+                  <input type="text" class="cmp-form-input" value="c:iadvize" placeholder="e.g. c:iadvize">
+                </div>
+                <div class="cmp-form-row" style="margin-bottom:0;grid-column:1/-1">
+                  <label class="cmp-form-label">Consent message</label>
+                  <textarea class="cmp-form-textarea" rows="3" placeholder="Message shown to visitors before consent is collected…">By continuing, you agree to the use of cookies to power the live chat assistant and improve your experience.</textarea>
+                </div>
+                <div class="cmp-form-row" style="margin-bottom:0">
+                  <label class="cmp-form-label">Privacy policy URL</label>
+                  <input type="text" class="cmp-form-input" value="https://www.nespresso.com/fr/fr/legal/privacy-policy" placeholder="https://…">
+                </div>
+                <div class="cmp-form-row" style="margin-bottom:0">
+                  <label class="cmp-form-label">Legal notice</label>
+                  <input type="text" class="cmp-form-input" value="iAdvize SAS — 2 rue de la Loire, 44000 Nantes" placeholder="Legal entity name and address">
+                </div>
               </div>
             </div>
 

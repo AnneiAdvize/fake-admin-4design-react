@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
 
 :root {
   /* ── Brand Colors ── */
@@ -42,7 +42,7 @@
   --btn-disabled-text: #9B9B97;
 
   /* ── Typography ── */
-  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
   --font-btn: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
 
@@ -56,6 +56,11 @@
   --text-3xl:  20px;
   --text-4xl:  24px;
   --text-5xl:  32px;
+
+  /* ── Figma Title Scale (Open Sans) ── */
+  --text-title-xxl:   25px;   /* Title/XXL */
+  --text-title-xxxl:  30px;   /* Title/XXXL */
+  --text-title-xxxxl: 36px;   /* Title/XXXXL */
 
   --weight-normal:   400;
   --weight-medium:   500;
@@ -97,3 +102,41 @@
   --t-base:   150ms ease;
   --t-slow:   220ms ease;
 }
+
+/* ============================================================
+   TYPOGRAPHY TOKEN CLASSES
+   Open Sans design system — 18 styles from Figma
+   ============================================================ */
+
+/* Copy / XS — 10px */
+.type-copy-xs          { font-size: 10px; font-weight: var(--weight-normal);   line-height: 1.4; }
+.type-copy-xs-semibold { font-size: 10px; font-weight: var(--weight-semibold); line-height: 1.4; }
+
+/* Copy / S — 12px */
+.type-copy-s                 { font-size: var(--text-sm); font-weight: var(--weight-normal);   line-height: 1.4; }
+.type-copy-s-italic          { font-size: var(--text-sm); font-weight: var(--weight-normal);   line-height: 1.4; font-style: italic; }
+.type-copy-s-upcase          { font-size: var(--text-sm); font-weight: var(--weight-normal);   line-height: 1.4; text-transform: uppercase; }
+.type-copy-s-semibold        { font-size: var(--text-sm); font-weight: var(--weight-semibold); line-height: 1.4; }
+.type-copy-s-semibold-upcase { font-size: var(--text-sm); font-weight: var(--weight-semibold); line-height: 1.4; text-transform: uppercase; }
+
+/* Copy / M — 14px */
+.type-copy-m        { font-size: var(--text-md); font-weight: var(--weight-normal); line-height: 1.5; }
+.type-copy-m-italic { font-size: var(--text-md); font-weight: var(--weight-normal); line-height: 1.4; font-style: italic; }
+
+/* Title / L — 16px */
+.type-title-l          { font-size: var(--text-xl); font-weight: var(--weight-normal);   line-height: 1.4; }
+.type-title-l-semibold { font-size: var(--text-xl); font-weight: var(--weight-semibold); line-height: 1.4; }
+
+/* Title / XL — 18px */
+.type-title-xl-semibold { font-size: var(--text-2xl); font-weight: var(--weight-semibold); line-height: 1.4; }
+
+/* Title / XXL — 25px */
+.type-title-xxl-semibold { font-size: var(--text-title-xxl); font-weight: var(--weight-semibold); line-height: 1.4; }
+
+/* Title / XXXL — 30px */
+.type-title-xxxl          { font-size: var(--text-title-xxxl); font-weight: var(--weight-normal);   line-height: normal; }
+.type-title-xxxl-semibold { font-size: var(--text-title-xxxl); font-weight: var(--weight-semibold); line-height: normal; }
+
+/* Title / XXXXL — 36px */
+.type-title-xxxxl          { font-size: var(--text-title-xxxxl); font-weight: var(--weight-normal);   line-height: normal; }
+.type-title-xxxxl-semibold { font-size: var(--text-title-xxxxl); font-weight: var(--weight-semibold); line-height: normal; }
