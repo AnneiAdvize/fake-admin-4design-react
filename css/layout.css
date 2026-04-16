@@ -118,6 +118,21 @@ input, select { font-family: var(--font); }
 }
 .btn-help:hover { background: var(--hover); }
 
+/* Notification button */
+.btn-notification {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 113px;
+  background: var(--hover);
+  border: none;
+  cursor: pointer;
+  transition: background var(--t-fast);
+}
+.btn-notification:hover { background: var(--Neutral-300); }
+
 /* Client selector */
 .client-selector { position: relative; }
 
