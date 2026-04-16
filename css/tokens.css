@@ -88,8 +88,8 @@
   --shadow-dropdown: 0 8px 24px rgba(10,10,9,.10), 0 2px 8px rgba(10,10,9,.06);
 
   /* ── Nav Dimensions ── */
-  --nav-h:     52px;
-  --subnav-h:  44px;
+  --nav-h:     64px;
+  --subnav-h:  52px;
 
   /* ── Transitions ── */
   --t-fast:   100ms ease;

@@ -202,6 +202,89 @@
   }
 
   /* ----------------------------------------------------------
+     COLLAPSE / ACCORDION
+     Clicking a .collapse-header toggles .is-open on its parent
+     .collapse-item.
+  ---------------------------------------------------------- */
+  function initCollapse() {
+    document.querySelectorAll('.collapse-header').forEach(function (header) {
+      header.addEventListener('click', function () {
+        var item = this.closest('.collapse-item');
+        if (!item) return;
+        item.classList.toggle('is-open');
+      });
+    });
+  }
+
+  /* ----------------------------------------------------------
+     TOGGLE — native checkbox powers the toggle; this just adds
+     an accessible keyboard handler.
+  ---------------------------------------------------------- */
+  function initToggles() {
+    document.querySelectorAll('.toggle-wrap').forEach(function (wrap) {
+      var input = wrap.querySelector('input[type="checkbox"]');
+      if (!input) return;
+      /* Clicking the whole wrap toggles the hidden checkbox */
+      wrap.addEventListener('click', function (e) {
+        if (e.target !== input && !wrap.classList.contains('is-disabled')) {
+          input.checked = !input.checked;
+          input.dispatchEvent(new Event('change'));
+        }
+      });
+    });
+  }
+
+  /* ----------------------------------------------------------
+     CHECKBOX — clicking wrap toggles the hidden checkbox
+  ---------------------------------------------------------- */
+  function initCheckboxes() {
+    document.querySelectorAll('.checkbox-wrap').forEach(function (wrap) {
+      var input = wrap.querySelector('input[type="checkbox"]');
+      if (!input) return;
+      wrap.addEventListener('click', function (e) {
+        if (e.target !== input && !wrap.classList.contains('is-disabled')) {
+          input.checked = !input.checked;
+          input.dispatchEvent(new Event('change'));
+        }
+      });
+    });
+  }
+
+  /* ----------------------------------------------------------
+     TABS — clicking a .tab-item activates it within its bar
+  ---------------------------------------------------------- */
+  function initTabs() {
+    document.querySelectorAll('.tabs-bar').forEach(function (bar) {
+      bar.querySelectorAll('.tab-item').forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          if (tab.classList.contains('is-disabled')) return;
+          bar.querySelectorAll('.tab-item').forEach(function (t) {
+            t.classList.remove('is-active');
+          });
+          tab.classList.add('is-active');
+        });
+      });
+    });
+  }
+
+  /* ----------------------------------------------------------
+     BIG OPTION — clicking a .big-option selects it within its group
+  ---------------------------------------------------------- */
+  function initBigOptions() {
+    document.querySelectorAll('.big-option-group').forEach(function (group) {
+      group.querySelectorAll('.big-option').forEach(function (opt) {
+        opt.addEventListener('click', function () {
+          if (opt.classList.contains('is-disabled')) return;
+          group.querySelectorAll('.big-option').forEach(function (o) {
+            o.classList.remove('is-selected');
+          });
+          opt.classList.add('is-selected');
+        });
+      });
+    });
+  }
+
+  /* ----------------------------------------------------------
      INIT
   ---------------------------------------------------------- */
   ready(function () {
@@ -212,6 +295,11 @@
     initTableActions();
     initChannelBars();
     initFilters();
+    initCollapse();
+    initToggles();
+    initCheckboxes();
+    initTabs();
+    initBigOptions();
   });
 
 })();
