@@ -105,4 +105,35 @@
   var currentScript = document.currentScript;
   currentScript.insertAdjacentHTML('beforebegin', navPrimary + '\n' + navSecondary);
 
+  /* ── Set active nav item and icon ── */
+  var currentFile = path.split('/').pop() || 'index.html';
+  var activePage = null;
+
+  if (currentFile === 'index.html' || currentFile === '') {
+    activePage = 'home';
+  } else if (currentFile === 'home.html') {
+    activePage = 'home';
+  } else if (currentFile === 'engagement.html') {
+    activePage = 'engagement';
+  } else if (currentFile === 'shopping-assistant.html') {
+    activePage = 'shopping';
+  } else if (currentFile === 'knowledge.html') {
+    activePage = 'knowledge';
+  } else if (isReports) {
+    activePage = 'reports';
+  } else if (currentFile === 'settings.html') {
+    activePage = 'settings';
+  }
+
+  if (activePage) {
+    var activeItem = document.querySelector('[data-page="' + activePage + '"]');
+    if (activeItem) {
+      activeItem.classList.add('active');
+      var icon = activeItem.querySelector('.nav-icon');
+      if (icon && icon.src) {
+        icon.src = icon.src.replace(/\.png$/, '-active.png');
+      }
+    }
+  }
+
 })();
