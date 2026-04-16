@@ -78,7 +78,7 @@ input, select { font-family: var(--font); }
   padding: 0 var(--sp-3);
   border-radius: var(--r-md);
   font-size: 13px;
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-semibold);
   color: var(--text-secondary);
   cursor: pointer;
   transition: background var(--t-fast), color var(--t-fast);
@@ -88,8 +88,9 @@ input, select { font-family: var(--font); }
 .nav-item:hover               { background: var(--hover); color: var(--text-primary); }
 .nav-item.active              { background: transparent; color: var(--brand-green-hover); }
 .nav-item .nav-icon-sparkle   { color: var(--brand-green); font-size: 10px; }
-.nav-item svg                 { flex-shrink: 0; opacity: .7; }
-.nav-item.active svg          { opacity: 1; color: var(--brand-green-hover); }
+.nav-item svg                 { flex-shrink: 0; color: var(--text-secondary); }
+.nav-item:hover svg           { color: var(--text-primary); }
+.nav-item.active svg          { color: var(--brand-green-hover); }
 
 /* Right-side actions */
 .nav-actions {
@@ -117,6 +118,7 @@ input, select { font-family: var(--font); }
   transition: all var(--t-fast);
 }
 .btn-help:hover { background: var(--hover); }
+.btn-help svg { color: currentColor; }
 
 /* Notification button */
 .btn-notification {
@@ -132,6 +134,7 @@ input, select { font-family: var(--font); }
   transition: background var(--t-fast);
 }
 .btn-notification:hover { background: var(--Neutral-300); }
+.btn-notification svg { color: #3D3D38; }
 
 /* Client selector */
 .client-selector { position: relative; }
@@ -325,9 +328,18 @@ input, select { font-family: var(--font); }
 }
 
 .page-content {
-  padding: var(--sp-6) var(--sp-8);
+  padding: var(--sp-6) var(--sp-10);
   max-width: 1600px;
   margin: 0 auto;
+}
+
+/* Shared page title — Title/XXL/Semibold from design system */
+.page-title {
+  font-size: var(--text-title-xxl);
+  font-weight: var(--weight-semibold);
+  line-height: 1.4;
+  color: var(--text-primary);
+  letter-spacing: 0;
 }
 
 
