@@ -26,7 +26,7 @@ export default function NavSecondary() {
           <NavLink
             key={link.to}
             to={link.to}
-            className={({ isActive }) => `${styles.item} ${isActive ? styles.active : ''}`}
+            className={styles.item}
           >
             {link.label}
           </NavLink>

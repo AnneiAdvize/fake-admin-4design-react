@@ -25,20 +25,35 @@
   --color-nav-bg: #FFFFFF;
   --color-subnav-bg: #0B3B37;
 
-  /* ── Semantic Colors ── */
-  --color-success: #16a34a;
-  --color-success-bg: #dcfce7;
-  --color-success-text: #15803d;
-  --color-warning: #d97706;
-  --color-warning-bg: #fef3c7;
-  --color-warning-text: #b45309;
-  --color-danger: #dc2626;
-  --color-danger-bg: #fee2e2;
-  --color-danger-text: #b91c1c;
+  /* ── Content ── */
+  --color-content-icon: #3D3D38;
+
+  /* ── Action ── */
+  --color-action-secondary-active: #93F0CD;
+
+  /* ── Status — Info ── */
+  --color-info-bg: #E6F7FF;
+  --color-info-icon: #2A7A8A;
+  --color-info-text: #1C4D73;
+
+  /* ── Status — Warning ── */
+  --color-warning-bg: #FFF2E6;
+  --color-warning-icon: #AC5A21;
+  --color-warning-text: #6F3A15;
+
+  /* ── Status — Error ── */
+  --color-danger-bg: #FEE6E6;
+  --color-danger-icon: #E03D3D;
+  --color-danger-text: #AE2E2E;
+
+  /* ── Status — Success ── */
+  --color-success-bg: #E5F6EA;
+  --color-success-icon: #1BC74E;
+  --color-success-text: #21880F;
+
+  /* ── Neutral (non-semantic) ── */
   --color-neutral-bg: #f1f5f9;
   --color-neutral-text: #475569;
-  --color-info-bg: #dbeafe;
-  --color-info-text: #1d4ed8;
 
   /* ── Channel Colors ── */
   --channel-chat: #3BE1A4;

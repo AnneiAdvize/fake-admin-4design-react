@@ -1,0 +1,114 @@
+.toast {
+  position: relative;
+  background: var(--color-bg-selected); /* #3D3D38 — dark background */
+  color: var(--color-content-inverse);
+  border-radius: var(--r-sm);
+  width: 500px;
+  max-width: 100%;
+  box-shadow: 0 9px 30px rgba(5,20,97,0.23);
+  overflow: hidden;
+  font-family: var(--font);
+}
+
+/* Progress bar */
+.progressBar {
+  height: 4px;
+  background: rgba(255,255,255,0.2);
+  border-radius: var(--r-sm) var(--r-sm) 0 0;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--color-brand);
+  border-radius: var(--r-sm);
+  transition: width 0.1s linear;
+}
+
+/* Body */
+.body {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-4);
+}
+
+/* Icon */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
+/* Spinner animation */
+.icon :global(.spinner) {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Message */
+.message {
+  flex: 1 0 0;
+  min-width: 0;
+  font-size: var(--text-md);
+  font-weight: var(--weight-normal);
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-shrink: 0;
+}
+
+/* Action button (text) */
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  padding: 0 var(--sp-3);
+  border-radius: var(--r-full);
+  font-family: var(--font);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-content-inverse);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background var(--t-base);
+}
+
+.actionBtn:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+/* Close button */
+.closeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-full);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--color-content-inverse);
+  opacity: 0.8;
+  transition: opacity var(--t-base), background var(--t-base);
+}
+
+.closeBtn:hover {
+  opacity: 1;
+  background: rgba(255,255,255,0.12);
+}

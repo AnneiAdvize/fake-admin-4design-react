@@ -12,7 +12,7 @@
   align-items: center;
   height: 100%;
   padding: 0 var(--sp-10);
-  gap: var(--sp-6);
+  gap: var(--sp-8); /* 32px — Figma spec */
   max-width: 1600px;
   margin: 0 auto;
 }
@@ -21,15 +21,15 @@
   display: inline-flex;
   align-items: center;
   height: 100%;
-  font-size: 13px;
+  font-size: var(--text-md); /* 14px */
   font-weight: var(--weight-semibold);
-  color: #D1D1CB;
-  transition: color var(--t-fast);
+  color: var(--color-border-default); /* #D1D1CB — dark/unselected */
+  transition: color var(--t-base);
   white-space: nowrap;
   position: relative;
 }
-.item:hover { color: #F8F8F6; }
-.item.active { color: #F8F8F6; }
+.item:hover { color: var(--color-bg-default); }
+.item[aria-current="page"] { color: var(--color-bg-default); }
 .item::after {
   content: '';
   position: absolute;
@@ -37,6 +37,6 @@
   height: 2px;
   background: transparent;
   border-radius: 2px 2px 0 0;
-  transition: background var(--t-fast);
+  transition: background var(--t-base);
 }
-.item.active::after { background: var(--color-brand); }
+.item[aria-current="page"]::after { background: var(--color-brand); /* Primary/600 #3BE1A4 */ }

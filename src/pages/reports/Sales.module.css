@@ -264,7 +264,7 @@
   transition: color var(--t-fast), border-color var(--t-fast);
 }
 .tabItem:hover { color: var(--color-content-primary); }
-.tabActive { color: var(--color-content-primary); border-bottom-color: var(--color-content-primary); }
+.tabActive { color: var(--color-content-primary); border-bottom-color: var(--color-brand); }
 
 .tabControls {
   display: flex;

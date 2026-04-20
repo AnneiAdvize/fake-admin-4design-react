@@ -61,7 +61,7 @@
   font-family: var(--font);
 }
 .tabItem:hover { color: var(--color-content-primary); }
-.tabItemActive { color: var(--color-content-primary); border-bottom-color: var(--color-content-primary); }
+.tabItemActive { color: var(--color-content-primary); border-bottom-color: var(--color-brand); }
 
 .formBody {
   padding: var(--sp-5);
@@ -101,12 +101,12 @@
   font-family: var(--font);
   font-size: var(--text-sm);
   color: var(--color-content-primary);
-  background: var(--color-bg-surface);
+  background: var(--color-bg-default);
   outline: none;
   box-sizing: border-box;
-  transition: border-color var(--t-fast);
+  transition: border-color var(--t-base), box-shadow var(--t-base);
 }
-.formInput:focus { border-color: var(--color-content-secondary); }
+.formInput:focus { border-color: var(--color-content-primary); box-shadow: 0 0 0 2px rgba(10,10,9,.12); }
 
 .formSelect {
   height: 36px;

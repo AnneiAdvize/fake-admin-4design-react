@@ -1,0 +1,122 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  width: 100%;
+}
+
+/* Label */
+.label {
+  font-family: var(--font);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-normal);
+  color: var(--color-content-secondary);
+  line-height: 1.4;
+}
+
+.required {
+  color: var(--color-danger-icon);
+}
+
+/* Input wrapper */
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--r-sm);
+  height: 40px;
+  overflow: hidden;
+  transition: border-color var(--t-base), box-shadow var(--t-base);
+}
+
+.inputWrapper:focus-within {
+  border-color: var(--color-content-primary);
+  box-shadow: 0 0 0 2px rgba(10,10,9,0.12);
+}
+
+/* Error state */
+.field[data-error] .inputWrapper {
+  border-color: var(--color-danger-icon);
+  background: var(--color-danger-bg);
+}
+
+.field[data-error] .inputWrapper:focus-within {
+  border-color: var(--color-danger-icon);
+  box-shadow: 0 0 0 2px rgba(224,61,61,0.15);
+}
+
+/* Disabled state */
+.field[data-disabled] .inputWrapper {
+  background: var(--color-action-primary-disabled);
+  border-color: var(--color-border-disabled);
+  cursor: not-allowed;
+}
+
+/* Readonly state */
+.field[data-readonly] .inputWrapper {
+  background: var(--color-bg-hover);
+  border-color: var(--color-border-default);
+}
+
+/* Input element */
+.input {
+  flex: 1 0 0;
+  min-width: 0;
+  height: 100%;
+  padding: 0 var(--sp-2);
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font);
+  font-size: var(--text-md);
+  font-weight: var(--weight-normal);
+  color: var(--color-content-primary);
+  line-height: 1.4;
+}
+
+.input::placeholder {
+  color: var(--color-content-secondary);
+}
+
+.input:disabled {
+  color: var(--color-content-disabled);
+  cursor: not-allowed;
+}
+
+.input:read-only {
+  color: var(--color-content-secondary);
+}
+
+/* Prefix / Suffix */
+.prefix,
+.suffix {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--sp-2);
+  color: var(--color-content-secondary);
+  font-size: var(--text-md);
+  flex-shrink: 0;
+  height: 100%;
+}
+
+/* Helper / Error text */
+.helperText {
+  font-family: var(--font);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-normal);
+  color: var(--color-content-secondary);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.errorText {
+  font-family: var(--font);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-normal);
+  color: var(--color-danger-text);
+  line-height: 1.4;
+  margin: 0;
+}

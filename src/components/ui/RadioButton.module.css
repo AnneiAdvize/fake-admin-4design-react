@@ -1,0 +1,136 @@
+.wrapper {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+
+.wrapper[data-disabled] {
+  cursor: not-allowed;
+}
+
+/* Hide native radio */
+.nativeInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Outer ring */
+.control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 1px; /* align with first line of text */
+}
+
+/* Radio dot + ring */
+.dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--r-full);
+  border: 1.5px solid var(--color-border-default);
+  background: var(--color-bg-surface);
+  transition: border-color var(--t-base), background var(--t-base);
+  flex-shrink: 0;
+}
+
+.dot::after {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--r-full);
+  background: transparent;
+  transition: background var(--t-base);
+}
+
+/* Checked */
+.wrapper[data-checked] .dot {
+  border-color: var(--color-brand-selected);
+  background: var(--color-bg-surface);
+}
+
+.wrapper[data-checked] .dot::after {
+  background: var(--color-brand-selected);
+}
+
+/* Hover */
+.wrapper:hover:not([data-disabled]) .dot {
+  border-color: var(--color-content-icon);
+}
+
+/* Focused */
+.wrapper[data-state="Focused"] .dot,
+.nativeInput:focus-visible + .dot {
+  outline: 2px solid var(--color-content-primary);
+  outline-offset: 2px;
+}
+
+/* Error */
+.wrapper[data-error] .dot {
+  border-color: var(--color-danger-icon);
+  background: var(--color-danger-bg);
+}
+
+.wrapper[data-error][data-checked] .dot::after {
+  background: var(--color-danger-icon);
+}
+
+/* Validation (success) */
+.wrapper[data-validation] .dot {
+  border-color: var(--color-brand-selected);
+  background: var(--color-success-bg);
+}
+
+.wrapper[data-validation][data-checked] .dot::after {
+  background: var(--color-brand-selected);
+}
+
+/* Disabled */
+.wrapper[data-disabled] .dot {
+  border-color: var(--color-content-disabled);
+  background: var(--color-action-primary-disabled);
+}
+
+.wrapper[data-disabled][data-checked] .dot::after {
+  background: var(--color-content-disabled);
+}
+
+/* Label group */
+.labelGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.label {
+  font-family: var(--font);
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  color: var(--color-content-primary);
+  line-height: 1.4;
+}
+
+.wrapper[data-disabled] .label {
+  color: var(--color-content-disabled);
+}
+
+.description {
+  font-family: var(--font);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-normal);
+  color: var(--color-content-secondary);
+  line-height: 1.4;
+}
