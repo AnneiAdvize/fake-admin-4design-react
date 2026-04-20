@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import styles from './Settings.module.css'
+import TextArea from '../components/ui/TextArea'
 
 const INITIAL_PAGE_TYPES = [
   { id: 'product',  label: 'Product',   detection: 'auto',   pages: '1,240', rules: [], expanded: false },
@@ -471,8 +472,7 @@ function Consent() {
               <input className={styles.cmpFormInput} defaultValue="c:iadvize" placeholder="e.g. c:iadvize" />
             </div>
             <div className={`${styles.cmpFormRow} ${styles.cmpFormFull}`}>
-              <label className={styles.cmpFormLabel}>Consent message</label>
-              <textarea className={styles.cmpFormTextarea} rows={3} defaultValue="By continuing, you agree to the use of cookies to power the live chat assistant and improve your experience." />
+              <TextArea label="Consent message" rows={3} defaultValue="By continuing, you agree to the use of cookies to power the live chat assistant and improve your experience." />
             </div>
             <div className={styles.cmpFormRow}>
               <label className={styles.cmpFormLabel}>Privacy policy URL</label>

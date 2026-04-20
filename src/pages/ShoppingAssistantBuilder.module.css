@@ -117,8 +117,8 @@
 }
 
 .formInput {
-  height: 36px;
-  padding: 0 var(--sp-3);
+  height: 40px;
+  padding: 0 var(--sp-2);
   border: 1px solid var(--color-border-default);
   border-radius: var(--r-md);
   font-family: var(--font);
@@ -127,8 +127,24 @@
   background: var(--color-bg-default);
   outline: none;
   transition: border-color var(--t-base), box-shadow var(--t-base);
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
 }
-.formInput:focus { border-color: var(--color-content-primary); box-shadow: 0 0 0 2px rgba(10,10,9,.12); }
+.formInput:focus {
+  border-color: var(--color-content-primary);
+  box-shadow: 0 0 0 2px rgba(10,10,9,.12);
+}
+
+/* Select specific styles */
+select.formInput {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%236C6C68' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 28px;
+  cursor: pointer;
+}
 
 .formCaption {
   font-size: var(--text-xs);
@@ -275,15 +291,40 @@
 }
 
 .fieldStatic {
-  height: 36px;
-  padding: 0 var(--sp-3);
+  height: 40px;
+  padding: 0 var(--sp-2);
   border: 1px solid var(--color-border-default);
   border-radius: var(--r-md);
   font-size: var(--text-sm);
   color: var(--color-content-primary);
-  background: var(--color-bg-surface);
+  background: var(--color-bg-default);
   display: flex;
   align-items: center;
+  box-sizing: border-box;
+}
+
+.formSelect {
+  height: 40px;
+  width: 100%;
+  padding: 0 28px 0 var(--sp-2);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--r-md);
+  font-family: var(--font);
+  font-size: var(--text-sm);
+  color: var(--color-content-primary);
+  background: var(--color-bg-default);
+  outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%236C6C68' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  cursor: pointer;
+  transition: border-color var(--t-base);
+}
+
+.formSelect:focus {
+  border-color: var(--color-content-primary);
+  box-shadow: 0 0 0 2px rgba(10,10,9,.12);
 }
 
 .panelInfoNote {

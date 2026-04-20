@@ -1,4 +1,5 @@
 import styles from './Home.module.css'
+import TextArea from '../components/ui/TextArea'
 
 export default function Home() {
   return (
@@ -40,7 +41,7 @@ export default function Home() {
                   <a className={styles.tipSeeAll}>See all related questions (132)</a>
                 </div>
                 <div className={styles.tipKnowledgeLabel}>Knowledge</div>
-                <textarea className={styles.tipTextarea} placeholder="Type your text" />
+                <TextArea placeholder="Type your text" rows={3} />
                 <div className={styles.tipActions}>
                   <button className={styles.tipBtnIgnore}>Ignore</button>
                   <button className={styles.tipBtnAdd}>Add knowledge</button>

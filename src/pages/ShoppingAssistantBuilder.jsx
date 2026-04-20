@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './ShoppingAssistantBuilder.module.css'
+import TextArea from '../components/ui/TextArea'
 
 const INITIAL_SKILLS = [
   { id: 1, name: 'WISMO', trigger: 'When the shopper asks where is their order', actionType: 'action-api', actionLabel: 'API: Shipup' },
@@ -157,11 +158,15 @@ function IdentityTab({ brandIdentity, setBrandIdentity, panelPos, setPanelPos, s
         <div className={styles.formRow2col}>
           <div className={styles.formField} style={{ marginBottom: 0 }}>
             <label className={styles.formLabel}>Google font</label>
-            <div className={styles.fieldStatic}>Open Sans</div>
+            <select className={styles.formInput}>
+              <option>Open Sans</option>
+              <option>Inter</option>
+              <option>Roboto</option>
+            </select>
           </div>
           <div className={styles.formField} style={{ marginBottom: 0 }}>
             <label className={styles.formLabel}>Radius</label>
-            <div className={styles.fieldStatic}>4px</div>
+            <input className={styles.formInput} type="text" defaultValue="4px" placeholder="e.g. 4px" />
           </div>
         </div>
       </div>
@@ -226,16 +231,14 @@ function ContentTab({ styles }) {
       <div className={styles.formCard}>
         <p className={styles.formCardTitle}>Conversation messages</p>
         <div className={styles.formField}>
-          <label className={styles.formLabel}>Welcome message*</label>
-          <textarea className={styles.formTextarea} rows={3} defaultValue={"Welcome!\nI'm an AI-powered assistant here to answer your questions about products or post-sales support."} />
+          <TextArea label="Welcome message*" rows={3} defaultValue={"Welcome!\nI'm an AI-powered assistant here to answer your questions about products or post-sales support."} />
         </div>
         <div className={styles.formField}>
           <label className={styles.formLabel}>Follow-up message*</label>
           <input className={styles.formInput} type="text" defaultValue="How can I assist you?" />
         </div>
         <div className={styles.formField}>
-          <label className={styles.formLabel}>Closing message if transfer failure</label>
-          <textarea className={styles.formTextarea} rows={3} defaultValue="Thank you for contacting us. If you need further assistance, feel free to reach out again. In the meantime, have a great day." />
+          <TextArea label="Closing message if transfer failure" rows={3} defaultValue="Thank you for contacting us. If you need further assistance, feel free to reach out again. In the meantime, have a great day." />
         </div>
         <p className={styles.surveyNote}>
           A satisfaction survey will be sent &nbsp;<span className={styles.knowledgeLink}>Edit the survey settings</span>
@@ -398,8 +401,7 @@ function SkillModal({ onClose, styles }) {
                 <input className={styles.formInput} type="text" placeholder="e.g. WISMO" />
               </div>
               <div className={styles.formField}>
-                <label className={styles.formLabel}>Trigger — when should this skill activate?</label>
-                <textarea className={styles.formTextarea} rows={2} placeholder="e.g. When the shopper asks where is their order" />
+                <TextArea label="Trigger — when should this skill activate?" rows={2} placeholder="e.g. When the shopper asks where is their order" />
               </div>
               <div>
                 <div className={styles.toolSectionLabel}>Action type</div>

@@ -196,7 +196,7 @@
   font-size: var(--text-sm);
   color: var(--color-content-secondary);
   resize: vertical;
-  background: var(--color-bg-surface);
+  background: var(--color-bg-default);
   outline: none;
   transition: border-color var(--t-fast);
 }
