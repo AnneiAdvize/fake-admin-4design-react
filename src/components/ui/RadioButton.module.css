@@ -129,7 +129,7 @@
 
 .description {
   font-family: var(--font);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   font-weight: var(--weight-normal);
   color: var(--color-content-secondary);
   line-height: 1.4;

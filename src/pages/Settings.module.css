@@ -445,7 +445,7 @@
 }
 
 .intCardDesc {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--color-content-secondary);
   line-height: 1.65;
   margin-bottom: var(--sp-4);

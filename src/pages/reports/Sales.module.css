@@ -20,7 +20,7 @@
 
 .iconFav { color: var(--color-brand); font-size: var(--text-xl); }
 
-.subtitle { font-size: var(--text-sm); color: var(--color-content-secondary); }
+.subtitle { font-size: var(--text-base); color: var(--color-content-secondary); }
 
 .link { color: var(--color-brand-strong); text-decoration: underline; cursor: pointer; }
 
@@ -288,7 +288,7 @@
   border: none;
   background: transparent;
   outline: none;
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--color-content-primary);
   font-family: var(--font);
   width: 100%;

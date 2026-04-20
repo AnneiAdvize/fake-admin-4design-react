@@ -41,7 +41,7 @@
 }
 
 .cardSubtitle {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--color-content-secondary);
 }
 

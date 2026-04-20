@@ -55,7 +55,7 @@
   border: none;
   background: transparent;
   outline: none;
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--color-content-primary);
   font-family: var(--font);
   width: 100%;

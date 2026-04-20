@@ -284,16 +284,16 @@
   display: block;
 }
 
-.tdNps { font-size: var(--text-sm); font-weight: var(--weight-semibold); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tdNps { font-size: var(--text-base); font-weight: var(--weight-semibold); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .high  { color: var(--color-success-text); }
 .mid   { color: var(--color-warning-text); }
 .low   { color: var(--color-danger-text); }
 .empty { color: var(--color-content-secondary); }
 
-.tdCsat { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-content-secondary); }
+.tdCsat { font-size: var(--text-base); font-weight: var(--weight-semibold); color: var(--color-content-secondary); }
 .csatRated { color: var(--color-content-primary); }
 
-.tdAmount { font-size: var(--text-sm); font-variant-numeric: tabular-nums; font-weight: var(--weight-medium); white-space: nowrap; }
+.tdAmount { font-size: var(--text-base); font-variant-numeric: tabular-nums; font-weight: var(--weight-medium); white-space: nowrap; }
 
 /* Detail row */
 .detailRow {}
