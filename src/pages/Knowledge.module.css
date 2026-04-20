@@ -18,7 +18,7 @@
   gap: 6px;
   height: 34px;
   padding: 0 var(--sp-4);
-  border-radius: var(--r-full);
+  border-radius: 16px;
   background: var(--color-action-primary);
   border: none;
   font-family: var(--font);
@@ -131,7 +131,7 @@
   gap: 5px;
   height: 32px;
   padding: 0 var(--sp-4);
-  border-radius: var(--r-full);
+  border-radius: 16px;
   background: transparent;
   border: 1px solid var(--color-brand-strong);
   font-family: var(--font);

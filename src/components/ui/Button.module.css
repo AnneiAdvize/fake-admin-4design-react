@@ -4,7 +4,7 @@
   justify-content: center;
   gap: var(--sp-1);
   border: none;
-  border-radius: var(--r-full);
+  border-radius: inherit;
   font-family: var(--font);
   font-weight: var(--weight-semibold);
   cursor: pointer;
@@ -23,24 +23,38 @@
 
 /* --- Sizes --- */
 .sm {
-  height: 28px;
+  height: 24px;
   padding: 0 var(--sp-3);
   font-size: var(--text-sm);
+  border-radius: var(--r-sm);
 }
 
 .md {
-  height: 34px;
+  height: 32px;
   padding: 0 var(--sp-4);
-  font-size: var(--text-md);
+  font-size: var(--text-base);
+  border-radius: var(--r-sm);
 }
 
 .lg {
   height: 40px;
   padding: 0 var(--sp-5);
   font-size: var(--text-lg);
+  border-radius: var(--r-sm);
 }
 
-/* --- Primary (brand green) --- */
+/* --- Primary (brand green - CTA button) --- */
+.primary.sm {
+  border-radius: 12px;
+}
+
+.primary.md {
+  border-radius: 16px;
+}
+
+.primary.lg {
+  border-radius: 20px;
+}
 .primary {
   background: var(--color-action-primary);
   color: var(--color-brand-strong);

@@ -44,7 +44,7 @@
   gap: var(--sp-2);
   height: 32px;
   padding: 0 var(--sp-3);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   font-size: 13px;
   font-weight: var(--weight-semibold);
   color: var(--color-content-secondary);
@@ -71,7 +71,7 @@
   gap: var(--sp-1);
   height: 32px;
   padding: 0 var(--sp-4);
-  border-radius: var(--r-full);
+  border-radius: var(--r-sm);
   background: transparent;
   border: 1px solid var(--color-brand-strong);
   font-size: 13px;
@@ -102,7 +102,7 @@
   gap: var(--sp-2);
   height: 30px;
   padding: 0 var(--sp-3);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   background: transparent;
   border: 1px solid var(--color-border-default);
   font-size: var(--text-sm);

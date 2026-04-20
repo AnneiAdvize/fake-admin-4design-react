@@ -42,7 +42,7 @@
   gap: 6px;
   height: 32px;
   padding: 0 var(--sp-3);
-  border-radius: var(--r-md);
+  border-radius: 16px;
   background: var(--color-action-primary);
   border: none;
   font-family: var(--font);
@@ -60,7 +60,7 @@
   gap: 6px;
   height: 32px;
   padding: 0 var(--sp-3);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   background: var(--color-bg-surface);
   border: 1px solid var(--color-border-default);
   font-family: var(--font);
@@ -276,7 +276,7 @@
   height: 32px;
   padding: 0 24px 0 var(--sp-3);
   border: 1px solid var(--color-border-default);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   font-family: var(--font);
   font-size: var(--text-base);
   color: var(--color-content-primary);
@@ -297,7 +297,7 @@
   height: 32px;
   padding: 0 var(--sp-3);
   border: 1px solid var(--color-border-default);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   font-family: var(--font);
   font-size: var(--text-base);
   color: var(--color-content-primary);
@@ -310,7 +310,7 @@
 .condDeleteBtn {
   width: 28px;
   height: 28px;
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   background: transparent;
   border: none;
   cursor: pointer;
@@ -406,7 +406,7 @@
 .iconBtnSm {
   width: 28px;
   height: 28px;
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   background: transparent;
   border: none;
   cursor: pointer;

@@ -97,7 +97,7 @@
   height: 36px;
   padding: 0 var(--sp-3);
   border: 1px solid var(--color-border-default);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   font-family: var(--font);
   font-size: var(--text-base);
   color: var(--color-content-primary);
@@ -113,7 +113,7 @@
   width: 100%;
   padding: 0 28px 0 var(--sp-3);
   border: 1px solid var(--color-border-default);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   font-family: var(--font);
   font-size: var(--text-sm);
   color: var(--color-content-primary);
@@ -136,7 +136,7 @@
   height: 34px;
   padding: 0 var(--sp-3);
   border: 1.5px solid var(--color-border-default);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   background: var(--color-bg-surface);
   font-family: var(--font);
   font-size: var(--text-sm);
@@ -155,7 +155,7 @@
   gap: var(--sp-3);
   padding: var(--sp-3) var(--sp-4);
   border: 1.5px solid var(--color-border-default);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   background: var(--color-bg-surface);
   font-family: var(--font);
   cursor: pointer;
@@ -182,7 +182,7 @@
   height: 32px;
   padding: 0 24px 0 var(--sp-2);
   border: 1px solid var(--color-border-default);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   font-family: var(--font);
   font-size: var(--text-base);
   color: var(--color-content-primary);
@@ -199,7 +199,7 @@
   height: 32px;
   padding: 0 var(--sp-2);
   border: 1px solid var(--color-border-default);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   font-family: var(--font);
   font-size: var(--text-base);
   color: var(--color-content-primary);
@@ -212,7 +212,7 @@
   justify-content: center;
   width: 28px;
   height: 28px;
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   border: 1px solid var(--color-border-default);
   background: none;
   color: var(--color-content-secondary);
@@ -242,7 +242,7 @@
 .styleSectionTitle { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-content-primary); margin-bottom: var(--sp-3); }
 .colorRow { display: flex; gap: var(--sp-4); align-items: center; flex-wrap: wrap; }
 .colorSwatchWrap { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.colorSwatch { width: 32px; height: 32px; border-radius: var(--r-md); border: 1px solid var(--color-border-default); cursor: pointer; }
+.colorSwatch { width: 32px; height: 32px; border-radius: var(--r-sm); border: 1px solid var(--color-border-default); cursor: pointer; }
 .colorSwatchLabel { font-size: var(--text-xs); color: var(--color-content-secondary); }
 .fontOptions { display: flex; gap: var(--sp-4); margin-bottom: var(--sp-3); }
 .radioOption { display: inline-flex; align-items: center; gap: var(--sp-2); cursor: pointer; }
@@ -257,7 +257,7 @@
   width: 34px;
   height: 34px;
   border: 1.5px solid var(--color-border-default);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   font-family: var(--font);
   font-size: var(--text-sm);
   font-weight: var(--weight-medium);
@@ -277,7 +277,7 @@
   height: 32px;
   padding: 0 var(--sp-3);
   border: 1px solid var(--color-border-default);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   background: var(--color-bg-surface);
   font-family: var(--font);
   font-size: var(--text-xs);
@@ -294,7 +294,7 @@
   height: 32px;
   padding: 0 var(--sp-3);
   border: 1px solid var(--color-border-default);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   font-family: var(--font);
   font-size: var(--text-sm);
   color: var(--color-content-primary);
@@ -310,7 +310,7 @@
   height: 34px;
   padding: 0 var(--sp-3);
   border: 1px solid var(--color-border-default);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   font-family: var(--font);
   font-size: var(--text-sm);
   color: var(--color-content-primary);
@@ -344,7 +344,7 @@
   height: 32px;
   padding: 0 var(--sp-2);
   border: 1px solid var(--color-border-default);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   font-family: var(--font);
   font-size: var(--text-sm);
   color: var(--color-content-primary);
@@ -366,7 +366,7 @@
 .btnCancel {
   height: 34px;
   padding: 0 var(--sp-4);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   background: var(--color-bg-surface);
   border: 1px solid var(--color-border-default);
   font-family: var(--font);
@@ -378,7 +378,7 @@
 .btnSave {
   height: 34px;
   padding: 0 var(--sp-4);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   background: var(--color-bg-surface);
   border: 1px solid var(--color-border-default);
   font-family: var(--font);
@@ -423,7 +423,7 @@
 .btnTest {
   height: 28px;
   padding: 0 var(--sp-3);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   border: 1px solid var(--color-border-default);
   background: var(--color-bg-surface);
   font-family: var(--font);
@@ -449,7 +449,7 @@
   height: 28px;
   padding: 0 var(--sp-2);
   border: 1px solid var(--color-border-default);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   background: var(--color-bg-default);
   font-family: var(--font);
   font-size: var(--text-xs);
