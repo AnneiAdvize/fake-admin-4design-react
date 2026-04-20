@@ -1,13 +1,6 @@
 import { useState } from 'react'
 import styles from './Settings.module.css'
 
-const TABS = [
-  { id: 'pagetypes', label: 'Page types' },
-  { id: 'users', label: 'Users' },
-  { id: 'integration', label: 'Integration' },
-  { id: 'consent', label: 'Consent' },
-]
-
 const INITIAL_PAGE_TYPES = [
   { id: 'product',  label: 'Product',   detection: 'auto',   pages: '1,240', rules: [], expanded: false },
   { id: 'category', label: 'Category',  detection: 'custom', pages: '450',   rules: [{ type: 'URL', op: 'contains', value: '/category/' }, { type: 'URL', op: 'matches regex', value: '^/c/[0-9]+$' }], expanded: true },
@@ -33,31 +26,16 @@ const CMPS = [
   { value: 'none',     label: 'None',      desc: 'No CMP — always show the chat widget' },
 ]
 
-export default function Settings() {
-  const [activeTab, setActiveTab] = useState('pagetypes')
-
+export default function Settings({ section = 'pagetypes' }) {
   return (
     <div>
       <div className={styles.pageHead}>
         <h1 className={styles.title}>Settings</h1>
       </div>
-      <div className={styles.tabs}>
-        {TABS.map(t => (
-          <button
-            key={t.id}
-            className={`${styles.tab} ${activeTab === t.id ? styles.tabActive : ''}`}
-            onClick={() => setActiveTab(t.id)}
-          >
-            {t.label}
-          </button>
-        ))}
-      </div>
-      <div className={styles.tabContent}>
-        {activeTab === 'pagetypes'  && <PageTypes />}
-        {activeTab === 'users'      && <Users />}
-        {activeTab === 'integration' && <Integration />}
-        {activeTab === 'consent'    && <Consent />}
-      </div>
+      {section === 'pagetypes'   && <PageTypes />}
+      {section === 'users'       && <Users />}
+      {section === 'integration' && <Integration />}
+      {section === 'consent'     && <Consent />}
     </div>
   )
 }

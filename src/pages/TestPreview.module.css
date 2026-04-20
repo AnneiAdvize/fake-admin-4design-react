@@ -1,0 +1,108 @@
+.root {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Open Sans', system-ui, -apple-system, sans-serif;
+  z-index: 9999;
+}
+
+.banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 52px;
+  padding: 0 24px;
+  background: #0B3B37;
+  flex-shrink: 0;
+}
+
+.bannerLogo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #3BE1A4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.bannerLogo svg { width: 16px; height: 16px; }
+
+.bannerUrlWrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.bannerUrlInput {
+  flex: 1;
+  height: 32px;
+  padding: 0 12px;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 6px;
+  color: white;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  min-width: 0;
+}
+.bannerUrlInput::placeholder { color: rgba(255,255,255,.5); }
+.bannerUrlInput:focus { border-color: rgba(255,255,255,.5); background: rgba(255,255,255,.18); }
+
+.bannerGo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #3BE1A4;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background .15s;
+}
+.bannerGo:hover { background: #2fcf96; }
+.bannerGo svg { width: 14px; height: 14px; }
+
+.bannerActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.bannerBtn {
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.35);
+  background: transparent;
+  color: white;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s;
+}
+.bannerBtn:hover { background: rgba(255,255,255,.1); }
+
+.iframe {
+  position: fixed;
+  top: 52px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: calc(100vh - 52px);
+  border: none;
+}

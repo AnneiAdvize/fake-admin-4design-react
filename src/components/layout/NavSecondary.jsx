@@ -1,22 +1,36 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import styles from './NavSecondary.module.css'
 
+const REPORTS_LINKS = [
+  { to: '/reports/overview', label: 'Overview' },
+  { to: '/reports/sales', label: 'Sales' },
+  { to: '/reports/conversations', label: 'Conversations' },
+  { to: '/reports/quality', label: 'Quality' },
+]
+
+const SETTINGS_LINKS = [
+  { to: '/settings/page-types', label: 'Page types' },
+  { to: '/settings/users', label: 'Users' },
+  { to: '/settings/integration', label: 'Integration' },
+  { to: '/settings/consent', label: 'Consent' },
+]
+
 export default function NavSecondary() {
+  const location = useLocation()
+  const links = location.pathname.startsWith('/settings') ? SETTINGS_LINKS : REPORTS_LINKS
+
   return (
     <nav className={styles.nav}>
       <div className={styles.inner}>
-        <NavLink to="/reports/overview" className={({ isActive }) => `${styles.item} ${isActive ? styles.active : ''}`}>
-          Overview
-        </NavLink>
-        <NavLink to="/reports/sales" className={({ isActive }) => `${styles.item} ${isActive ? styles.active : ''}`}>
-          Sales
-        </NavLink>
-        <NavLink to="/reports/conversations" className={({ isActive }) => `${styles.item} ${isActive ? styles.active : ''}`}>
-          Conversations
-        </NavLink>
-        <NavLink to="/reports/quality" className={({ isActive }) => `${styles.item} ${isActive ? styles.active : ''}`}>
-          Quality
-        </NavLink>
+        {links.map(link => (
+          <NavLink
+            key={link.to}
+            to={link.to}
+            className={({ isActive }) => `${styles.item} ${isActive ? styles.active : ''}`}
+          >
+            {link.label}
+          </NavLink>
+        ))}
       </div>
     </nav>
   )
