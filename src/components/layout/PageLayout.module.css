@@ -1,0 +1,17 @@
+.shell { min-height: 100vh; }
+
+.mainDefault {
+  padding-top: var(--nav-h);
+  min-height: 100vh;
+}
+
+.mainReports {
+  padding-top: calc(var(--nav-h) + var(--subnav-h));
+  min-height: 100vh;
+}
+
+.pageContent {
+  padding: var(--sp-6) var(--sp-10);
+  max-width: 1600px;
+  margin: 0 auto;
+}
