@@ -2,7 +2,7 @@ import { useState, Fragment } from 'react'
 import styles from './Conversations.module.css'
 
 const ROWS = [
-  { id: 1, date: '22/02/2026', time: '21:48', author: 'Visitor', anon: true, content: 'Hi, I\'m looking for capsules to make lattes at home…', nps: '9', npsClass: 'high', csat: '4.8', amount: '—', detail: {
+  { id: 1, convId: 'd7dd4e26-fad2', date: '22/02/2026', time: '21:48', author: 'Visitor', anon: true, content: 'Hi, I\'m looking for capsules to make lattes at home…', nps: '9', npsClass: 'high', csat: '4.8', amount: '—', detail: {
     topic: 'Product recommendation', stars: 5,
     messages: [
       { role: 'event', text: 'Visitor loaded a new page', url: 'www.nespresso.com/uk/en/capsules/vertuo', time: '21:47:52' },
@@ -14,7 +14,7 @@ const ROWS = [
       { role: 'bot',  text: 'Barista Creations Chiaro is £4.30 per 10-capsule box. Right now, order 5+ boxes to get 10% off — the discount applies within 24 hours of checkout. Shall I redirect you to our shop?', time: '21:49:31', analyzeVariant: 'hallucination' },
     ]
   }},
-  { id: 2, date: '22/02/2026', time: '21:44', author: 'Visitor', anon: true, content: 'Capsule compatibility with Original Line machine…', nps: '—', npsClass: 'empty', csat: '—', amount: '—', detail: {
+  { id: 2, convId: 'a1b3c7d2-e4f8', date: '22/02/2026', time: '21:44', author: 'Visitor', anon: true, content: 'Capsule compatibility with Original Line machine…', nps: '—', npsClass: 'empty', csat: '—', amount: '—', detail: {
     topic: 'Product compatibility', stars: 0,
     messages: [
       { role: 'event', text: 'Visitor loaded a new page', url: 'www.nespresso.com/uk/en/machines/vertuo', time: '21:43:55' },
@@ -23,11 +23,11 @@ const ROWS = [
       { role: 'bot',  text: 'No, the Vertuo and Original systems are not compatible — they use different brewing technologies. For your Original Line machine, look for capsules labelled with the Original logo. Would you like me to suggest some great Original Line options?', time: '21:44:45', analyzeVariant: 'missing-knowledge' },
     ]
   }},
-  { id: 3,  date: '22/02/2026', time: '21:42', author: 'Visitor',   anon: true,  content: 'Monthly capsule subscription offer…',                      nps: '8',  npsClass: 'high', csat: '4.2', amount: '40.40' },
-  { id: 4,  date: '22/02/2026', time: '21:38', author: 'Lucas B.',  anon: false, content: 'Order #NES-284912 tracking — late delivery…',              nps: '—',  npsClass: 'empty', csat: '—', amount: '—' },
-  { id: 5,  date: '22/02/2026', time: '21:35', author: 'Visitor',   anon: true,  content: 'Difference between Vertuo and Original Line ranges…',      nps: '7',  npsClass: 'mid',  csat: '3.8', amount: '—' },
-  { id: 6,  date: '22/02/2026', time: '21:31', author: 'Marie C.',  anon: false, content: 'Vertuo Next won\'t start after descaling…',                nps: '—',  npsClass: 'empty', csat: '—', amount: '—' },
-  { id: 7,  date: '22/02/2026', time: '21:28', author: 'Visitor',   anon: true,  content: 'Best high-intensity capsule for espresso…',                nps: '10', npsClass: 'high', csat: '5.0', amount: '52.00', detail: {
+  { id: 3,  convId: 'b2c4d8e1-f5a9', date: '22/02/2026', time: '21:42', author: 'Visitor',   anon: true,  content: 'Monthly capsule subscription offer…',                      nps: '8',  npsClass: 'high', csat: '4.2', amount: '40.40' },
+  { id: 4,  convId: 'c3d5e9f2-a6b0', date: '22/02/2026', time: '21:38', author: 'Lucas B.',  anon: false, content: 'Order #NES-284912 tracking — late delivery…',              nps: '—',  npsClass: 'empty', csat: '—', amount: '—' },
+  { id: 5,  convId: 'd4e6f0a3-b7c1', date: '22/02/2026', time: '21:35', author: 'Visitor',   anon: true,  content: 'Difference between Vertuo and Original Line ranges…',      nps: '7',  npsClass: 'mid',  csat: '3.8', amount: '—' },
+  { id: 6,  convId: 'e5f7a1b4-c8d2', date: '22/02/2026', time: '21:31', author: 'Marie C.',  anon: false, content: 'Vertuo Next won\'t start after descaling…',                nps: '—',  npsClass: 'empty', csat: '—', amount: '—' },
+  { id: 7,  convId: 'f6a8b2c5-d9e3', date: '22/02/2026', time: '21:28', author: 'Visitor',   anon: true,  content: 'Best high-intensity capsule for espresso…',                nps: '10', npsClass: 'high', csat: '5.0', amount: '52.00', detail: {
     topic: 'Product recommendation', stars: 5,
     messages: [
       { role: 'event', text: 'Visitor loaded a new page', url: 'www.nespresso.com/uk/en/capsules/original', time: '21:27:50' },
@@ -36,9 +36,9 @@ const ROWS = [
       { role: 'bot',  text: 'For a bold, intense espresso I\'d recommend Roma — Intensity 8 on the Original Line. It delivers a rich, full-bodied shot with a beautiful crema. Currently £4.30 per 10-capsule box.', time: '21:28:35', analyzeVariant: 'product-answer' },
     ]
   }},
-  { id: 8,  date: '22/02/2026', time: '21:22', author: 'Visitor',   anon: true,  content: 'Standard delivery time to Southern UK…',                  nps: '—',  npsClass: 'empty', csat: '—', amount: '—' },
-  { id: 9,  date: '22/02/2026', time: '21:18', author: 'Thomas R.', anon: false, content: 'Refund request for duplicate order…',                     nps: '5',  npsClass: 'low',  csat: '2.5', amount: '—' },
-  { id: 10, date: '22/02/2026', time: '21:14', author: 'Visitor',   anon: true,  content: 'Compatible capsules for Vertuo Next — full range…',        nps: '9',  npsClass: 'high', csat: '4.6', amount: '38.60', detail: {
+  { id: 8,  convId: 'a7b9c3d6-e0f4', date: '22/02/2026', time: '21:22', author: 'Visitor',   anon: true,  content: 'Standard delivery time to Southern UK…',                  nps: '—',  npsClass: 'empty', csat: '—', amount: '—' },
+  { id: 9,  convId: 'b8c0d4e7-f1a5', date: '22/02/2026', time: '21:18', author: 'Thomas R.', anon: false, content: 'Refund request for duplicate order…',                     nps: '5',  npsClass: 'low',  csat: '2.5', amount: '—' },
+  { id: 10, convId: 'c9d1e5f8-a2b6', date: '22/02/2026', time: '21:14', author: 'Visitor',   anon: true,  content: 'Compatible capsules for Vertuo Next — full range…',        nps: '9',  npsClass: 'high', csat: '4.6', amount: '38.60', detail: {
     topic: 'Product compatibility', stars: 5,
     messages: [
       { role: 'event', text: 'Visitor loaded a new page', url: 'www.nespresso.com/uk/en/machines/vertuo-next', time: '21:13:48' },
@@ -47,16 +47,16 @@ const ROWS = [
       { role: 'bot',  text: 'For your Vertuo Next and a strong coffee preference, here are my top picks: Ristretto Decaffeinato (Intensity 10), Roma (Intensity 8), and Volluto (Intensity 4) for a lighter alternative. All are Vertuo-compatible.', time: '21:14:48', analyzeVariant: 'product-reco' },
     ]
   }},
-  { id: 11, date: '22/02/2026', time: '21:09', author: 'Visitor',   anon: true,  content: 'Loyalty programme — points accrual on subscriptions…',    nps: '—',  npsClass: 'empty', csat: '—', amount: '—' },
-  { id: 12, date: '22/02/2026', time: '21:04', author: 'Emma D.',   anon: false, content: 'Anniversary gift idea — machine and capsule bundle…',     nps: '10', npsClass: 'high', csat: '5.0', amount: '76.00' },
-  { id: 13, date: '22/02/2026', time: '20:58', author: 'Visitor',   anon: true,  content: 'How to recycle used capsules at a boutique…',             nps: '8',  npsClass: 'high', csat: '4.1', amount: '—' },
-  { id: 14, date: '22/02/2026', time: '20:52', author: 'Visitor',   anon: true,  content: 'Free machine trial — discovery offer available?…',        nps: '—',  npsClass: 'empty', csat: '—', amount: '—' },
-  { id: 15, date: '22/02/2026', time: '20:47', author: 'Paul M.',   anon: false, content: 'Vertuo Evoluo descaling step-by-step…',                   nps: '—',  npsClass: 'empty', csat: '—', amount: '—' },
-  { id: 16, date: '22/02/2026', time: '20:43', author: 'Visitor',   anon: true,  content: 'Spring promotions — discounts on new arrivals…',          nps: '6',  npsClass: 'mid',  csat: '3.2', amount: '—' },
-  { id: 17, date: '22/02/2026', time: '20:38', author: 'Visitor',   anon: true,  content: 'Recommended intensity for the perfect ristretto…',        nps: '9',  npsClass: 'high', csat: '4.7', amount: '28.50' },
-  { id: 18, date: '22/02/2026', time: '20:32', author: 'Julie F.',  anon: false, content: 'Change delivery address for order in progress…',          nps: '—',  npsClass: 'empty', csat: '—', amount: '—' },
-  { id: 19, date: '22/02/2026', time: '20:28', author: 'Visitor',   anon: true,  content: 'Spring 2026 collection — first look at new capsules…',    nps: '8',  npsClass: 'high', csat: '4.3', amount: '45.00' },
-  { id: 20, date: '22/02/2026', time: '20:24', author: 'Visitor',   anon: true,  content: 'Sustainable capsules — eco-friendly product range…',      nps: '7',  npsClass: 'mid',  csat: '3.9', amount: '—' },
+  { id: 11, convId: 'd0e2f6a9-b3c7', date: '22/02/2026', time: '21:09', author: 'Visitor',   anon: true,  content: 'Loyalty programme — points accrual on subscriptions…',    nps: '—',  npsClass: 'empty', csat: '—', amount: '—' },
+  { id: 12, convId: 'e1f3a7b0-c4d8', date: '22/02/2026', time: '21:04', author: 'Emma D.',   anon: false, content: 'Anniversary gift idea — machine and capsule bundle…',     nps: '10', npsClass: 'high', csat: '5.0', amount: '76.00' },
+  { id: 13, convId: 'f2a4b8c1-d5e9', date: '22/02/2026', time: '20:58', author: 'Visitor',   anon: true,  content: 'How to recycle used capsules at a boutique…',             nps: '8',  npsClass: 'high', csat: '4.1', amount: '—' },
+  { id: 14, convId: 'a3b5c9d2-e6f0', date: '22/02/2026', time: '20:52', author: 'Visitor',   anon: true,  content: 'Free machine trial — discovery offer available?…',        nps: '—',  npsClass: 'empty', csat: '—', amount: '—' },
+  { id: 15, convId: 'b4c6d0e3-f7a1', date: '22/02/2026', time: '20:47', author: 'Paul M.',   anon: false, content: 'Vertuo Evoluo descaling step-by-step…',                   nps: '—',  npsClass: 'empty', csat: '—', amount: '—' },
+  { id: 16, convId: 'c5d7e1f4-a8b2', date: '22/02/2026', time: '20:43', author: 'Visitor',   anon: true,  content: 'Spring promotions — discounts on new arrivals…',          nps: '6',  npsClass: 'mid',  csat: '3.2', amount: '—' },
+  { id: 17, convId: 'd6e8f2a5-b9c3', date: '22/02/2026', time: '20:38', author: 'Visitor',   anon: true,  content: 'Recommended intensity for the perfect ristretto…',        nps: '9',  npsClass: 'high', csat: '4.7', amount: '28.50' },
+  { id: 18, convId: 'e7f9a3b6-c0d4', date: '22/02/2026', time: '20:32', author: 'Julie F.',  anon: false, content: 'Change delivery address for order in progress…',          nps: '—',  npsClass: 'empty', csat: '—', amount: '—' },
+  { id: 19, convId: 'f8a0b4c7-d1e5', date: '22/02/2026', time: '20:28', author: 'Visitor',   anon: true,  content: 'Spring 2026 collection — first look at new capsules…',    nps: '8',  npsClass: 'high', csat: '4.3', amount: '45.00' },
+  { id: 20, convId: 'a9b1c5d8-e2f6', date: '22/02/2026', time: '20:24', author: 'Visitor',   anon: true,  content: 'Sustainable capsules — eco-friendly product range…',      nps: '7',  npsClass: 'mid',  csat: '3.9', amount: '—' },
 ]
 
 export default function Conversations() {
@@ -170,12 +170,12 @@ export default function Conversations() {
                 <tr>
                   <th className={styles.th}></th>
                   <th className={styles.th}>Date</th>
-                  <th className={styles.th}>Author</th>
-                  <th className={styles.th}>Channel</th>
-                  <th className={styles.th}>Content / Topic</th>
-                  <th className={styles.th}>NPS</th>
+                  <th className={styles.th}>Conv ID</th>
+                  <th className={styles.th}>Respondent</th>
                   <th className={styles.th}>CSAT</th>
-                  <th className={styles.th}>Cart value</th>
+                  <th className={styles.th}>NPS</th>
+                  <th className={styles.th}>Turnover</th>
+                  <th className={styles.th}></th>
                 </tr>
               </thead>
               <tbody>
@@ -191,7 +191,19 @@ export default function Conversations() {
                         <div className={styles.dateTime}>{row.time}</div>
                       </td>
                       <td className={styles.td}>
-                        <span className={row.anon ? styles.authorAnon : styles.author}>{row.author}</span>
+                        <div className={styles.convIdCell}>
+                          <span className={styles.convIdText}>{row.convId}</span>
+                          <button
+                            className={styles.convIdCopy}
+                            onClick={e => e.stopPropagation()}
+                            title="Copy ID"
+                          >
+                            <svg width="11" height="11" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.4">
+                              <rect x="4" y="4" width="8" height="8" rx="1.2"/>
+                              <path d="M2 10V2h8" strokeLinecap="round"/>
+                            </svg>
+                          </button>
+                        </div>
                       </td>
                       <td className={styles.td}>
                         <span className={styles.canalChip}>
@@ -200,16 +212,32 @@ export default function Conversations() {
                         </span>
                       </td>
                       <td className={styles.td}>
-                        <span className={styles.tdContent}>{row.content}</span>
+                        <span className={`${styles.tdCsat} ${row.csat !== '—' ? styles.csatRated : ''}`}>{row.csat}</span>
                       </td>
                       <td className={styles.td}>
                         <span className={`${styles.tdNps} ${styles[row.npsClass]}`}>{row.nps}</span>
                       </td>
                       <td className={styles.td}>
-                        <span className={`${styles.tdCsat} ${row.csat !== '—' ? styles.csatRated : ''}`}>{row.csat}</span>
-                      </td>
-                      <td className={styles.td}>
                         <span className={styles.tdAmount}>{row.amount}</span>
+                      </td>
+                      <td className={`${styles.td} ${styles.tdAction}`}>
+                        {row.detail && (
+                          <button
+                            className={styles.viewDetailsBtn}
+                            onClick={e => { e.stopPropagation(); toggleRow(row.id) }}
+                          >
+                            View details
+                            <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+                              <path
+                                d={expandedId === row.id ? 'M9 5L5 1L1 5' : 'M1 1L5 5L9 1'}
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                          </button>
+                        )}
                       </td>
                     </tr>
                     {expandedId === row.id && row.detail && (
