@@ -6,12 +6,14 @@ import styles from './PageLayout.module.css'
 export default function PageLayout() {
   const location = useLocation()
   const isReports = location.pathname.startsWith('/reports')
+  const isSettings = location.pathname.startsWith('/settings')
+  const hasSecondaryNav = isReports || isSettings
 
   return (
     <div className={styles.shell}>
       <NavPrimary />
-      {isReports && <NavSecondary />}
-      <main className={isReports ? styles.mainReports : styles.mainDefault}>
+      {hasSecondaryNav && <NavSecondary />}
+      <main className={hasSecondaryNav ? styles.mainReports : styles.mainDefault}>
         <div className={styles.pageContent}>
           <Outlet />
         </div>
