@@ -30,9 +30,6 @@ const CMPS = [
 export default function Settings({ section = 'pagetypes' }) {
   return (
     <div>
-      <div className={styles.pageHead}>
-        <h1 className={styles.title}>Settings</h1>
-      </div>
       {section === 'pagetypes'   && <PageTypes />}
       {section === 'users'       && <Users />}
       {section === 'integration' && <Integration />}

@@ -9,8 +9,8 @@ const REPORTS_LINKS = [
 ]
 
 const SETTINGS_LINKS = [
-  { to: '/settings/page-types', label: 'Page types' },
   { to: '/settings/users', label: 'Users' },
+  { to: '/settings/page-types', label: 'Page types' },
   { to: '/settings/integration', label: 'Integration' },
   { to: '/settings/consent', label: 'Consent' },
 ]
