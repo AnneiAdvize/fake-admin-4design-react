@@ -260,7 +260,7 @@
 .iconBtn {
   width: 26px;
   height: 26px;
-  border-radius: var(--r-sm);
+  border-radius: 13px;
   background: transparent;
   border: none;
   cursor: pointer;

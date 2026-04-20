@@ -87,6 +87,10 @@
 .filterBar {
   padding: var(--sp-3) var(--sp-5);
   border-bottom: 1px solid var(--color-border-default);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
 }
 
 .searchWrap {
@@ -164,7 +168,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--r-sm);
+  border-radius: 14px;
   border: 1px solid transparent;
   background: transparent;
   font-size: 18px;
@@ -231,10 +235,8 @@
 .conditionChip:hover { background: var(--color-bg-hover); }
 
 .conditionsPopover {
-  position: absolute;
-  left: 0;
-  top: calc(100% + 6px);
-  z-index: 50;
+  position: fixed;
+  z-index: 100;
   min-width: 260px;
   background: var(--color-bg-surface);
   border: 1px solid var(--color-border-default);
@@ -318,7 +320,7 @@
 .btnCancel {
   height: 32px;
   padding: 0 var(--sp-4);
-  border-radius: var(--r-sm);
+  border-radius: 16px;
   border: 1px solid var(--color-border-default);
   background: var(--color-bg-surface);
   font-size: var(--text-sm);
@@ -333,7 +335,7 @@
 .btnDelete {
   height: 32px;
   padding: 0 var(--sp-4);
-  border-radius: var(--r-sm);
+  border-radius: 16px;
   border: none;
   background: #dc2626;
   font-size: var(--text-sm);
@@ -344,3 +346,312 @@
   transition: background var(--t-fast);
 }
 .btnDelete:hover { background: #b91c1c; }
+
+/* ── Active filter chips ── */
+.filterChips {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.filterChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 26px;
+  padding: 0 6px 0 var(--sp-3);
+  border-radius: 13px;
+  background: var(--color-bg-selected);
+  font-size: var(--text-xs);
+}
+
+.filterChipLabel {
+  color: #fff;
+  opacity: 0.75;
+}
+
+.filterChipValue {
+  color: #fff;
+  font-weight: var(--weight-semibold);
+}
+
+.filterChipRemove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+.filterChipRemove:hover { background: rgba(255,255,255,0.35); }
+
+.btnAddFilter {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 28px;
+  padding: 0 var(--sp-3);
+  border-radius: 14px;
+  border: 1px dashed var(--color-border-default);
+  background: transparent;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--color-content-secondary);
+  cursor: pointer;
+  font-family: var(--font);
+  margin-left: auto;
+  white-space: nowrap;
+  transition: all var(--t-fast);
+}
+.btnAddFilter:hover {
+  background: var(--color-bg-hover);
+  border-color: var(--color-brand);
+  color: var(--color-brand);
+}
+
+/* ── Filter dropdown (fixed) ── */
+.filterDropdown {
+  position: fixed;
+  z-index: 100;
+  width: 318px;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--sp-3);
+}
+
+.filterDropdownTitle {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-content-primary);
+  margin-bottom: var(--sp-2);
+  padding: 0 var(--sp-1);
+}
+
+.filterDropdownSearch {
+  width: 100%;
+  height: 32px;
+  padding: 0 var(--sp-3);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--r-md);
+  background: var(--color-bg-default);
+  font-size: var(--text-sm);
+  font-family: var(--font);
+  color: var(--color-content-primary);
+  margin-bottom: var(--sp-2);
+  box-sizing: border-box;
+}
+.filterDropdownSearch::placeholder { color: var(--color-content-secondary); }
+.filterDropdownSearch:focus { outline: none; border-color: var(--color-brand); }
+
+.filterCategory {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px var(--sp-2);
+  border-radius: var(--r-md);
+  font-size: var(--text-sm);
+  color: var(--color-content-primary);
+  cursor: pointer;
+  transition: background var(--t-fast);
+}
+.filterCategory:hover { background: var(--color-bg-hover); }
+.filterCategory svg { color: var(--color-content-secondary); flex-shrink: 0; transition: transform .2s; }
+.filterCategoryArrowOpen { transform: rotate(90deg); }
+
+.filterValues {
+  padding: var(--sp-1) var(--sp-2) var(--sp-2);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.filterValueItem {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 5px var(--sp-2);
+  border-radius: var(--r-sm);
+  font-size: var(--text-sm);
+  color: var(--color-content-primary);
+  cursor: pointer;
+  transition: background var(--t-fast);
+}
+.filterValueItem:hover { background: var(--color-bg-hover); }
+.filterValueItem input[type="checkbox"] { accent-color: var(--color-brand); width: 14px; height: 14px; cursor: pointer; }
+
+/* ── Widget cell ── */
+.widgetCell {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.widgetEye {
+  color: var(--color-content-secondary);
+  cursor: pointer;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity var(--t-fast), color var(--t-fast);
+}
+.row:hover .widgetEye,
+.widgetEyeActive {
+  opacity: 1;
+  color: var(--color-brand);
+}
+
+/* ── Widget preview popover (fixed) ── */
+.widgetPopover {
+  position: fixed;
+  z-index: 100;
+  width: 280px;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.previewAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-full);
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.previewAvatarDot {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--r-full);
+  background: var(--color-brand);
+  border: 2px solid #fff;
+}
+
+/* Classic widget preview */
+.classicPreview { padding: var(--sp-4); }
+
+.classicHeader {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--color-content-secondary);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  margin-bottom: var(--sp-3);
+}
+
+.classicBody {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-3);
+}
+
+.classicText {
+  font-size: var(--text-sm);
+  color: var(--color-content-primary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.classicCta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  width: 100%;
+  border-radius: 17px;
+  background: var(--color-action-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-brand-strong);
+  cursor: pointer;
+}
+
+/* Messaging widget preview */
+.messagingPreview {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+}
+
+.messagingBubble {
+  background: var(--color-bg-default);
+  border-radius: 0 var(--r-lg) var(--r-lg) var(--r-lg);
+  padding: var(--sp-3);
+  font-size: var(--text-sm);
+  color: var(--color-content-primary);
+  line-height: 1.5;
+  max-width: 200px;
+}
+
+/* Conversation starters preview */
+.csPreview { padding: var(--sp-4); }
+
+.csHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-3);
+}
+
+.csAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-full);
+  background: var(--color-brand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.csTitle {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-content-primary);
+}
+
+.csChips {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-3);
+}
+
+.csChip {
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--color-bg-default);
+  border-radius: var(--r-lg);
+  font-size: var(--text-xs);
+  color: var(--color-content-primary);
+  cursor: pointer;
+}
+
+.csAsk {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  width: 100%;
+  border-radius: 16px;
+  background: var(--color-action-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-brand-strong);
+  cursor: pointer;
+}

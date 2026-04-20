@@ -26,35 +26,24 @@
   height: 24px;
   padding: 0 var(--sp-3);
   font-size: var(--text-sm);
-  border-radius: var(--r-sm);
+  border-radius: 12px;
 }
 
 .md {
   height: 32px;
   padding: 0 var(--sp-4);
   font-size: var(--text-base);
-  border-radius: var(--r-sm);
+  border-radius: 16px;
 }
 
 .lg {
   height: 40px;
   padding: 0 var(--sp-5);
   font-size: var(--text-lg);
-  border-radius: var(--r-sm);
+  border-radius: 20px;
 }
 
 /* --- Primary (brand green - CTA button) --- */
-.primary.sm {
-  border-radius: 12px;
-}
-
-.primary.md {
-  border-radius: 16px;
-}
-
-.primary.lg {
-  border-radius: 20px;
-}
 .primary {
   background: var(--color-action-primary);
   color: var(--color-brand-strong);

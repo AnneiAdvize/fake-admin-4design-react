@@ -60,7 +60,7 @@
   gap: 6px;
   height: 32px;
   padding: 0 var(--sp-3);
-  border-radius: var(--r-sm);
+  border-radius: 16px;
   background: var(--color-bg-surface);
   border: 1px solid var(--color-border-default);
   font-family: var(--font);
@@ -734,7 +734,7 @@
 .btnCancel {
   height: 34px;
   padding: 0 var(--sp-4);
-  border-radius: var(--r-md);
+  border-radius: 17px;
   background: var(--color-bg-surface);
   border: 1px solid var(--color-border-default);
   font-family: var(--font);
@@ -749,7 +749,7 @@
 .btnSave {
   height: 34px;
   padding: 0 var(--sp-4);
-  border-radius: var(--r-md);
+  border-radius: 17px;
   background: var(--color-action-primary);
   border: none;
   font-family: var(--font);
@@ -769,11 +769,11 @@
   height: 36px;
   padding: 0 var(--sp-3);
   border: 1px solid var(--color-border-default);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   font-family: var(--font);
   font-size: var(--text-sm);
   color: var(--color-content-primary);
-  background: var(--color-bg-surface);
+  background: var(--color-bg-default);
   outline: none;
   transition: border-color var(--t-fast);
 }
@@ -782,7 +782,7 @@
 .btnTestUrl {
   height: 36px;
   padding: 0 var(--sp-4);
-  border-radius: var(--r-md);
+  border-radius: 18px;
   background: var(--color-action-primary);
   border: none;
   font-family: var(--font);

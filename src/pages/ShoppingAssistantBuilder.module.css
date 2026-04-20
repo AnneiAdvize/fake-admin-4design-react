@@ -159,7 +159,7 @@ select.formInput {
   font-family: var(--font);
   font-size: var(--text-sm);
   color: var(--color-content-primary);
-  background: var(--color-bg-surface);
+  background: var(--color-bg-default);
   resize: vertical;
   outline: none;
   line-height: 1.65;
@@ -177,7 +177,7 @@ select.formInput {
   font-family: var(--font);
   font-size: var(--text-sm);
   color: var(--color-content-primary);
-  background: var(--color-bg-surface);
+  background: var(--color-bg-default);
   outline: none;
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%236C6C68' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -392,7 +392,7 @@ select.formInput {
   padding: 4px var(--sp-2);
   border: 1px solid var(--color-border-default);
   border-radius: var(--r-sm);
-  background: var(--color-bg-surface);
+  background: var(--color-bg-default);
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -484,7 +484,7 @@ select.formInput {
   justify-content: center;
   width: 28px;
   height: 28px;
-  border-radius: var(--r-sm);
+  border-radius: 14px;
   border: 1px solid var(--color-border-default);
   background: var(--color-bg-surface);
   color: var(--color-content-secondary);
@@ -535,7 +535,7 @@ select.formInput {
   gap: 5px;
   height: 30px;
   padding: 0 var(--sp-3);
-  border-radius: var(--r-sm);
+  border-radius: 15px;
   background: var(--color-bg-surface);
   border: 1px solid var(--color-border-default);
   font-family: var(--font);
@@ -778,7 +778,7 @@ select.formInput {
 .btnCancel {
   height: 34px;
   padding: 0 var(--sp-4);
-  border-radius: var(--r-sm);
+  border-radius: 17px;
   background: none;
   border: none;
   font-family: var(--font);
@@ -792,7 +792,7 @@ select.formInput {
 .btnCancelText {
   height: 34px;
   padding: 0 var(--sp-4);
-  border-radius: var(--r-sm);
+  border-radius: 17px;
   background: none;
   border: none;
   font-family: var(--font);
@@ -805,7 +805,7 @@ select.formInput {
 .btnSave {
   height: 34px;
   padding: 0 var(--sp-5);
-  border-radius: 16px;
+  border-radius: 17px;
   background: transparent;
   border: 1.5px solid var(--color-content-primary);
   font-family: var(--font);
@@ -822,7 +822,7 @@ select.formInput {
 .btnPublish {
   height: 34px;
   padding: 0 var(--sp-5);
-  border-radius: 16px;
+  border-radius: 17px;
   background: var(--color-brand);
   border: none;
   font-family: var(--font);
