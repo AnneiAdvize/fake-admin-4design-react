@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test on my website — Back-office</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { height:100%; overflow:hidden; font-family:'Open Sans',system-ui,-apple-system,sans-serif; }
+
+    /* ── Banner ── */
+    .preview-banner {
+      position:fixed; top:0; left:0; right:0; z-index:1000;
+      display:flex; align-items:center; gap:12px;
+      height:52px; padding:0 24px;
+      background:#0B3B37;
+    }
+
+    .banner-logo {
+      width:32px; height:32px; border-radius:50%;
+      background:#3BE1A4; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    }
+    .banner-logo svg { width:16px; height:16px; }
+
+    .banner-url-wrap {
+      flex:1; display:flex; align-items:center; gap:8px; min-width:0;
+    }
+    .banner-url-input {
+      flex:1; height:32px; padding:0 12px;
+      background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2);
+      border-radius:6px; color:white; font-family:inherit; font-size:13px;
+      outline:none; min-width:0;
+    }
+    .banner-url-input::placeholder { color:rgba(255,255,255,.5); }
+    .banner-url-input:focus { border-color:rgba(255,255,255,.5); background:rgba(255,255,255,.18); }
+
+    .banner-go {
+      width:32px; height:32px; border-radius:50%;
+      background:#3BE1A4; border:none; cursor:pointer;
+      display:flex; align-items:center; justify-content:center; flex-shrink:0;
+      transition:background .15s;
+    }
+    .banner-go:hover { background:#2fcf96; }
+    .banner-go svg { width:14px; height:14px; }
+
+    .banner-actions {
+      display:flex; align-items:center; gap:8px; flex-shrink:0;
+    }
+    .banner-btn {
+      height:32px; padding:0 16px; border-radius:6px;
+      border:1px solid rgba(255,255,255,.35); background:transparent;
+      color:white; font-family:inherit; font-size:13px; font-weight:600;
+      cursor:pointer; transition:background .15s;
+    }
+    .banner-btn:hover { background:rgba(255,255,255,.1); }
+
+    /* ── Iframe ── */
+    .preview-iframe {
+      position:fixed; top:52px; left:0; right:0; bottom:0;
+      width:100%; height:calc(100vh - 52px);
+      border:none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="preview-banner">
+    <div class="banner-logo">
+      <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="white" stroke-width="2"/><path d="M10 7v1M10 11v2" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+    </div>
+
+    <div class="banner-url-wrap">
+      <input class="banner-url-input" type="text" id="banner-url" placeholder="Enter URL...">
+      <button class="banner-go" id="banner-go" title="Navigate">
+        <svg viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+
+    <div class="banner-actions">
+      <button class="banner-btn" id="btn-quit">Quit</button>
+      <button class="banner-btn" id="btn-guidelines">View guidelines</button>
+    </div>
+  </div>
+
+  <iframe class="preview-iframe" id="preview-iframe"></iframe>
+
+  <script>
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      var targetUrl = params.get('url') || '';
+      var returnTo = params.get('returnTo') || 'engagement-strategy-builder.html';
+
+      var urlInput = document.getElementById('banner-url');
+      var iframe = document.getElementById('preview-iframe');
+
+      /* Set initial URL */
+      urlInput.value = targetUrl;
+      if (targetUrl) iframe.src = targetUrl;
+
+      /* Navigate button */
+      document.getElementById('banner-go').addEventListener('click', function() {
+        var url = urlInput.value.trim();
+        if (url) {
+          if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+          iframe.src = url;
+        }
+      });
+
+      /* Enter key in URL input */
+      urlInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') document.getElementById('banner-go').click();
+      });
+
+      /* Quit button */
+      document.getElementById('btn-quit').addEventListener('click', function() {
+        window.location.href = './' + returnTo;
+      });
+
+      /* View guidelines — placeholder */
+      document.getElementById('btn-guidelines').addEventListener('click', function() {
+        alert('Guidelines feature coming soon.');
+      });
+    })();
+  </script>
+</body>
+</html>
