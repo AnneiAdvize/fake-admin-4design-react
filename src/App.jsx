@@ -17,7 +17,7 @@ import TestPreview from './pages/TestPreview'
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route path="/test-preview" element={<TestPreview />} />
         <Route path="/" element={<PageLayout />}>
