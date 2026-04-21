@@ -24,7 +24,7 @@ export default function NavPrimary() {
     <nav className={styles.nav}>
       <div className={styles.inner}>
         <NavLink to="/home" className={styles.logo} aria-label="Dashboard home">
-          <img src="/logo.png" width="28" height="28" alt="" />
+          <img src={`${import.meta.env.BASE_URL}logo.png`} width="28" height="28" alt="" />
         </NavLink>
 
         <div className={styles.items}>
