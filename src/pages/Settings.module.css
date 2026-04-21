@@ -260,8 +260,6 @@
   font-size: var(--text-xs);
   font-weight: var(--weight-semibold);
   color: var(--color-content-secondary);
-  text-transform: uppercase;
-  letter-spacing: .055em;
   margin-bottom: var(--sp-3);
 }
 
@@ -552,8 +550,6 @@
   font-size: var(--text-xs);
   font-weight: var(--weight-semibold);
   color: var(--color-content-secondary);
-  text-transform: uppercase;
-  letter-spacing: .055em;
   margin-bottom: var(--sp-2);
 }
 
@@ -669,8 +665,6 @@
   font-size: var(--text-xs);
   font-weight: var(--weight-semibold);
   color: var(--color-content-secondary);
-  text-transform: uppercase;
-  letter-spacing: .055em;
   margin-bottom: var(--sp-2);
 }
 
@@ -829,8 +823,6 @@
   font-size: var(--text-xs);
   font-weight: var(--weight-semibold);
   color: var(--color-content-secondary);
-  text-transform: uppercase;
-  letter-spacing: .055em;
   margin-bottom: var(--sp-3);
 }
 

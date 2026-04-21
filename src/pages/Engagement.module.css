@@ -249,8 +249,6 @@
   font-size: var(--text-xs);
   font-weight: var(--weight-semibold);
   color: var(--color-content-secondary);
-  text-transform: uppercase;
-  letter-spacing: .06em;
   margin-bottom: var(--sp-3);
 }
 
@@ -548,8 +546,6 @@
   font-size: var(--text-xs);
   font-weight: var(--weight-semibold);
   color: var(--color-content-secondary);
-  text-transform: uppercase;
-  letter-spacing: .05em;
   margin-bottom: var(--sp-3);
 }
 

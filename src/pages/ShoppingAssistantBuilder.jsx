@@ -19,6 +19,7 @@ export default function ShoppingAssistantBuilder() {
   const [activeTab, setActiveTab] = useState('identity')
   const [brandIdentity, setBrandIdentity] = useState(true)
   const [panelPos, setPanelPos] = useState('left')
+  const [visitorName, setVisitorName] = useState('Your AI Shopping Assistant')
   const [skills, setSkills] = useState(INITIAL_SKILLS)
   const [editingSkill, setEditingSkill] = useState(null)
 
@@ -82,6 +83,8 @@ export default function ShoppingAssistantBuilder() {
               setBrandIdentity={setBrandIdentity}
               panelPos={panelPos}
               setPanelPos={setPanelPos}
+              visitorName={visitorName}
+              setVisitorName={setVisitorName}
               styles={styles}
             />
           )}
@@ -98,7 +101,7 @@ export default function ShoppingAssistantBuilder() {
           {activeTab === 'selling-logic' && <SellingLogicTab styles={styles} />}
         </div>
 
-        <PreviewPanel styles={styles} />
+        <PreviewPanel styles={styles} visitorName={visitorName} />
       </div>
 
       {editingSkill !== null && (
@@ -113,7 +116,7 @@ export default function ShoppingAssistantBuilder() {
   )
 }
 
-function IdentityTab({ brandIdentity, setBrandIdentity, panelPos, setPanelPos, styles }) {
+function IdentityTab({ brandIdentity, setBrandIdentity, panelPos, setPanelPos, visitorName, setVisitorName, styles }) {
   return (
     <>
       <div className={styles.formCard}>
@@ -126,7 +129,7 @@ function IdentityTab({ brandIdentity, setBrandIdentity, panelPos, setPanelPos, s
           </div>
           <div className={styles.formField}>
             <label className={styles.formLabel}>Visitor-facing Name*</label>
-            <input className={styles.formInput} type="text" defaultValue="Your AI Shopping Assistant" />
+            <input className={styles.formInput} type="text" value={visitorName} onChange={e => setVisitorName(e.target.value)} />
           </div>
         </div>
       </div>
@@ -345,19 +348,14 @@ function SellingLogicTab({ styles }) {
   )
 }
 
-function PreviewPanel({ styles }) {
+function PreviewPanel({ styles, visitorName }) {
   const [message, setMessage] = useState('')
 
   return (
     <div className={styles.previewPanel}>
       <div className={styles.previewHeader}>
         <div className={styles.previewHeaderBar}>
-          <button className={styles.previewIconBtn} title="Expand" aria-label="Expand">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M2 10v4h4M14 6V2h-4M10 10l4 4M6 6L2 2"/>
-            </svg>
-          </button>
-          <span className={styles.previewName}>My first Assistant</span>
+          <span className={styles.previewName}>{visitorName}</span>
           <button className={styles.previewIconBtn} title="Minimize" aria-label="Minimize">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M3 6l5 5 5-5"/>
