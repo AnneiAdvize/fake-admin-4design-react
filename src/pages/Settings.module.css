@@ -406,7 +406,7 @@
 .iconBtnSm {
   width: 28px;
   height: 28px;
-  border-radius: var(--r-sm);
+  border-radius: 14px;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -639,7 +639,7 @@
 .modalClose {
   width: 28px;
   height: 28px;
-  border-radius: var(--r-md);
+  border-radius: 14px;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -706,7 +706,7 @@
 .ruleTypeBtn {
   height: 28px;
   padding: 0 var(--sp-3);
-  border-radius: calc(var(--r-md) - 2px);
+  border-radius: 14px;
   border: none;
   font-family: var(--font);
   font-size: var(--text-sm);
