@@ -22,8 +22,9 @@
 
 .subtitle a {
   color: var(--color-info-text);
-  cursor: pointer;
+  font-weight: var(--weight-semibold);
   text-decoration: none;
+  cursor: pointer;
 }
 .subtitle a:hover { text-decoration: underline; }
 

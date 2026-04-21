@@ -23,9 +23,11 @@
 
 .subtitle a {
   color: var(--color-info-text);
-  text-decoration: underline;
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
   cursor: pointer;
 }
+.subtitle a:hover { text-decoration: underline; }
 
 .btnCreate {
   display: inline-flex;
