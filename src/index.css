@@ -10,6 +10,7 @@ body {
   background: var(--color-bg-default);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scrollbar-gutter: stable;
 }
 
 a { text-decoration: none; color: inherit; }

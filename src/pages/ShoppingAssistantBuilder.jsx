@@ -56,7 +56,6 @@ export default function ShoppingAssistantBuilder() {
           <div className={styles.saHeader}>
             <div className={styles.saHeaderLeft}>
               <h1 className={styles.saTitle}>Shopping Assistant</h1>
-              <span className={styles.statusPill}>Offline</span>
             </div>
             <div className={styles.saHeaderActions}>
               <button className={styles.btnCancel} onClick={() => navigate('/shopping-assistant')}>Cancel</button>
@@ -347,48 +346,64 @@ function SellingLogicTab({ styles }) {
 }
 
 function PreviewPanel({ styles }) {
+  const [message, setMessage] = useState('')
+
   return (
     <div className={styles.previewPanel}>
-      <div className={styles.previewPanelTopbar}>
-        <div className={styles.previewPanelName}>
-          My first Assistant
-          <span className={styles.previewChevron}>▾</span>
-        </div>
-        <span className={styles.previewExpand}>⤢</span>
-      </div>
-      <div className={styles.previewBody}>
-        <div className={styles.chatWidget}>
-          <div className={styles.chatProductCard}>
-            <div className={styles.chatProductImg} />
-            <div className={styles.chatProductInfo}>
-              <div className={styles.chatProductName}>Nespresso Vertuo Next</div>
-              <div className={styles.chatProductPrice}>89,99 €</div>
-            </div>
-            <button className={styles.chatProductBtn}>View</button>
-          </div>
-          <div className={styles.chatBody}>
-            <div className={styles.chatTimestamp}>Today, 14:32</div>
-            <div className={styles.chatBubble}>
-              Welcome! I'm an AI-powered assistant here to answer your questions about products or post-sales support.
-            </div>
-            <div className={`${styles.chatBubble} ${styles.chatBubbleSub}`}>How can I assist you?</div>
-          </div>
-          <div className={styles.chatQuickReplies}>
-            <span className={styles.chatQuickReply}>Track my order</span>
-            <span className={styles.chatQuickReply}>Product info</span>
-            <span className={styles.chatQuickReply}>Returns</span>
-          </div>
-          <div className={styles.chatInputRow}>
-            <svg className={styles.chatInputIcon} width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" aria-hidden="true">
-              <circle cx="5.5" cy="5.5" r="3.5"/><path d="M8.5 8.5l3 3"/>
+      <div className={styles.previewHeader}>
+        <div className={styles.previewHeaderBar}>
+          <button className={styles.previewIconBtn} title="Expand" aria-label="Expand">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M2 10v4h4M14 6V2h-4M10 10l4 4M6 6L2 2"/>
             </svg>
-            <input className={styles.chatInputField} placeholder="Type your message…" />
-          </div>
+          </button>
+          <span className={styles.previewName}>My first Assistant</span>
+          <button className={styles.previewIconBtn} title="Minimize" aria-label="Minimize">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M3 6l5 5 5-5"/>
+            </svg>
+          </button>
         </div>
-        <div className={styles.previewFooter}>
-          <span className={styles.previewFooterLink}>Test on my website</span>
-          <span className={styles.previewFooterSep}>·</span>
-          <span className={styles.previewFooterLink}>View guidelines</span>
+        <div className={styles.previewProductCard}>
+          <img
+            className={styles.previewProductImg}
+            src="https://www.figma.com/api/mcp/asset/e50dbac0-de37-4b62-b187-55a307f600b8"
+            alt="Nourishing Night Balm"
+          />
+          <div className={styles.previewProductInfo}>
+            <p className={styles.previewProductName}>Nourishing Night Balm</p>
+            <p className={styles.previewProductPrice}>34€</p>
+          </div>
+          <button className={styles.previewAddToCart}>Add to cart</button>
+        </div>
+      </div>
+
+      <div className={styles.previewChat}>
+        <div className={styles.previewSeparator}>
+          <span className={styles.previewSeparatorLine} />
+          <span className={styles.previewSeparatorDate}>05/07/2025 — 2:56PM</span>
+          <span className={styles.previewSeparatorLine} />
+        </div>
+        <div className={styles.previewMessages}>
+          <p className={styles.previewMessageText}>👋 Hello, welcome to Brand&apos;s AI Shopping Assistant.</p>
+          <p className={styles.previewMessageText}>What can I help you with?</p>
+        </div>
+      </div>
+
+      <div className={styles.previewFooter}>
+        <div className={styles.previewQuickReplies}>
+          <button className={styles.previewQuickReply}>Track my order</button>
+          <button className={styles.previewQuickReply}>Product info</button>
+          <button className={styles.previewQuickReply}>Returns</button>
+        </div>
+        <div className={styles.previewCompose}>
+          <input
+            className={styles.previewComposeInput}
+            type="text"
+            placeholder="Type your message"
+            value={message}
+            onChange={e => setMessage(e.target.value)}
+          />
         </div>
       </div>
     </div>
