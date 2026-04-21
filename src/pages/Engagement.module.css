@@ -21,7 +21,7 @@
 }
 
 .subtitle a {
-  color: var(--color-brand);
+  color: var(--color-info-text);
   cursor: pointer;
   text-decoration: none;
 }
@@ -400,21 +400,19 @@
   height: 28px;
   padding: 0 var(--sp-3);
   border-radius: 14px;
-  border: 1px dashed var(--color-border-default);
+  border: 1.5px solid var(--color-action-secondary);
   background: transparent;
   font-size: var(--text-xs);
-  font-weight: var(--weight-medium);
-  color: var(--color-content-secondary);
+  font-weight: var(--weight-semibold);
+  color: var(--color-action-secondary);
   cursor: pointer;
   font-family: var(--font);
   margin-left: auto;
   white-space: nowrap;
-  transition: all var(--t-fast);
+  transition: background var(--t-fast);
 }
 .btnAddFilter:hover {
-  background: var(--color-bg-hover);
-  border-color: var(--color-brand);
-  color: var(--color-brand);
+  background: var(--color-action-secondary-hover);
 }
 
 /* ── Filter dropdown (fixed) ── */

@@ -1,36 +1,44 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Badge from '../components/ui/Badge'
 import styles from './EngagementBuilder.module.css'
-
-const WIDGETS = [
-  { id: 'cs-embedded', name: 'Conversation starters', sub: 'Embedded', desc: 'Inline widget embedded in page content' },
-  { id: 'cs-floating', name: 'Conversation starters', sub: 'Floating', desc: 'Floating overlay above page content' },
-  { id: 'classic', name: 'Classic', sub: 'Floating', desc: 'Classic notification popup' },
-  { id: 'messaging', name: 'Messaging', sub: 'Floating', desc: 'Chat messaging widget' },
-  { id: 'badge', name: 'Badge', sub: 'Floating', desc: 'Compact badge with avatar' },
-]
-
-const DEVICES = [
-  { id: 'both', label: 'Desktop & mobile' },
-  { id: 'desktop', label: 'Desktop' },
-  { id: 'mobile', label: 'Mobile' },
-]
-
-const PAGE_TYPES = ['All pages', 'Home', 'Category', 'Search result', 'Product details', 'Purchase funnel', 'Other pages']
+import {
+  DEVICES,
+  PAGE_TYPES,
+  WIDGETS,
+  PAIR_RULES,
+  getAvailableWidgets,
+  splitRecommended,
+  isPairCard,
+} from './engagement/widgetCatalog'
+import { ILLUSTRATIONS } from './engagement/WidgetIllustrations'
 
 export default function EngagementBuilder() {
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('widget')
+  const [pageType, setPageType] = useState('product')
   const [device, setDevice] = useState('both')
-  const [selectedWidget, setSelectedWidget] = useState('cs-embedded')
+  const [selectedWidget, setSelectedWidget] = useState('starters-embedded')
+  const [showOthers, setShowOthers] = useState(false)
+  const [strategyName] = useState('All product except B5')
+  const [status] = useState('Offline')
   const [conditions, setConditions] = useState([
     { field: 'Time on page', op: 'is greater than', value: '6 seconds' },
   ])
 
+  // Auto-switch selected widget if it becomes unavailable for the current page/device.
+  useEffect(() => {
+    const available = getAvailableWidgets(pageType, device)
+    const ids = available.map(w => w.id)
+    if (!ids.includes(selectedWidget)) {
+      const firstReco = available.find(w => w.recommended)
+      setSelectedWidget((firstReco ?? available[0])?.id ?? selectedWidget)
+    }
+  }, [pageType, device, selectedWidget])
+
   function addCondition() {
     setConditions(prev => [...prev, { field: 'Time on page', op: 'is greater than', value: '' }])
   }
-
   function removeCondition(i) {
     setConditions(prev => prev.filter((_, idx) => idx !== i))
   }
@@ -50,52 +58,70 @@ export default function EngagementBuilder() {
         </svg>
         Back to engagement strategies listing
       </button>
-      <h1 className={styles.builderTitle}>Engagement builder</h1>
+      <div className={styles.builderTitleRow}>
+        <h1 className={styles.builderTitle}>{strategyName}</h1>
+        <Badge variant="neutral" label={status} />
+      </div>
+
+      <div className={styles.tabNav}>
+        {TABS.map(t => (
+          <button
+            key={t.id}
+            className={`${styles.tabItem} ${activeTab === t.id ? styles.tabItemActive : ''}`}
+            onClick={() => setActiveTab(t.id)}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
 
       <div className={styles.builderLayout}>
         <div className={styles.formPanel}>
-          <div className={styles.tabNav}>
-            {TABS.map(t => (
-              <button
-                key={t.id}
-                className={`${styles.tabItem} ${activeTab === t.id ? styles.tabItemActive : ''}`}
-                onClick={() => setActiveTab(t.id)}
-              >
-                {t.label}
-              </button>
-            ))}
-          </div>
-
           {activeTab === 'widget' && (
             <WidgetTab
+              pageType={pageType}
+              setPageType={setPageType}
               device={device}
               setDevice={setDevice}
               selectedWidget={selectedWidget}
               setSelectedWidget={setSelectedWidget}
+              showOthers={showOthers}
+              setShowOthers={setShowOthers}
               conditions={conditions}
               onAddCondition={addCondition}
               onRemoveCondition={removeCondition}
-              styles={styles}
             />
           )}
-          {activeTab === 'style' && <StyleTab styles={styles} />}
-          {activeTab === 'content' && <ContentTab styles={styles} />}
-          {activeTab === 'position' && <PositionTab navigate={navigate} styles={styles} />}
-
-          <div className={styles.formFooter}>
-            <button className={styles.btnCancel} onClick={() => navigate('/engagement')}>Cancel</button>
-            <button className={styles.btnSave}>Save</button>
-            <button className={styles.btnPublish}>Publish</button>
-          </div>
+          {activeTab === 'style' && <StyleTab />}
+          {activeTab === 'content' && <ContentTab />}
+          {activeTab === 'position' && <PositionTab navigate={navigate} />}
         </div>
 
-        <PreviewPanel navigate={navigate} styles={styles} />
+        <PreviewPanel navigate={navigate} device={device} selectedWidget={selectedWidget} />
+      </div>
+
+      <div className={styles.formFooter}>
+        <button className={styles.btnCancel} onClick={() => navigate('/engagement')}>Cancel</button>
+        <button className={styles.btnSave}>Save</button>
+        <button className={styles.btnPublish}>Publish</button>
       </div>
     </div>
   )
 }
 
-function WidgetTab({ device, setDevice, selectedWidget, setSelectedWidget, conditions, onAddCondition, onRemoveCondition, styles }) {
+/* ── Widget tab ─────────────────────────────────────────────────────── */
+
+function WidgetTab({
+  pageType, setPageType,
+  device, setDevice,
+  selectedWidget, setSelectedWidget,
+  showOthers, setShowOthers,
+  conditions, onAddCondition, onRemoveCondition,
+}) {
+  const available = getAvailableWidgets(pageType, device)
+  const { recommended, others } = splitRecommended(available)
+  const hasOthers = others.length > 0
+
   return (
     <div className={styles.formBody}>
       <div className={styles.formSection}>
@@ -106,24 +132,28 @@ function WidgetTab({ device, setDevice, selectedWidget, setSelectedWidget, condi
       <div className={styles.formSection}>
         <label className={styles.formLabel}>Page type</label>
         <p className={styles.formHint}>Select the page type for your widget display. We automatically detect and deploy the widget from the selected page types.</p>
-        <select className={styles.formSelect} defaultValue="Product details">
-          {PAGE_TYPES.map(pt => (
-            <option key={pt}>{pt}</option>
-          ))}
+        <select
+          className={styles.formSelect}
+          value={pageType}
+          onChange={e => setPageType(e.target.value)}
+        >
+          {PAGE_TYPES.map(pt => <option key={pt.id} value={pt.id}>{pt.label}</option>)}
         </select>
       </div>
 
       <div className={styles.formSection}>
         <label className={styles.formLabel}>Device</label>
         <p className={styles.formHint}>Select the device where your widget will be displayed</p>
-        <div className={styles.deviceChips}>
+        <div className={styles.deviceTiles}>
           {DEVICES.map(d => (
             <button
               key={d.id}
-              className={`${styles.deviceChip} ${device === d.id ? styles.deviceChipSelected : ''}`}
+              className={`${styles.deviceTile} ${device === d.id ? styles.deviceTileSelected : ''}`}
               onClick={() => setDevice(d.id)}
+              type="button"
             >
-              {d.label}
+              <DeviceIcon id={d.id} />
+              <span className={styles.deviceTileLabel}>{d.label}</span>
             </button>
           ))}
         </div>
@@ -131,16 +161,43 @@ function WidgetTab({ device, setDevice, selectedWidget, setSelectedWidget, condi
 
       <div className={styles.formSection}>
         <label className={styles.formLabel}>Widget</label>
-        <div className={styles.widgetOptions}>
-          {WIDGETS.map(w => (
+        <div className={styles.widgetList}>
+          {recommended.map(entry => (
+            <WidgetCard
+              key={entry.id}
+              entry={entry}
+              device={device}
+              selected={selectedWidget === entry.id}
+              onSelect={() => setSelectedWidget(entry.id)}
+            />
+          ))}
+
+          {hasOthers && (
             <button
-              key={w.id}
-              className={`${styles.widgetOption} ${selectedWidget === w.id ? styles.widgetOptionSelected : ''}`}
-              onClick={() => setSelectedWidget(w.id)}
+              type="button"
+              className={styles.seeOtherLink}
+              onClick={() => setShowOthers(v => !v)}
             >
-              <div className={styles.widgetOptionName}>{w.name}</div>
-              {w.sub && <div className={styles.widgetOptionSub}>{w.sub}</div>}
+              See other widgets
+              <svg
+                className={showOthers ? styles.seeOtherChevronOpen : ''}
+                width="10" height="10" viewBox="0 0 10 10" fill="none"
+                stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"
+                aria-hidden="true"
+              >
+                <path d="M2 4l3 3 3-3"/>
+              </svg>
             </button>
+          )}
+
+          {hasOthers && showOthers && others.map(entry => (
+            <WidgetCard
+              key={entry.id}
+              entry={entry}
+              device={device}
+              selected={selectedWidget === entry.id}
+              onSelect={() => setSelectedWidget(entry.id)}
+            />
           ))}
         </div>
       </div>
@@ -182,7 +239,143 @@ function WidgetTab({ device, setDevice, selectedWidget, setSelectedWidget, condi
   )
 }
 
-function StyleTab({ styles }) {
+/* ── Widget card (solo + pair) ──────────────────────────────────────── */
+
+function WidgetCard({ entry, device, selected, onSelect }) {
+  const widget = WIDGETS[entry.id]
+  const pair = isPairCard(entry.id, device) ? PAIR_RULES[entry.id] : null
+
+  const cls = [
+    styles.widgetCard,
+    selected ? styles.widgetCardSelected : '',
+    pair ? styles.widgetCardPair : '',
+    !widget.hasIllustration ? styles.widgetCardNoIllus : '',
+  ].filter(Boolean).join(' ')
+
+  return (
+    <button type="button" className={cls} onClick={onSelect}>
+      {pair ? (
+        <>
+          <CardHalf
+            widgetId={pair.desktop}
+            label={`Desktop: ${WIDGETS[pair.desktop].name}`}
+            active={selected}
+            showRadio
+            selected={selected}
+            recommended={entry.recommended}
+          />
+          <span className={styles.pairDivider} aria-hidden="true" />
+          <CardHalf
+            widgetId={pair.mobile}
+            label={`Mobile: ${WIDGETS[pair.mobile].name}`}
+            active={selected}
+          />
+        </>
+      ) : (
+        <CardBody
+          widget={widget}
+          active={selected}
+          selected={selected}
+          recommended={entry.recommended}
+        />
+      )}
+    </button>
+  )
+}
+
+function CardBody({ widget, active, selected, recommended }) {
+  const Illus = widget.hasIllustration ? ILLUSTRATIONS[widget.id] : null
+  return (
+    <>
+      <span className={styles.widgetCardMain}>
+        <Radio on={selected} />
+        <span className={styles.widgetCardTexts}>
+          <span className={styles.widgetCardTitleRow}>
+            <span className={styles.widgetCardName}>{widget.name}</span>
+            {widget.variant && (
+              <>
+                <span className={styles.widgetCardDash}>—</span>
+                <span className={styles.widgetCardVariant}>{widget.variant}</span>
+              </>
+            )}
+            <HelpIcon />
+          </span>
+          {recommended && <span className={styles.recommendedTag}>Recommended</span>}
+        </span>
+      </span>
+      {Illus && (
+        <span className={styles.illustrationTile}>
+          <Illus active={active} />
+        </span>
+      )}
+    </>
+  )
+}
+
+function CardHalf({ widgetId, label, active, showRadio, selected, recommended }) {
+  const widget = WIDGETS[widgetId]
+  const Illus = ILLUSTRATIONS[widgetId]
+  return (
+    <span className={styles.pairHalf}>
+      <span className={styles.widgetCardMain}>
+        {showRadio && <Radio on={selected} />}
+        <span className={styles.widgetCardTexts}>
+          <span className={styles.widgetCardTitleRow}>
+            <span className={styles.widgetCardName}>{label}</span>
+            <HelpIcon />
+          </span>
+          <span className={styles.widgetCardVariant}>{widget.variant}</span>
+          {recommended && <span className={styles.recommendedTag}>Recommended</span>}
+        </span>
+      </span>
+      <span className={styles.illustrationTile}>
+        <Illus active={active} />
+      </span>
+    </span>
+  )
+}
+
+function Radio({ on }) {
+  return (
+    <span className={`${styles.radio} ${on ? styles.radioOn : ''}`} aria-hidden="true">
+      {on && <span className={styles.radioDot} />}
+    </span>
+  )
+}
+
+function HelpIcon() {
+  return (
+    <svg className={styles.helpIcon} width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+      <circle cx="6" cy="6" r="5" fill="var(--color-content-icon)" />
+      <path d="M4.5 4.5a1.5 1.5 0 013 0c0 .6-.4 1-.9 1.2s-.6.4-.6.8M6 8.3v.2" stroke="white" strokeWidth="1" strokeLinecap="round"/>
+    </svg>
+  )
+}
+
+function DeviceIcon({ id }) {
+  if (id === 'both') return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="1" y="3" width="9" height="7" rx="1"/>
+      <rect x="10" y="6" width="5" height="8" rx="1"/>
+    </svg>
+  )
+  if (id === 'desktop') return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="1.5" y="2.5" width="13" height="9" rx="1"/>
+      <path d="M5 14h6M8 11.5v2.5"/>
+    </svg>
+  )
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="4" y="2" width="8" height="12" rx="1.25"/>
+      <path d="M7 12.5h2"/>
+    </svg>
+  )
+}
+
+/* ── Style / Content / Position tabs (unchanged) ───────────────────── */
+
+function StyleTab() {
   return (
     <div className={styles.formBody}>
       <div className={styles.formSection}>
@@ -229,7 +422,7 @@ function StyleTab({ styles }) {
   )
 }
 
-function ContentTab({ styles }) {
+function ContentTab() {
   return (
     <div className={styles.formBody}>
       <div className={styles.formSection}>
@@ -275,7 +468,7 @@ function ContentTab({ styles }) {
   )
 }
 
-function PositionTab({ navigate, styles }) {
+function PositionTab({ navigate }) {
   return (
     <div className={styles.formBody}>
       <div className={styles.formSection}>
@@ -318,8 +511,18 @@ function PositionTab({ navigate, styles }) {
   )
 }
 
-function PreviewPanel({ navigate, styles }) {
+/* ── Preview panel ─────────────────────────────────────────────────── */
+
+function PreviewPanel({ navigate, device, selectedWidget }) {
   const [previewUrl, setPreviewUrl] = useState('')
+
+  const showDesktop = device === 'both' || device === 'desktop'
+  const showMobile  = device === 'both' || device === 'mobile'
+
+  // For Desktop+mobile with a pair widget, mobile preview uses the paired widget id.
+  const mobileWidget = isPairCard(selectedWidget, device)
+    ? PAIR_RULES[selectedWidget].mobile
+    : selectedWidget
 
   return (
     <div className={styles.previewPanel}>
@@ -345,43 +548,145 @@ function PreviewPanel({ navigate, styles }) {
             placeholder="Enter your website URL"
           />
         </div>
-        <p className={styles.previewDeviceLabel}>Desktop</p>
-        <div className={styles.widgetPreviewCard}>
-          <div className={styles.fakeWidget}>
-            <div className={styles.fakeWidgetHeader}>
-              <div className={styles.fakeWidgetAvatar}>
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                  <circle cx="6" cy="6" r="4.5" fill="#3BE1A4"/>
-                </svg>
-              </div>
-              <span className={styles.fakeWidgetQuestion}>Need help with your search?</span>
+
+        {showDesktop && (
+          <>
+            <p className={styles.previewDeviceLabel}>Desktop</p>
+            <div className={styles.widgetPreviewCard}>
+              <WidgetPreview widgetId={selectedWidget} />
             </div>
-            <div className={styles.fakeChips}>
-              <span className={styles.fakeChip}>Does the gamepad work on Windows 11?</span>
-              <span className={styles.fakeChip}>Can I use it on console?</span>
-              <span className={styles.fakeAskBtn}>Ask my question</span>
+          </>
+        )}
+
+        {showDesktop && showMobile && <div className={styles.previewDivider} />}
+
+        {showMobile && (
+          <>
+            <p className={styles.previewDeviceLabel}>Mobile</p>
+            <div className={styles.widgetPreviewCard}>
+              <WidgetPreview widgetId={mobileWidget} compact />
             </div>
-          </div>
-        </div>
-        <div className={styles.previewDivider} />
-        <p className={styles.previewDeviceLabel}>Mobile</p>
-        <div className={styles.widgetPreviewCard}>
-          <div className={styles.fakeWidget} style={{ maxWidth: 200 }}>
-            <div className={styles.fakeWidgetHeader}>
-              <div className={styles.fakeWidgetAvatar}>
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                  <circle cx="6" cy="6" r="4.5" fill="#3BE1A4"/>
-                </svg>
-              </div>
-              <span className={styles.fakeWidgetQuestion}>Need help?</span>
-            </div>
-            <div className={styles.fakeChips}>
-              <span className={styles.fakeChip}>Windows 11?</span>
-              <span className={styles.fakeAskBtn}>Ask</span>
-            </div>
-          </div>
-        </div>
+          </>
+        )}
       </div>
+    </div>
+  )
+}
+
+/* ── Widget previews — one component per widget type ───────────────── */
+
+function WidgetPreview({ widgetId, compact }) {
+  switch (widgetId) {
+    case 'starters-embedded': return <PvEmbedded compact={compact} />
+    case 'starters-floating': return <PvFloating compact={compact} />
+    case 'classic':           return <PvClassic />
+    case 'messaging':         return <PvMessaging />
+    case 'badge':             return <PvBadge />
+    case 'smart-banner':      return <PvSmartBanner compact={compact} />
+    case 'custom':            return <PvCustom />
+    default: return null
+  }
+}
+
+function Sparkle({ size = 14 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M8 1l1.4 4.6L14 7l-4.6 1.4L8 13l-1.4-4.6L2 7l4.6-1.4L8 1z" fill="currentColor"/>
+    </svg>
+  )
+}
+
+function PvEmbedded({ compact }) {
+  return (
+    <div className={`${styles.pvEmbedded} ${compact ? styles.pvMobile : ''}`}>
+      <div className={styles.pvEmbeddedHeader}>
+        <span className={styles.pvAiBadge}>✦</span>
+        <span className={styles.pvEmbeddedTitle}>A question about this product?</span>
+      </div>
+      <div className={styles.pvEmbeddedChips}>
+        <span className={styles.pvChip}>Is it suitable for sports?</span>
+        <span className={styles.pvChip}>Is it waterproof?</span>
+        <span className={styles.pvChip}>What is the delivery time?</span>
+        <span className={styles.pvChipCta}>
+          <span className={styles.pvAiSpark}>✦</span> Ask your question
+        </span>
+      </div>
+    </div>
+  )
+}
+
+function PvFloating({ compact }) {
+  return (
+    <div className={`${styles.pvFloating} ${compact ? styles.pvMobile : ''}`}>
+      <button className={styles.pvFloatingClose} aria-label="Close">×</button>
+      <div className={styles.pvFloatingChips}>
+        <span className={styles.pvChip}>Is it suitable for sports?</span>
+        <span className={styles.pvChip}>Is it waterproof?</span>
+        <span className={styles.pvChip}>What is the delivery time?</span>
+        <span className={styles.pvFloatingCta}>
+          <span className={styles.pvAiSpark}>✦</span> Shopping Assistant
+        </span>
+      </div>
+    </div>
+  )
+}
+
+function PvClassic() {
+  return (
+    <div className={styles.pvClassic}>
+      <div className={styles.pvClassicHeader}>Need help?</div>
+      <div className={styles.pvClassicBody}>
+        <div className={styles.pvClassicAvatar}><Sparkle /></div>
+        <p className={styles.pvClassicText}>Have a question? We are here to help!</p>
+      </div>
+      <button className={styles.pvClassicCta}>Ask your question</button>
+    </div>
+  )
+}
+
+function PvMessaging() {
+  return (
+    <div className={styles.pvMessaging}>
+      <div className={styles.pvMessagingAvatar}><Sparkle /></div>
+      <div className={styles.pvMessagingBubble}>Have a question? We can help!</div>
+    </div>
+  )
+}
+
+function PvBadge() {
+  return (
+    <div className={styles.pvBadge}>
+      <div className={styles.pvBadgeCircle}><Sparkle size={18} /></div>
+    </div>
+  )
+}
+
+function PvSmartBanner({ compact }) {
+  return (
+    <div className={`${styles.pvSmartBanner} ${compact ? styles.pvMobile : ''}`}>
+      <div className={styles.pvSmartBannerInner}>
+        <span className={styles.pvSmartBannerBrand}>
+          <span className={styles.pvAiSpark}>✦</span> Shopping Assistant
+        </span>
+        <span className={styles.pvSmartBannerDivider} />
+        <span className={styles.pvChip}>Help me find the perfect gift</span>
+        {!compact && <span className={styles.pvChip}>I am looking for a facial treatment</span>}
+        <span className={styles.pvSmartBannerInput}>
+          Ask a question
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+            <rect x="6" y="2" width="4" height="8" rx="2"/>
+            <path d="M4 9a4 4 0 008 0M8 13v2"/>
+          </svg>
+        </span>
+      </div>
+    </div>
+  )
+}
+
+function PvCustom() {
+  return (
+    <div className={styles.pvCustom}>
+      <button className={styles.pvCustomBtn}>Custom button</button>
     </div>
   )
 }

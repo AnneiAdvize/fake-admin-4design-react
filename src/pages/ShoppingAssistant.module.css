@@ -22,7 +22,7 @@
 }
 
 .subtitle a {
-  color: var(--color-brand);
+  color: var(--color-info-text);
   text-decoration: underline;
   cursor: pointer;
 }
