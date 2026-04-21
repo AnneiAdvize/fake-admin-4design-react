@@ -19,7 +19,7 @@
   display: grid;
   grid-template-columns: 1fr 340px;
   gap: var(--sp-5);
-  align-items: start;
+  align-items: stretch;
 }
 
 .saHeader {
@@ -76,7 +76,7 @@
   white-space: nowrap;
 }
 .pageTab:hover { color: var(--color-content-primary); }
-.pageTabActive { color: var(--color-content-primary); border-bottom-color: var(--color-content-primary); }
+.pageTabActive { color: var(--color-content-primary); border-bottom-color: var(--color-brand); }
 
 .formCard {
   background: var(--color-bg-surface);
@@ -454,29 +454,31 @@ select.formInput {
   cursor: pointer;
   transition: background var(--t-fast);
 }
-.skillListItem:hover { background: var(--color-bg-hover); }
+.skillListItem:hover { background: var(--color-bg-surface); }
 .skillListItemInfo { flex: 1; min-width: 0; }
 .skillListItemName { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-content-primary); margin-bottom: 2px; }
 .skillListItemTrigger { font-size: var(--text-xs); color: var(--color-content-secondary); line-height: 1.5; margin-top: 1px; }
-.skillListItemAction {
+.skillTagsRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
+}
+
+.skillTag {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  height: 20px;
-  padding: 0 var(--sp-2);
-  border-radius: var(--r-sm);
-  background: var(--color-bg-default);
-  border: 1px solid var(--color-border-default);
-  font-size: 10px;
+  height: 24px;
+  padding: 3px 12px;
+  border-radius: 8px;
+  background: #F0F0EC;
+  font-size: var(--text-xs);
   font-weight: var(--weight-medium);
-  color: var(--color-content-secondary);
-  margin-top: var(--sp-2);
+  color: var(--color-content-primary);
   white-space: nowrap;
-  letter-spacing: .01em;
 }
-.action-api { background: #EFF6FF; border-color: #BFDBFE; color: #1D4ED8; }
-.action-mcp { background: #F5F3FF; border-color: #DDD6FE; color: #6D28D9; }
-.action-search { background: #FFF7ED; border-color: #FED7AA; color: #C2410C; }
 
 .skillEditBtn {
   display: inline-flex;
@@ -485,15 +487,15 @@ select.formInput {
   width: 28px;
   height: 28px;
   border-radius: 14px;
-  border: 1px solid var(--color-border-default);
-  background: var(--color-bg-surface);
+  border: none;
+  background: transparent;
   color: var(--color-content-secondary);
   cursor: pointer;
   flex-shrink: 0;
   transition: all var(--t-fast);
 }
 .skillEditBtn:hover { background: var(--color-bg-hover); color: var(--color-content-primary); }
-.skillDeleteBtn:hover { background: var(--color-danger-subtle); color: var(--color-danger-emphasis); border-color: transparent; }
+.skillDeleteBtn:hover { background: var(--color-danger-subtle); color: var(--color-danger-emphasis); }
 
 .rankingItem {
   display: flex;
@@ -605,7 +607,7 @@ select.formInput {
 .chatProductBtn {
   height: 28px;
   padding: 0 var(--sp-3);
-  border-radius: var(--r-sm);
+  border-radius: 14px;
   background: var(--color-brand);
   border: none;
   font-family: var(--font);
@@ -705,8 +707,8 @@ select.formInput {
   justify-content: center;
   width: 28px;
   height: 28px;
-  border-radius: var(--r-sm);
-  border: 1px solid var(--color-border-default);
+  border-radius: 14px;
+  border: none;
   background: none;
   color: var(--color-content-secondary);
   cursor: pointer;
@@ -720,19 +722,19 @@ select.formInput {
   gap: 6px;
   height: 28px;
   padding: 0 var(--sp-2);
-  border-radius: var(--r-sm);
-  border: 1px solid var(--color-border-default);
+  border-radius: 14px;
+  border: none;
   background: none;
   font-family: var(--font);
   font-size: var(--text-sm);
-  font-weight: var(--weight-medium);
-  color: var(--color-content-secondary);
+  font-weight: var(--weight-semibold);
+  color: var(--color-brand-strong);
   cursor: pointer;
-  transition: all var(--t-fast);
+  transition: background var(--t-fast);
   white-space: nowrap;
 }
 .modalBackVisible { display: inline-flex; }
-.modalBack:hover { background: var(--color-bg-hover); color: var(--color-content-primary); }
+.modalBack:hover { background: var(--color-bg-hover); }
 .modalBody {
   flex: 1;
   overflow-y: auto;
@@ -833,3 +835,183 @@ select.formInput {
   transition: background var(--t-fast);
 }
 .btnPublish:hover { background: #2fcf96; }
+
+/* Modal labels — regular case, not uppercase */
+.modalLabel {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--color-content-secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.optionalTag {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-normal);
+  color: var(--color-content-secondary);
+  opacity: 0.65;
+}
+
+/* Tertiary button — no border, semibold, left-aligned */
+.btnTertiary {
+  display: inline-flex;
+  height: 24px;
+  padding: 0 12px;
+  align-items: center;
+  gap: 4px;
+  border-radius: 24px;
+  border: none;
+  background: transparent;
+  font-family: var(--font);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--color-content-primary);
+  cursor: pointer;
+  transition: background var(--t-fast);
+  align-self: flex-start;
+}
+.btnTertiary:hover:not(:disabled) { background: var(--color-bg-hover); }
+
+/* Advanced settings — tertiary + primary 1200 color */
+.btnAdvanced {
+  display: inline-flex;
+  height: 24px;
+  padding: 0 12px;
+  align-items: center;
+  gap: 4px;
+  border-radius: 24px;
+  border: none;
+  background: transparent;
+  font-family: var(--font);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--color-brand-strong);
+  cursor: pointer;
+  transition: background var(--t-fast);
+  align-self: flex-start;
+  opacity: 0.5;
+}
+
+/* Added tools list */
+.addedToolsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.addedToolItem {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 6px var(--sp-3);
+  background: var(--color-bg-default);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--r-lg);
+}
+
+.addedToolBadge {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+  padding: 0 var(--sp-2);
+  border-radius: var(--r-full);
+  font-size: 10px;
+  font-weight: var(--weight-semibold);
+  background: var(--color-brand-strong);
+  color: var(--color-brand);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.addedToolName {
+  flex: 1;
+  font-size: var(--text-sm);
+  color: var(--color-content-primary);
+  min-width: 0;
+}
+
+.removeToolBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-content-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  padding: 0;
+  transition: all var(--t-fast);
+}
+.removeToolBtn:hover { background: var(--color-bg-hover); color: var(--color-content-primary); }
+
+/* Tool type picker */
+.toolPicker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+/* MCP preset cards */
+.mcpPresetGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+}
+
+.mcpPresetCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: var(--sp-4) var(--sp-3);
+  border: 1.5px solid var(--color-border-default);
+  border-radius: var(--r-xl);
+  background: var(--color-bg-surface);
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all var(--t-fast);
+}
+.mcpPresetCard:hover { border-color: var(--color-content-secondary); }
+.mcpPresetCardSelected { border-color: var(--color-brand); background: #F0FDF7; }
+
+.mcpPresetIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-full);
+  background: var(--color-bg-default);
+  border: 1px solid var(--color-border-default);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-content-primary);
+}
+
+.mcpPresetLabel {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-content-primary);
+}
+
+/* OR separator */
+.orSeparator {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  color: var(--color-content-secondary);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+}
+.orSeparator::before,
+.orSeparator::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border-default);
+}
