@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Badge from '../components/ui/Badge'
+import { WidgetPreview as SharedWidgetPreview } from './engagement/WidgetPreviews'
 import styles from './Engagement.module.css'
 
 const INITIAL_STRATEGIES = [
@@ -352,7 +353,9 @@ export default function Engagement() {
       {/* ── Widget preview popover (fixed) ── */}
       {wPreview && (
         <div className={styles.widgetPopover} style={wStyle} onClick={e => e.stopPropagation()}>
-          <WidgetPreview widget={wPreview.widget} styles={styles} />
+          <div className={styles.widgetPopoverInner}>
+            <SharedWidgetPreview widgetName={wPreview.widget} />
+          </div>
         </div>
       )}
 

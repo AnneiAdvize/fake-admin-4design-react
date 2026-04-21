@@ -90,3 +90,16 @@ export function splitRecommended(entries) {
 export function isPairCard(widgetId, deviceId) {
   return deviceId === 'both' && Object.hasOwn(PAIR_RULES, widgetId)
 }
+
+// Default target URLs used to pre-fill the Website URL field when changing page type.
+// Other page types start empty and require the user to enter a URL manually.
+export const PAGE_TYPE_DEMO_URLS = {
+  'home':     'https://idz-v2-marine.surge.sh/index.html',
+  'category': 'https://idz-v2-marine.surge.sh/category/bouche.html',
+  'product':  'https://idz-v2-marine.surge.sh/bouche/dentifrice-enfants.html',
+}
+
+// Returns the default URL to pre-fill for the given page type, or null if none.
+export function getDemoUrl(pageTypeId) {
+  return PAGE_TYPE_DEMO_URLS[pageTypeId] ?? null
+}
