@@ -1,0 +1,88 @@
+.carousel {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-4) var(--sp-5);
+}
+
+.titleRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+}
+
+.title {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  color: var(--color-content-primary);
+}
+
+.counter {
+  font-size: var(--text-sm);
+  color: var(--color-content-secondary);
+}
+
+.body {
+  position: relative;
+  padding: 0 48px var(--sp-4);
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border-radius: var(--r-full);
+  background: var(--color-bg-default);
+  border: 1px solid var(--color-border-default);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-content-secondary);
+  font-size: 18px;
+  line-height: 1;
+  transition: all var(--t-fast);
+  cursor: pointer;
+}
+.arrow:hover { background: var(--color-bg-hover); color: var(--color-content-primary); }
+
+.tipContent {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--r-lg);
+  padding: var(--sp-4);
+}
+
+.tipTitle {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-content-primary);
+  margin-bottom: var(--sp-3);
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding-bottom: var(--sp-4);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--r-full);
+  background: var(--color-border-default);
+  border: none;
+  cursor: pointer;
+  transition: background var(--t-fast);
+}
+.dotActive { background: var(--color-brand); }

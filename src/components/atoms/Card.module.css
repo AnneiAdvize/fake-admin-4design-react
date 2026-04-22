@@ -1,0 +1,21 @@
+.card {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+}
+
+.header {
+  padding: var(--sp-4) var(--sp-5);
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.title {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  color: var(--color-content-primary);
+}
+
+.body {
+  padding: var(--sp-5);
+}

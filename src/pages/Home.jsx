@@ -1,5 +1,5 @@
 import styles from './Home.module.css'
-import TextArea from '../components/ui/TextArea'
+import TextArea from '../components/atoms/TextArea'
 
 export default function Home() {
   return (

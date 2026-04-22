@@ -1,0 +1,136 @@
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+}
+
+.wrapper[data-disabled] {
+  cursor: not-allowed;
+}
+
+/* Hide native input visually but keep it accessible */
+.nativeInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  width: 16px;
+  height: 16px;
+}
+
+/* Box (the visual checkbox) */
+.box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--r-sm);
+  border: 1.5px solid var(--color-border-default);
+  background: var(--color-bg-surface);
+  transition: background var(--t-base), border-color var(--t-base);
+  flex-shrink: 0;
+}
+
+/* Checked state */
+.wrapper[data-checked] .box {
+  background: var(--color-brand-selected);
+  border-color: var(--color-brand-selected);
+  color: var(--color-content-inverse);
+}
+
+/* Hover */
+.wrapper:hover:not([data-disabled]) .box {
+  border-color: var(--color-action-primary-hover);
+}
+
+.wrapper:hover:not([data-disabled])[data-checked] .box {
+  background: var(--color-action-primary-hover);
+  border-color: var(--color-action-primary-hover);
+}
+
+/* Focused (keyboard nav) */
+.wrapper[data-state="Focused"] .box,
+.nativeInput:focus-visible + .box {
+  outline: 2px solid var(--color-content-primary);
+  outline-offset: 2px;
+}
+
+/* Error */
+.wrapper[data-error] .box {
+  border-color: var(--color-danger-icon);
+  background: var(--color-danger-bg);
+  color: var(--color-danger-icon);
+}
+
+.wrapper[data-error][data-checked] .box {
+  background: var(--color-danger-bg);
+  border-color: var(--color-danger-icon);
+  color: var(--color-danger-icon);
+}
+
+/* Validation (success) */
+.wrapper[data-validation] .box {
+  border-color: var(--color-brand-selected);
+  background: var(--color-success-bg);
+  color: var(--color-brand-selected);
+}
+
+/* Disabled unchecked */
+.wrapper[data-disabled] .box {
+  border-color: var(--color-content-disabled);
+  background: var(--color-action-primary-disabled);
+}
+
+/* Disabled checked */
+.wrapper[data-disabled][data-checked] .box {
+  background: var(--color-action-primary-disabled);
+  border-color: var(--color-content-disabled);
+  color: var(--color-content-disabled);
+}
+
+/* Indeterminate */
+.wrapper[data-indeterminate] .box {
+  background: var(--color-brand-selected);
+  border-color: var(--color-brand-selected);
+}
+
+.indeterminateMark {
+  display: block;
+  width: 8px;
+  height: 2px;
+  background: var(--color-content-inverse);
+  border-radius: 1px;
+}
+
+/* Checkmark SVG */
+.checkmark {
+  width: 10px;
+  height: 8px;
+}
+
+/* Label text */
+.label {
+  font-family: var(--font);
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  color: var(--color-content-primary);
+  line-height: 1.4;
+  transition: color var(--t-base);
+}
+
+.wrapper[data-disabled] .label {
+  color: var(--color-content-disabled);
+}

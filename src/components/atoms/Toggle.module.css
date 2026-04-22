@@ -1,0 +1,96 @@
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  cursor: pointer;
+  user-select: none;
+}
+
+.wrapper[data-disabled] {
+  cursor: not-allowed;
+}
+
+/* Hide native checkbox */
+.nativeInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Track */
+.track {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 36px;
+  height: 20px;
+  border-radius: var(--r-full);
+  background: var(--color-border-default);
+  transition: background var(--t-base);
+  flex-shrink: 0;
+}
+
+/* Checked track */
+.wrapper[data-checked] .track {
+  background: var(--color-brand-selected);
+}
+
+/* Hover */
+.wrapper:hover:not([data-disabled]) .track {
+  background: var(--color-content-secondary);
+}
+
+.wrapper:hover:not([data-disabled])[data-checked] .track {
+  background: var(--color-action-primary-hover);
+}
+
+/* Disabled */
+.wrapper[data-disabled] .track {
+  background: var(--color-border-disabled);
+}
+
+.wrapper[data-disabled][data-checked] .track {
+  background: var(--color-content-disabled);
+}
+
+/* Focus ring */
+.wrapper[data-state="Focused"] .track,
+.nativeInput:focus-visible ~ .track {
+  outline: 2px solid var(--color-content-primary);
+  outline-offset: 2px;
+}
+
+/* Thumb */
+.thumb {
+  position: absolute;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--r-full);
+  background: var(--color-bg-surface);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  transition: transform var(--t-base);
+}
+
+.wrapper[data-checked] .thumb {
+  transform: translateX(16px);
+}
+
+.wrapper[data-disabled] .thumb {
+  background: var(--color-bg-hover);
+}
+
+/* Label */
+.label {
+  font-family: var(--font);
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  color: var(--color-content-primary);
+  line-height: 1.4;
+}
+
+.wrapper[data-disabled] .label {
+  color: var(--color-content-disabled);
+}

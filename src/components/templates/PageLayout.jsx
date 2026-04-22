@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom'
-import NavPrimary from './NavPrimary'
-import NavSecondary from './NavSecondary'
+import NavPrimary from '../organisms/NavPrimary'
+import NavSecondary from '../organisms/NavSecondary'
 import styles from './PageLayout.module.css'
 
 export default function PageLayout() {

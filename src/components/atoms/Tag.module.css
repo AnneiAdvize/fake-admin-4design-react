@@ -1,0 +1,157 @@
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  border-radius: var(--r-full);
+  font-family: var(--font);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+  border: none;
+  cursor: default;
+  vertical-align: middle;
+}
+
+button.tag {
+  cursor: pointer;
+}
+
+/* Sizes */
+.tag[data-size="XL"] {
+  height: 40px;
+  padding: 0 var(--sp-4);
+  font-size: var(--text-lg);
+}
+
+.tag[data-size="L"] {
+  height: 32px;
+  padding: 0 var(--sp-3);
+  font-size: var(--text-md);
+}
+
+.tag[data-size="M"] {
+  height: 24px;
+  padding: 0 var(--sp-2);
+  font-size: var(--text-sm);
+}
+
+.tag[data-size="S"] {
+  height: 16px;
+  padding: 0 var(--sp-1);
+  font-size: var(--text-xs);
+}
+
+/* Colors — light (default) */
+.tag[data-color="Validation"] {
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+}
+
+.tag[data-color="Information"] {
+  background: var(--color-info-bg);
+  color: var(--color-info-text);
+}
+
+.tag[data-color="Warning"] {
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+}
+
+.tag[data-color="Alerte"] {
+  background: var(--color-danger-bg);
+  color: var(--color-danger-text);
+}
+
+.tag[data-color="Purple"] {
+  background: #EDE8FD;
+  color: #2F1E7E;
+}
+
+.tag[data-color="Dark"] {
+  background: var(--color-bg-hover);
+  color: var(--color-content-primary);
+}
+
+.tag[data-color="White"] {
+  background: var(--color-bg-surface);
+  color: var(--color-content-primary);
+  border: 1px solid var(--color-border-default);
+}
+
+/* Intense (filled) variants */
+.tag[data-color="Validation"][data-intense] {
+  background: var(--color-success-icon);
+  color: var(--color-content-inverse);
+}
+
+.tag[data-color="Information"][data-intense] {
+  background: var(--color-info-icon);
+  color: var(--color-content-inverse);
+}
+
+.tag[data-color="Warning"][data-intense] {
+  background: var(--color-warning-icon);
+  color: var(--color-content-inverse);
+}
+
+.tag[data-color="Alerte"][data-intense] {
+  background: var(--color-danger-icon);
+  color: var(--color-content-inverse);
+}
+
+.tag[data-color="Purple"][data-intense] {
+  background: #2F1E7E;
+  color: var(--color-content-inverse);
+}
+
+.tag[data-color="Dark"][data-intense] {
+  background: var(--color-content-primary);
+  color: var(--color-content-inverse);
+}
+
+/* Icon */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.tag[data-size="XL"] .icon,
+.tag[data-size="L"] .icon {
+  width: 16px;
+  height: 16px;
+}
+
+.tag[data-size="S"] .icon {
+  width: 10px;
+  height: 10px;
+}
+
+/* Label */
+.label {
+  flex-shrink: 0;
+}
+
+/* Close button */
+.closeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  color: inherit;
+  opacity: 0.7;
+  border-radius: var(--r-sm);
+  transition: opacity var(--t-base);
+}
+
+.closeBtn:hover {
+  opacity: 1;
+}

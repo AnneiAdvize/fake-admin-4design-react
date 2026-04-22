@@ -1,0 +1,28 @@
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-md);
+  font-size: var(--text-sm);
+  color: var(--color-content-primary);
+  cursor: pointer;
+  transition: background var(--t-fast);
+}
+.item:hover { background: var(--color-bg-hover); }
+
+.itemSelected { font-weight: var(--weight-medium); }
+
+.itemDestructive { color: var(--color-danger-text); }
+
+.icon { display: flex; align-items: center; flex-shrink: 0; }
+
+.label { flex: 1; }
+
+.selectedDot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--r-full);
+  background: var(--color-brand);
+  flex-shrink: 0;
+}

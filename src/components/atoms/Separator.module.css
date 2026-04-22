@@ -1,0 +1,26 @@
+.separator {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  width: 100%;
+}
+
+.separator[data-space-bottom] {
+  padding-bottom: var(--sp-4);
+}
+
+.line {
+  flex: 1 0 0;
+  min-width: 0;
+  height: 1px;
+  background: var(--color-border-default);
+}
+
+.text {
+  flex-shrink: 0;
+  font-family: var(--font);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-content-disabled);
+  white-space: nowrap;
+}

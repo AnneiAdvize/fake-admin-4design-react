@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import PageLayout from './components/layout/PageLayout'
+import PageLayout from './components/templates/PageLayout'
 import Home from './pages/Home'
 import Engagement from './pages/Engagement'
 import EngagementBuilder from './pages/EngagementBuilder'

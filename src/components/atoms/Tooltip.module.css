@@ -1,0 +1,136 @@
+.container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.trigger {
+  display: inline-flex;
+}
+
+/* Tooltip bubble */
+.tooltip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--t-base);
+  width: 240px;
+}
+
+.container:hover .tooltip,
+.container:focus-within .tooltip {
+  opacity: 1;
+}
+
+/* Positioning per side */
+.tooltip[data-side="Top"] {
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  flex-direction: column-reverse;
+}
+
+.tooltip[data-side="Bottom"] {
+  top: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  flex-direction: column;
+}
+
+.tooltip[data-side="Left"] {
+  right: calc(100% + 4px);
+  top: 50%;
+  transform: translateY(-50%);
+  flex-direction: row-reverse;
+  align-items: center;
+  width: auto;
+  max-width: 240px;
+}
+
+.tooltip[data-side="Right"] {
+  left: calc(100% + 4px);
+  top: 50%;
+  transform: translateY(-50%);
+  flex-direction: row;
+  align-items: center;
+  width: auto;
+  max-width: 240px;
+}
+
+/* Content box */
+.content {
+  background: var(--color-brand-strong);
+  color: var(--color-content-inverse);
+  font-family: var(--font);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-normal);
+  line-height: 1.4;
+  padding: var(--sp-3);
+  border-radius: var(--r-lg);
+  display: block;
+}
+
+/* Arrow */
+.arrow {
+  display: block;
+  width: 16px;
+  height: 8px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: visible;
+}
+
+.arrow::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+/* Top arrow (points down toward content trigger) */
+.arrow[data-side="Top"]::before {
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--color-brand-strong);
+  left: 0;
+  top: 0;
+}
+
+/* Bottom arrow (points up) */
+.arrow[data-side="Bottom"]::before {
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid var(--color-brand-strong);
+  left: 0;
+  top: 0;
+}
+
+/* Left arrow (points right) */
+.arrow[data-side="Left"] {
+  width: 8px;
+  height: 16px;
+}
+.arrow[data-side="Left"]::before {
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 8px solid var(--color-brand-strong);
+  top: 0;
+  left: 0;
+}
+
+/* Right arrow (points left) */
+.arrow[data-side="Right"] {
+  width: 8px;
+  height: 16px;
+}
+.arrow[data-side="Right"]::before {
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 8px solid var(--color-brand-strong);
+  top: 0;
+  left: 0;
+}

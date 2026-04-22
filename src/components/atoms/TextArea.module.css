@@ -1,0 +1,90 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  width: 100%;
+}
+
+/* Label */
+.label {
+  font-family: var(--font);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-normal);
+  color: var(--color-content-secondary);
+  line-height: 1.4;
+}
+
+.required {
+  color: var(--color-danger-icon);
+}
+
+/* Textarea element */
+.textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--color-bg-default);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--r-sm);
+  font-family: var(--font);
+  font-size: var(--text-base);
+  font-weight: var(--weight-normal);
+  color: var(--color-content-primary);
+  line-height: 1.4;
+  resize: vertical;
+  outline: none;
+  transition: border-color var(--t-base), box-shadow var(--t-base);
+  box-sizing: border-box;
+}
+
+.textarea::placeholder {
+  color: var(--color-content-secondary);
+}
+
+.textarea:focus {
+  border-color: var(--color-content-primary);
+  box-shadow: 0 0 0 2px rgba(10,10,9,0.12);
+}
+
+.textarea:disabled {
+  background: var(--color-action-primary-disabled);
+  border-color: var(--color-border-disabled);
+  color: var(--color-content-disabled);
+  cursor: not-allowed;
+}
+
+.textarea:read-only {
+  background: var(--color-bg-hover);
+  border-color: var(--color-border-default);
+  color: var(--color-content-secondary);
+}
+
+/* Error state */
+.field[data-error] .textarea {
+  border-color: var(--color-danger-icon);
+  background: var(--color-danger-bg);
+}
+
+.field[data-error] .textarea:focus {
+  border-color: var(--color-danger-icon);
+  box-shadow: 0 0 0 2px rgba(224,61,61,0.15);
+}
+
+/* Helper / Error text */
+.helperText {
+  font-family: var(--font);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-normal);
+  color: var(--color-content-secondary);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.errorText {
+  font-family: var(--font);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-normal);
+  color: var(--color-danger-text);
+  line-height: 1.4;
+  margin: 0;
+}
